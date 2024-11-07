@@ -33,17 +33,37 @@ class _DisplayPictureScreenState extends State<DisplayPictureScreen> {
       builder: (BuildContext context) {
         return AlertDialog(
           backgroundColor: Colors.white,
-          title: const Text('Success'),
+          title: const Column(
+            children: [
+              Icon(
+                Icons.check_circle,
+                color: Colors.green,
+                size: 60,
+              ),
+              SizedBox(height: 10),
+              Center(child: Text('Success')),
+            ],
+          ),
           content: const Text('Gambar berhasil diunggah!'),
           actions: <Widget>[
             TextButton(
               child: const Text(
                 'OK',
                 style:
-                    TextStyle(fontWeight: FontWeight.bold, color: Colors.blue),
+                    TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
+              ),
+              style: TextButton.styleFrom(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 30, vertical: 12),
+                backgroundColor: const Color(0xFF42B1FF),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(30),
+                ),
               ),
               onPressed: () {
                 Navigator.of(context).pop();
+                Navigator.pushNamedAndRemoveUntil(
+                    context, '/navbar', (Route<dynamic> route) => false);
               },
             ),
           ],

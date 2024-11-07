@@ -23,8 +23,10 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      // Pass the first available camera to Navbar
       home: Navbar(camera: cameras.first),
+      routes: {
+        '/navbar': (context) => Navbar(camera: cameras.first),
+      },
     );
   }
 }
