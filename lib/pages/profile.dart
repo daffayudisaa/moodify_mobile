@@ -9,43 +9,42 @@ class ProfilePage extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
-          child: NestedScrollView(
-        headerSliverBuilder: (context, innerBoxIsScrolled) => [
-          SliverAppBar(
-            floating: true,
-            snap: true,
-            backgroundColor: Colors.white,
-            title: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 15),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Container(
-                        child: const Text(
-                          "My Profile",
-                          style: TextStyle(
-                             fontSize: 24,
-                            fontWeight: FontWeight.bold,
+        child: NestedScrollView(
+          headerSliverBuilder: (context, innerBoxIsScrolled) => [
+            SliverAppBar(
+              floating: true,
+              snap: true,
+              backgroundColor: Colors.white,
+              title: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 15),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Container(
+                            child: const Text(
+                              "My Profile",
+                              style: TextStyle(
+                                fontSize: 24,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
                           ),
-                        ),
-                      ),
-                    ]
-                  ), 
-                ],
+                        ]),
+                  ],
+                ),
               ),
             ),
-          ),
-        ],
+          ],
           body: SingleChildScrollView(
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 25.0, vertical: 10),
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 25.0, vertical: 10),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  
                   const SizedBox(height: 20),
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -194,7 +193,6 @@ class ProfilePage extends StatelessWidget {
                         ),
                       ),
                       const SizedBox(height: 16),
-                      
                     ],
                   ),
                   const SizedBox(height: 20),
@@ -206,7 +204,7 @@ class ProfilePage extends StatelessWidget {
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.white,
                           padding: const EdgeInsets.symmetric(
-                              horizontal: 80, vertical: 15),
+                              horizontal: 75, vertical: 15),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10),
                           ),
@@ -224,7 +222,7 @@ class ProfilePage extends StatelessWidget {
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Color(0xFF42B1FF),
                           padding: const EdgeInsets.symmetric(
-                              horizontal: 80, vertical: 15),
+                              horizontal: 75, vertical: 15),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10),
                           ),
@@ -244,8 +242,8 @@ class ProfilePage extends StatelessWidget {
                     onPressed: () {},
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Color(0xFF263238),
-                     padding: const EdgeInsets.symmetric(
-                          horizontal: 174, vertical: 15),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 155, vertical: 15),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10),
                       ),
@@ -264,7 +262,7 @@ class ProfilePage extends StatelessWidget {
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Color(0xFFFF5855),
                       padding: const EdgeInsets.symmetric(
-                          horizontal: 150, vertical: 15),
+                          horizontal: 130, vertical: 15),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10),
                       ),
@@ -277,7 +275,7 @@ class ProfilePage extends StatelessWidget {
                       ),
                     ),
                   ),
-                  const SizedBox(height: 60),
+                  const SizedBox(height: 40),
                   Center(
                     child: RichText(
                       text: TextSpan(
@@ -285,19 +283,16 @@ class ProfilePage extends StatelessWidget {
                           const TextSpan(
                             text: "To change your password, ",
                             style: TextStyle(
-                              color: Colors.black,
-                              fontWeight: FontWeight.bold
-                            ),
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold),
                           ),
                           TextSpan(
                             text: "Click Here",
                             style: const TextStyle(
-                              color: Colors.blue,
-                              decoration: TextDecoration.underline,
-                              fontWeight: FontWeight.bold
-                            ),
-                            recognizer: TapGestureRecognizer()
-                              ..onTap = () {},
+                                color: Colors.blue,
+                                decoration: TextDecoration.underline,
+                                fontWeight: FontWeight.bold),
+                            recognizer: TapGestureRecognizer()..onTap = () {},
                           ),
                         ],
                       ),
