@@ -241,7 +241,11 @@ class ProfilePage extends StatelessWidget {
                           ),
                           const SizedBox(height: 20),
                           ElevatedButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                              Navigator.pushNamedAndRemoveUntil(context,
+                                  '/signin', (Route<dynamic> route) => false);
+                            },
                             style: ElevatedButton.styleFrom(
                               backgroundColor: Color(0xFF263238),
                               padding: const EdgeInsets.symmetric(
