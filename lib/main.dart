@@ -27,6 +27,7 @@ class MyApp extends StatelessWidget {
       home: SignInPage(),
       routes: {
         '/navbar': (context) => Navbar(camera: cameras.first),
+        '/signin': (context) => const SignInPage(),
       },
     );
   }
