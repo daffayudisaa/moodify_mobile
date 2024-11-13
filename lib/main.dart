@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
+import 'package:moodify_mobile/pages/auth/sign_in.dart';
 import 'package:moodify_mobile/widgets/navbar.dart';
 
 late List<CameraDescription> cameras;
@@ -23,7 +24,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: Navbar(camera: cameras.first),
+      home: SignInPage(),
       routes: {
         '/navbar': (context) => Navbar(camera: cameras.first),
       },
