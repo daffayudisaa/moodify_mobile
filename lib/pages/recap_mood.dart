@@ -150,8 +150,7 @@ class _MoodRecapState extends State<RecapMoodPage>
                     Expanded(
                       child: LayoutBuilder(
                         builder: (context, constraints) {
-                          double chartSize = constraints.maxWidth /
-                              2.5; // Scale based on container's width
+                          double chartSize = constraints.maxWidth / 2.5; 
                           return PieChart(
                             dataMap: dataMap,
                             animationDuration:
@@ -283,14 +282,210 @@ class _MoodRecapState extends State<RecapMoodPage>
     );
   }
 
-  Widget _buildHistory() {
-    return const Center(
-      child: Text(
-        'History View',
-        style: TextStyle(fontSize: 24),
+Widget _buildHistory() {
+  return Center(
+    child: SingleChildScrollView(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+            margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+            width: double.infinity,
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(10),
+              border: Border.all(
+                color: Colors.blue.withOpacity(0.3),
+              ),
+            ),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Text(
+                  'Details',
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                const SizedBox(height: 10),
+                _buildEmojiGrid(),
+              ],
+            ),
+          ),
+          Column(
+            children: List.generate(10, (index) {
+              return Container(
+                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(10),
+                  border: Border.all(
+                    color: Colors.blue.withOpacity(0.3),
+                  ),
+                ),
+                child: Row(
+                  children: [
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(10), 
+                      child: Image.asset(
+                        'assets/images/user.jpg', 
+                        width: 70,
+                        height: 100,
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                    const SizedBox(width: 10),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                'Mood: Happy',
+                                style: TextStyle(fontSize: 16),
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                              Text(
+                                '2024-11-14', 
+                                style: TextStyle(
+                                  fontSize: 14,
+                                  color: Colors.grey,
+                                ),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(width: 5),
+                          _buildPercentageGrid(),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              );
+            }),
+          ),
+        ],
       ),
-    );
-  }
+    ),
+  );
+}
+Widget _buildEmojiGrid() {
+  return Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: [
+          _buildEmojiItem('😡', 'Angry'),
+          _buildEmojiItem('😢', 'Sad'),
+          _buildEmojiItem('😨', 'Fear'),
+        ],
+      ),
+      const SizedBox(height: 10),
+      Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: [
+          _buildEmojiItem('😄', 'Happy'),
+          _buildEmojiItem('😮', 'Surprised'),
+          _buildEmojiItem('😞', 'Disgusting'),
+        ],
+      ),
+    ],
+  );
+}
+
+Widget _buildEmojiItem(String emoji, String label) {
+  return Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      Row(
+        children: [
+          Text(
+            emoji,
+            style: const TextStyle(fontSize: 23),
+          ),
+          const SizedBox(width: 5),
+          Text(
+            label,
+            style: const TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.w400,
+              color: Colors.black,
+            ),
+          ),
+        ],
+      ),
+    ],
+  );
+}
+
+
+Widget _buildPercentageGrid() {
+  return Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    
+    children: [
+      const SizedBox(width: 15),
+      Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          _buildPercentageItem('😡', '7%'),
+          const SizedBox(width: 48,),
+          _buildPercentageItem('😢', '35%'),
+        ],
+      ),
+      const SizedBox(height: 10),
+      Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: [
+          _buildPercentageItem('😨', '10%'),
+          const SizedBox(width: 40,),
+          _buildPercentageItem('😄', '50%'),
+        ],
+      ),
+      const SizedBox(height: 10),
+      Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: [
+          _buildPercentageItem('😮', '25%'),
+          const SizedBox(width: 40,),
+          _buildPercentageItem('😞', '15%'),
+        ],
+      ),
+    ],
+  );
+}
+
+Widget _buildPercentageItem(String emoji, String percentage) {
+  return Row(
+    children: [
+      Text(
+        emoji,
+        style: const TextStyle(fontSize: 23),
+      ),
+      const SizedBox(width: 5),
+      Text(
+        percentage,
+        style: const TextStyle(
+          fontSize: 16,
+          fontWeight: FontWeight.w400,
+          color: Colors.black,
+        ),
+      ),
+    ],
+  );
+}
+
+
 }
 
 class RecapMoodCard extends StatelessWidget {
