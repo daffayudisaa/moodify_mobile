@@ -8,29 +8,32 @@ import 'package:moodify_mobile/pages/scan_page.dart';
 import 'package:hugeicons/hugeicons.dart';
 
 class Navbar extends StatefulWidget {
-  final CameraDescription camera; // Add CameraDescription parameter
+  final CameraDescription camera;
+  final int initialTab; // New initialTab parameter to specify the default tab
 
-  const Navbar({super.key, required this.camera});
+  const Navbar({super.key, required this.camera, this.initialTab = 0});
 
   @override
   State<Navbar> createState() => _NavbarState();
 }
 
 class _NavbarState extends State<Navbar> {
-  int currentTab = 0;
-  late List<Widget> screens;
+  late int currentTab;
+  late Widget currentScreen;
   final PageStorageBucket bucket = PageStorageBucket();
-  Widget currentScreen = const HomePage();
+  late List<Widget> screens;
 
   @override
   void initState() {
     super.initState();
+    currentTab = widget.initialTab; // Set initial tab based on parameter
     screens = [
       const HomePage(),
       const RecapMoodPage(),
       const MusicRecomPage(),
       const ProfilePage(),
     ];
+    currentScreen = screens[currentTab]; // Initialize currentScreen
   }
 
   @override

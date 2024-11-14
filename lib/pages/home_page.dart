@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:hugeicons/hugeicons.dart';
-import 'package:moodify_mobile/pages/music_recom_page.dart';
-import 'package:moodify_mobile/pages/recap_mood.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -153,10 +151,11 @@ class HomePage extends StatelessWidget {
                     const SizedBox(height: 20),
                     GestureDetector(
                       onTap: () {
-                        Navigator.push(
+                        Navigator.pushNamedAndRemoveUntil(
                           context,
-                          MaterialPageRoute(
-                              builder: (context) => MusicRecomPage()),
+                          '/navbar',
+                          (Route<dynamic> route) => false,
+                          arguments: 2, // Pass the index for MusicRecomPage
                         );
                       },
                       child: Container(
@@ -244,10 +243,11 @@ class HomePage extends StatelessWidget {
                     const SizedBox(height: 20),
                     GestureDetector(
                       onTap: () {
-                        Navigator.push(
+                        Navigator.pushNamedAndRemoveUntil(
                           context,
-                          MaterialPageRoute(
-                              builder: (context) => RecapMoodPage()),
+                          '/navbar',
+                          (Route<dynamic> route) => false,
+                          arguments: 1, // Pass the index for MusicRecomPage
                         );
                       },
                       child: Container(

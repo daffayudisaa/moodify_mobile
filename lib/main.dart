@@ -26,7 +26,11 @@ class MyApp extends StatelessWidget {
       ),
       home: SignInPage(),
       routes: {
-        '/navbar': (context) => Navbar(camera: cameras.first),
+        '/navbar': (context) {
+          final initialTab =
+              ModalRoute.of(context)?.settings.arguments as int? ?? 0;
+          return Navbar(camera: cameras.first, initialTab: initialTab);
+        },
         '/signin': (context) => const SignInPage(),
       },
     );
