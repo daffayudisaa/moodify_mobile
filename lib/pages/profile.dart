@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:moodify_mobile/pages/change_password.dart';
 import 'package:moodify_mobile/bloc/profile/profile_bloc.dart';
 import 'package:moodify_mobile/bloc/profile/profile_state.dart';
 import 'package:moodify_mobile/bloc/profile/profile_event.dart';
@@ -283,28 +284,36 @@ class ProfilePage extends StatelessWidget {
                           ),
                           const SizedBox(height: 50),
                           Center(
-                            child: RichText(
-                              text: TextSpan(
-                                children: [
-                                  const TextSpan(
-                                    text: "To change your password, ",
-                                    style: TextStyle(
-                                      color: Colors.black,
-                                    ),
+                          child: RichText(
+                            text: TextSpan(
+                              children: [
+                                const TextSpan(
+                                  text: "To change your password, ",
+                                  style: TextStyle(
+                                    color: Colors.black,
                                   ),
-                                  TextSpan(
-                                    text: "Click Here",
-                                    style: const TextStyle(
-                                        color: Colors.blue,
-                                        decoration: TextDecoration.underline,
-                                        fontWeight: FontWeight.bold),
-                                    recognizer: TapGestureRecognizer()
-                                      ..onTap = () {},
-                                  ),
-                                ],
-                              ),
+                                ),
+                                TextSpan(
+                                  text: "Click Here",
+                                  style: const TextStyle(
+                                      color: Colors.blue,
+                                      decoration: TextDecoration.underline,
+                                      fontWeight: FontWeight.bold),
+                                  recognizer: TapGestureRecognizer()
+                                    ..onTap = () {
+                                      // Arahkan ke halaman ChangePasswordPage
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) => const ChangePasswordPage(),
+                                        ),
+                                      );
+                                    },
+                                ),
+                              ],
                             ),
                           ),
+                        ),
                           const SizedBox(height: 60),
                         ],
                       ),
