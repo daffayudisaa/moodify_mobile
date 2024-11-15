@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
 import 'package:moodify_mobile/pages/displaypicture_page.dart';
+import 'package:moodify_mobile/pages/preparescan_page.dart';
 
 class ScanPage extends StatefulWidget {
   const ScanPage({
@@ -158,6 +159,10 @@ class ScanPageState extends State<ScanPage> {
           ),
           onPressed: () {
             Navigator.of(context).pop();
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const PreparescanPage()),
+            );
           },
         ),
       ),

@@ -18,6 +18,17 @@ class PreparescanPage extends StatelessWidget {
               fontWeight: FontWeight.w600,
               color: Color(0xFF004373)),
         ),
+        leading: IconButton(
+          icon: const Icon(
+            Icons.arrow_back,
+            color: Color(0xFF004373), // Blue color for the back button
+          ),
+          onPressed: () {
+            Navigator.of(context).pop();
+            Navigator.pushNamedAndRemoveUntil(
+                context, '/navbar', (Route<dynamic> route) => false);
+          },
+        ),
       ),
       body: Center(
         child: Column(
