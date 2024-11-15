@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
 import 'package:moodify_mobile/pages/auth/sign_in.dart';
 import 'package:moodify_mobile/widgets/navbar.dart';
+import 'package:moodify_mobile/widgets/splash_screen.dart';
 
 late List<CameraDescription> cameras;
 
@@ -24,7 +25,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: SignInPage(),
+      home: const SplashScreen(),
       routes: {
         '/navbar': (context) {
           final initialTab =
