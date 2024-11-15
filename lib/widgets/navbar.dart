@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
 import 'package:moodify_mobile/pages/home_page.dart';
 import 'package:moodify_mobile/pages/music_recom_page.dart';
+import 'package:moodify_mobile/pages/preparescan_page.dart';
 import 'package:moodify_mobile/pages/profile.dart';
 import 'package:moodify_mobile/pages/recap_mood.dart';
-import 'package:moodify_mobile/pages/scan_page.dart';
 import 'package:hugeicons/hugeicons.dart';
 
 class Navbar extends StatefulWidget {
@@ -58,7 +58,7 @@ class _NavbarState extends State<Navbar> {
             onPressed: () {
               Navigator.of(context).push(
                 MaterialPageRoute(
-                  builder: (context) => ScanPage(camera: widget.camera),
+                  builder: (context) => PreparescanPage(),
                 ),
               );
             },

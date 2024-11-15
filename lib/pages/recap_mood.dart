@@ -130,7 +130,7 @@ class _MoodRecapState extends State<RecapMoodPage>
               width: double.infinity,
               decoration: BoxDecoration(
                 border: Border.all(
-                  color: const Color.fromRGBO(160, 211, 245, 0.23),
+                  color: const Color.fromRGBO(160, 211, 245, 0.3),
                   width: 1,
                 ),
                 borderRadius: BorderRadius.circular(16),
@@ -303,7 +303,7 @@ class _MoodRecapState extends State<RecapMoodPage>
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(10),
                 border: Border.all(
-                  color: Colors.blue.withOpacity(0.3),
+                  color: const Color(0xFFA0D3F5).withOpacity(0.3),
                 ),
               ),
               child: Column(
@@ -353,7 +353,7 @@ class _MoodRecapState extends State<RecapMoodPage>
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(10),
                     border: Border.all(
-                      color: Colors.blue.withOpacity(0.3),
+                      color: const Color(0xFFA0D3F5).withOpacity(0.3),
                     ),
                   ),
                   child: Row(

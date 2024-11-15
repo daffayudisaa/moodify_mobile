@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
 import 'package:moodify_mobile/pages/auth/sign_in.dart';
+import 'package:moodify_mobile/pages/scan_page.dart';
 import 'package:moodify_mobile/widgets/navbar.dart';
 import 'package:moodify_mobile/widgets/splash_screen.dart';
 
@@ -33,6 +34,7 @@ class MyApp extends StatelessWidget {
           return Navbar(camera: cameras.first, initialTab: initialTab);
         },
         '/signin': (context) => const SignInPage(),
+        '/scan': (context) => ScanPage(camera: cameras.first),
       },
     );
   }
