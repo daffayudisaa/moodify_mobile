@@ -9,7 +9,7 @@ import 'package:hugeicons/hugeicons.dart';
 
 class Navbar extends StatefulWidget {
   final CameraDescription camera;
-  final int initialTab; // New initialTab parameter to specify the default tab
+  final int initialTab;
 
   const Navbar({super.key, required this.camera, this.initialTab = 0});
 
@@ -26,18 +26,54 @@ class _NavbarState extends State<Navbar> {
   @override
   void initState() {
     super.initState();
-    currentTab = widget.initialTab; // Set initial tab based on parameter
+    currentTab = widget.initialTab;
     screens = [
       const HomePage(),
       const RecapMoodPage(),
       const MusicRecomPage(),
       const ProfilePage(),
     ];
-    currentScreen = screens[currentTab]; // Initialize currentScreen
+    currentScreen = screens[currentTab];
+  }
+
+  double _getIconSize(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+    if (screenWidth > 600) {
+      return 34.0;
+    } else if (screenWidth > 400) {
+      return 30.0;
+    }
+    return 26.0;
+  }
+
+  double _getTextSize(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+    if (screenWidth > 600) {
+      return 15.0;
+    } else if (screenWidth > 400) {
+      return 13.0;
+    }
+    return 11.0;
+  }
+
+  double _getBottomBarHeight(BuildContext context) {
+    double screenHeight = MediaQuery.of(context).size.height;
+    if (screenHeight > 800) {
+      return 90.0;
+    } else if (screenHeight > 600) {
+      return 80.0;
+    }
+    return 70.0;
   }
 
   @override
   Widget build(BuildContext context) {
+    double iconSize = _getIconSize(context);
+    double textSize = _getTextSize(context);
+    double bottomBarHeight = _getBottomBarHeight(context);
+    double fabSize = MediaQuery.of(context).size.width * 0.15;
+    fabSize = fabSize.clamp(45.0, 65.0);
+
     return Scaffold(
       body: PageStorage(
         child: currentScreen,
@@ -46,29 +82,33 @@ class _NavbarState extends State<Navbar> {
       floatingActionButton: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          const SizedBox(height: 40),
-          FloatingActionButton(
-            backgroundColor: Colors.blue,
-            splashColor: Colors.transparent,
-            child: Icon(
-              HugeIcons.strokeRoundedFaceId,
-              color: Colors.white,
-              size: 30,
+          SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+          SizedBox(
+            height: fabSize,
+            width: fabSize,
+            child: FloatingActionButton(
+              backgroundColor: Colors.blue,
+              splashColor: Colors.transparent,
+              child: Icon(
+                HugeIcons.strokeRoundedFaceId,
+                color: Colors.white,
+                size: iconSize * 1.2,
+              ),
+              onPressed: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => const PreparescanPage(),
+                  ),
+                );
+              },
             ),
-            onPressed: () {
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (context) => PreparescanPage(),
-                ),
-              );
-            },
           ),
-          const SizedBox(height: 10),
-          const Text(
+          SizedBox(height: MediaQuery.of(context).size.height * 0.01),
+          Text(
             'Scan',
             style: TextStyle(
               color: Colors.grey,
-              fontSize: 13,
+              fontSize: textSize,
               fontWeight: FontWeight.bold,
             ),
           ),
@@ -78,127 +118,72 @@ class _NavbarState extends State<Navbar> {
       bottomNavigationBar: BottomAppBar(
         color: Colors.white,
         child: Container(
-          height: 60,
+          height: bottomBarHeight,
+          padding: EdgeInsets.symmetric(
+            horizontal: MediaQuery.of(context).size.width * 0.02,
+          ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  MaterialButton(
-                    highlightColor: Colors.transparent,
-                    splashColor: Colors.transparent,
-                    minWidth: 40,
-                    onPressed: () {
-                      setState(() {
-                        currentScreen = HomePage();
-                        currentTab = 0;
-                      });
-                    },
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(
-                          HugeIcons.strokeRoundedHome09,
-                          color: currentTab == 0 ? Colors.blue : Colors.grey,
-                        ),
-                        Text(
-                          "Home",
-                          style: TextStyle(
-                              color:
-                                  currentTab == 0 ? Colors.blue : Colors.grey),
-                        ),
-                      ],
-                    ),
-                  ),
-                  MaterialButton(
-                    highlightColor: Colors.transparent,
-                    splashColor: Colors.transparent,
-                    minWidth: 40,
-                    onPressed: () {
-                      setState(() {
-                        currentScreen = RecapMoodPage();
-                        currentTab = 1;
-                      });
-                    },
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(
-                          HugeIcons.strokeRoundedDocumentValidation,
-                          color: currentTab == 1 ? Colors.blue : Colors.grey,
-                        ),
-                        Text(
-                          "Recap",
-                          style: TextStyle(
-                              color:
-                                  currentTab == 1 ? Colors.blue : Colors.grey),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
+              Expanded(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    _buildNavItem(0, HugeIcons.strokeRoundedHome09, "Home",
+                        iconSize, textSize),
+                    _buildNavItem(1, HugeIcons.strokeRoundedDocumentValidation,
+                        "Recap", iconSize, textSize),
+                  ],
+                ),
               ),
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  MaterialButton(
-                    highlightColor: Colors.transparent,
-                    splashColor: Colors.transparent,
-                    minWidth: 40,
-                    onPressed: () {
-                      setState(() {
-                        currentScreen = MusicRecomPage();
-                        currentTab = 2;
-                      });
-                    },
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(
-                          HugeIcons.strokeRoundedFolderMusic,
-                          color: currentTab == 2 ? Colors.blue : Colors.grey,
-                        ),
-                        Text(
-                          "Music",
-                          style: TextStyle(
-                              color:
-                                  currentTab == 2 ? Colors.blue : Colors.grey),
-                        ),
-                      ],
-                    ),
-                  ),
-                  MaterialButton(
-                    highlightColor: Colors.transparent,
-                    splashColor: Colors.transparent,
-                    minWidth: 40,
-                    onPressed: () {
-                      setState(() {
-                        currentScreen = ProfilePage();
-                        currentTab = 3;
-                      });
-                    },
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(
-                          HugeIcons.strokeRoundedUser,
-                          color: currentTab == 3 ? Colors.blue : Colors.grey,
-                        ),
-                        Text(
-                          "Profile",
-                          style: TextStyle(
-                              color:
-                                  currentTab == 3 ? Colors.blue : Colors.grey),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
+              SizedBox(width: MediaQuery.of(context).size.width * 0.25),
+              Expanded(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    _buildNavItem(2, HugeIcons.strokeRoundedFolderMusic,
+                        "Music", iconSize, textSize),
+                    _buildNavItem(3, HugeIcons.strokeRoundedUser, "Profile",
+                        iconSize, textSize),
+                  ],
+                ),
               ),
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  Widget _buildNavItem(int index, IconData icon, String label, double iconSize,
+      double textSize) {
+    return MaterialButton(
+      highlightColor: Colors.transparent,
+      splashColor: Colors.transparent,
+      minWidth: 40,
+      padding: const EdgeInsets.symmetric(horizontal: 13),
+      onPressed: () {
+        setState(() {
+          currentScreen = screens[index];
+          currentTab = index;
+        });
+      },
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(
+            icon,
+            size: iconSize,
+            color: currentTab == index ? Colors.blue : Colors.grey,
+          ),
+          Text(
+            label,
+            style: TextStyle(
+              fontSize: textSize,
+              color: currentTab == index ? Colors.blue : Colors.grey,
+            ),
+          ),
+        ],
       ),
     );
   }
