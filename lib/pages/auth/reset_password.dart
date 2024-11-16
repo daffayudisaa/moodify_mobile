@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hugeicons/hugeicons.dart';
+import 'package:moodify_mobile/widgets/buttons/button.dart';
+import 'package:moodify_mobile/widgets/form/text_field.dart';
 
 class ResetPasswordPage extends StatelessWidget {
   const ResetPasswordPage({super.key});
@@ -8,7 +10,7 @@ class ResetPasswordPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: GestureDetector(
-        onTap: () => FocusScope.of(context).unfocus(), // Dismisses the keyboard
+        onTap: () => FocusScope.of(context).unfocus(),
         child: Container(
           decoration: const BoxDecoration(
             gradient: LinearGradient(
@@ -89,8 +91,8 @@ class ResetPasswordPage extends StatelessWidget {
                       Expanded(
                         child: Container(
                             color: Colors.white,
-                            child: Padding(
-                              padding: const EdgeInsets.only(
+                            child: const Padding(
+                              padding: EdgeInsets.only(
                                 right: 40,
                                 left: 40,
                                 top: 30,
@@ -98,7 +100,7 @@ class ResetPasswordPage extends StatelessWidget {
                               child: SingleChildScrollView(
                                 child: Column(
                                   children: [
-                                    const Text(
+                                    Text(
                                       'Time to set a new password! Make it strong, unique, and something you’ll remember!',
                                       style: TextStyle(
                                         fontFamily: 'Poppins',
@@ -107,108 +109,21 @@ class ResetPasswordPage extends StatelessWidget {
                                       ),
                                       textAlign: TextAlign.center,
                                     ),
-                                    const SizedBox(height: 30),
-                                    TextField(
-                                      decoration: InputDecoration(
+                                    SizedBox(height: 30),
+                                    CustomTextField(
                                         hintText: 'New Password',
-                                        hintStyle: const TextStyle(
-                                          fontFamily: 'Poppins',
-                                          fontSize: 14,
-                                          color: Colors.black54,
-                                        ),
-                                        contentPadding:
-                                            const EdgeInsets.symmetric(
-                                          vertical: 15,
-                                          horizontal: 20,
-                                        ),
-                                        filled: true,
-                                        fillColor: const Color(0xFFA0D3F5)
-                                            .withOpacity(0.2),
-                                        border: InputBorder.none,
-                                        focusedBorder: OutlineInputBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(6),
-                                          borderSide: const BorderSide(
-                                            color: Color(0xFF008EF2),
-                                            width: 2,
-                                          ),
-                                        ),
-                                        enabledBorder: OutlineInputBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(6),
-                                          borderSide: const BorderSide(
-                                            color: Colors.transparent,
-                                            width: 1,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                    const SizedBox(height: 20),
-                                    TextField(
-                                      decoration: InputDecoration(
+                                        obscureText: true),
+                                    SizedBox(height: 20),
+                                    CustomTextField(
                                         hintText: 'Confirm New Password',
-                                        hintStyle: const TextStyle(
-                                          fontFamily: 'Poppins',
-                                          fontSize: 14,
-                                          color: Colors.black54,
-                                        ),
-                                        contentPadding:
-                                            const EdgeInsets.symmetric(
-                                          vertical: 15,
-                                          horizontal: 20,
-                                        ),
-                                        filled: true,
-                                        fillColor: const Color(0xFFA0D3F5)
-                                            .withOpacity(0.2),
-                                        border: InputBorder.none,
-                                        focusedBorder: OutlineInputBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(6),
-                                          borderSide: const BorderSide(
-                                            color: Color(0xFF008EF2),
-                                            width: 2,
-                                          ),
-                                        ),
-                                        enabledBorder: OutlineInputBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(6),
-                                          borderSide: const BorderSide(
-                                            color: Colors.transparent,
-                                            width: 1,
-                                          ),
-                                        ),
-                                      ),
+                                        obscureText: true),
+                                    SizedBox(height: 40),
+                                    FillButtonRoute(
+                                      route: '/signin',
+                                      color: Color(0xFF42B1FF),
+                                      text: 'Save',
                                     ),
-                                    const SizedBox(height: 40),
-                                    ElevatedButton(
-                                      onPressed: () {
-                                        Navigator.of(context).pop();
-                                        Navigator.pushNamedAndRemoveUntil(
-                                            context,
-                                            '/signin',
-                                            (Route<dynamic> route) => false);
-                                      },
-                                      style: ElevatedButton.styleFrom(
-                                        backgroundColor:
-                                            const Color(0xFF0096FF),
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(6),
-                                        ),
-                                        padding: const EdgeInsets.symmetric(
-                                            horizontal: 93, vertical: 15),
-                                      ),
-                                      child: const Text(
-                                        "Save Password",
-                                        style: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 15,
-                                          fontWeight: FontWeight.w600,
-                                          fontFamily: 'Poppins',
-                                        ),
-                                      ),
-                                    ),
-                                    const SizedBox(height: 40),
+                                    SizedBox(height: 40),
                                   ],
                                 ),
                               ),

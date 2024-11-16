@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hugeicons/hugeicons.dart';
+import 'package:moodify_mobile/widgets/buttons/button.dart';
+import 'package:moodify_mobile/widgets/form/text_field.dart';
 
 class SignUpPage extends StatelessWidget {
   const SignUpPage({super.key});
@@ -50,7 +52,7 @@ class SignUpPage extends StatelessWidget {
                 ),
               ],
             ),
-            height: MediaQuery.of(context).size.height - 100,
+            height: MediaQuery.of(context).size.height,
             child: Column(
               children: [
                 const Text(
@@ -76,270 +78,38 @@ class SignUpPage extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 35),
-                TextField(
-                  decoration: InputDecoration(
-                    hintText: 'Email',
-                    hintStyle: const TextStyle(
-                      fontFamily: 'Poppins',
-                      fontSize: 14,
-                      color: Colors.black54,
-                    ),
-                    contentPadding: const EdgeInsets.symmetric(
-                      vertical: 15,
-                      horizontal: 20,
-                    ),
-                    filled: true,
-                    fillColor: const Color(0xFFA0D3F5).withOpacity(0.2),
-                    border: InputBorder.none,
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(6),
-                      borderSide: const BorderSide(
-                        color: Color(0xFF008EF2),
-                        width: 2,
-                      ),
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(6),
-                      borderSide: const BorderSide(
-                        color: Colors.transparent,
-                        width: 1,
-                      ),
-                    ),
-                  ),
-                ),
+                const CustomTextField(hintText: 'Email'),
                 const SizedBox(height: 20),
-                Column(
+                const Column(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Row(
                       children: [
                         Expanded(
-                          child: TextField(
-                            decoration: InputDecoration(
-                              hintText: 'First Name',
-                              hintStyle: const TextStyle(
-                                fontFamily: 'Poppins',
-                                fontSize: 14,
-                                color: Colors.black54,
-                              ),
-                              contentPadding: const EdgeInsets.symmetric(
-                                vertical: 15,
-                                horizontal: 20,
-                              ),
-                              filled: true,
-                              fillColor:
-                                  const Color(0xFFA0D3F5).withOpacity(0.2),
-                              border: InputBorder.none,
-                              focusedBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(6),
-                                borderSide: const BorderSide(
-                                  color: Color(0xFF008EF2),
-                                  width: 2,
-                                ),
-                              ),
-                              enabledBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(6),
-                                borderSide: const BorderSide(
-                                  color: Colors.transparent,
-                                  width: 1,
-                                ),
-                              ),
-                            ),
-                          ),
+                          child: CustomTextField(hintText: 'First Name'),
                         ),
-                        const SizedBox(width: 10),
+                        SizedBox(width: 10),
                         Expanded(
-                          child: TextField(
-                            decoration: InputDecoration(
-                              hintText: 'Last Name',
-                              hintStyle: const TextStyle(
-                                fontFamily: 'Poppins',
-                                fontSize: 14,
-                                color: Colors.black54,
-                              ),
-                              contentPadding: const EdgeInsets.symmetric(
-                                vertical: 15,
-                                horizontal: 20,
-                              ),
-                              filled: true,
-                              fillColor:
-                                  const Color(0xFFA0D3F5).withOpacity(0.2),
-                              border: InputBorder.none,
-                              focusedBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(6),
-                                borderSide: const BorderSide(
-                                  color: Color(0xFF008EF2),
-                                  width: 2,
-                                ),
-                              ),
-                              enabledBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(6),
-                                borderSide: const BorderSide(
-                                  color: Colors.transparent,
-                                  width: 1,
-                                ),
-                              ),
-                            ),
-                          ),
+                          child: CustomTextField(hintText: 'Last Name'),
                         ),
                       ],
                     ),
                   ],
                 ),
                 const SizedBox(height: 20),
-                TextField(
-                  decoration: InputDecoration(
-                    hintText: 'Gender',
-                    hintStyle: const TextStyle(
-                      fontFamily: 'Poppins',
-                      fontSize: 14,
-                      color: Colors.black54,
-                    ),
-                    contentPadding: const EdgeInsets.symmetric(
-                      vertical: 15,
-                      horizontal: 20,
-                    ),
-                    filled: true,
-                    fillColor: const Color(0xFFA0D3F5).withOpacity(0.2),
-                    border: InputBorder.none,
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(6),
-                      borderSide: const BorderSide(
-                        color: Color(0xFF008EF2),
-                        width: 2,
-                      ),
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(6),
-                      borderSide: const BorderSide(
-                        color: Colors.transparent,
-                        width: 1,
-                      ),
-                    ),
-                  ),
-                ),
+                const CustomTextField(hintText: 'Gender'),
                 const SizedBox(height: 20),
-                TextField(
-                  decoration: InputDecoration(
-                    hintText: 'Birth Date',
-                    hintStyle: const TextStyle(
-                      fontFamily: 'Poppins',
-                      fontSize: 14,
-                      color: Colors.black54,
-                    ),
-                    contentPadding: const EdgeInsets.symmetric(
-                      vertical: 15,
-                      horizontal: 20,
-                    ),
-                    filled: true,
-                    fillColor: const Color(0xFFA0D3F5).withOpacity(0.2),
-                    border: InputBorder.none,
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(6),
-                      borderSide: const BorderSide(
-                        color: Color(0xFF008EF2),
-                        width: 2,
-                      ),
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(6),
-                      borderSide: const BorderSide(
-                        color: Colors.transparent,
-                        width: 1,
-                      ),
-                    ),
-                  ),
-                ),
+                const CustomTextField(hintText: 'Birth Date'),
                 const SizedBox(height: 20),
-                TextField(
-                  obscureText: true,
-                  decoration: InputDecoration(
-                    hintText: 'Password',
-                    hintStyle: const TextStyle(
-                      fontFamily: 'Poppins',
-                      fontSize: 14,
-                      color: Colors.black54,
-                    ),
-                    contentPadding: const EdgeInsets.symmetric(
-                      vertical: 15,
-                      horizontal: 20,
-                    ),
-                    filled: true,
-                    fillColor: const Color(0xFFA0D3F5).withOpacity(0.2),
-                    border: InputBorder.none,
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(6),
-                      borderSide: const BorderSide(
-                        color: Color(0xFF008EF2),
-                        width: 2,
-                      ),
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(6),
-                      borderSide: const BorderSide(
-                        color: Colors.transparent,
-                        width: 1,
-                      ),
-                    ),
-                  ),
-                ),
+                const CustomTextField(hintText: 'Passwrod', obscureText: true),
                 const SizedBox(height: 20),
-                TextField(
-                  obscureText: true,
-                  decoration: InputDecoration(
-                    hintText: 'Confirm Password',
-                    hintStyle: const TextStyle(
-                      fontFamily: 'Poppins',
-                      fontSize: 14,
-                      color: Colors.black54,
-                    ),
-                    contentPadding: const EdgeInsets.symmetric(
-                      vertical: 15,
-                      horizontal: 20,
-                    ),
-                    filled: true,
-                    fillColor: const Color(0xFFA0D3F5).withOpacity(0.2),
-                    border: InputBorder.none,
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(6),
-                      borderSide: const BorderSide(
-                        color: Color(0xFF008EF2),
-                        width: 2,
-                      ),
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(6),
-                      borderSide: const BorderSide(
-                        color: Colors.transparent,
-                        width: 1,
-                      ),
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 20),
-                ElevatedButton(
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                    Navigator.pushNamedAndRemoveUntil(
-                        context, '/signin', (Route<dynamic> route) => false);
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xFF0096FF),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(6),
-                    ),
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 91, vertical: 15),
-                  ),
-                  child: const Text(
-                    "Create Account",
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 15,
-                      fontWeight: FontWeight.w600,
-                      fontFamily: 'Poppins',
-                    ),
-                  ),
+                const CustomTextField(
+                    hintText: 'Confirm Password', obscureText: true),
+                const SizedBox(height: 30),
+                const FillButtonRoute(
+                  route: '/signin',
+                  color: Color(0xFF42B1FF),
+                  text: 'Create Account',
                 ),
                 const SizedBox(height: 30),
                 Row(

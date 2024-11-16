@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:hugeicons/hugeicons.dart';
 import 'package:moodify_mobile/pages/auth/reset_password.dart';
+import 'package:moodify_mobile/widgets/buttons/button.dart';
+import 'package:moodify_mobile/widgets/form/text_field.dart';
 
 class ForgotPasswordPage extends StatelessWidget {
   const ForgotPasswordPage({super.key});
@@ -88,8 +90,8 @@ class ForgotPasswordPage extends StatelessWidget {
                     Expanded(
                       child: Container(
                           color: Colors.white,
-                          child: Padding(
-                            padding: const EdgeInsets.only(
+                          child: const Padding(
+                            padding: EdgeInsets.only(
                               right: 40,
                               left: 40,
                               top: 30,
@@ -100,7 +102,7 @@ class ForgotPasswordPage extends StatelessWidget {
                                   Expanded(
                                     child: Column(
                                       children: [
-                                        const Text(
+                                        Text(
                                           'To reset your password, please enter your email, click the button below, and check yor inbox for further instructions.',
                                           style: TextStyle(
                                             fontFamily: 'Poppins',
@@ -109,73 +111,16 @@ class ForgotPasswordPage extends StatelessWidget {
                                           ),
                                           textAlign: TextAlign.center,
                                         ),
-                                        const SizedBox(height: 20),
-                                        TextField(
-                                          decoration: InputDecoration(
-                                            hintText: 'Email',
-                                            hintStyle: const TextStyle(
-                                              fontFamily: 'Poppins',
-                                              fontSize: 14,
-                                              color: Colors.black54,
-                                            ),
-                                            contentPadding:
-                                                const EdgeInsets.symmetric(
-                                              vertical: 15,
-                                              horizontal: 20,
-                                            ),
-                                            filled: true,
-                                            fillColor: const Color(0xFFA0D3F5)
-                                                .withOpacity(0.2),
-                                            border: InputBorder.none,
-                                            focusedBorder: OutlineInputBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(6),
-                                              borderSide: const BorderSide(
-                                                color: Color(0xFF008EF2),
-                                                width: 2,
-                                              ),
-                                            ),
-                                            enabledBorder: OutlineInputBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(6),
-                                              borderSide: const BorderSide(
-                                                color: Colors.transparent,
-                                                width: 1,
-                                              ),
-                                            ),
-                                          ),
+                                        SizedBox(height: 20),
+                                        CustomTextField(
+                                            hintText: 'Email Address'),
+                                        SizedBox(height: 40),
+                                        FillButtonPage(
+                                          route: ResetPasswordPage(),
+                                          color: Color(0xFF42B1FF),
+                                          text: 'Send Verification Link',
                                         ),
-                                        const SizedBox(height: 40),
-                                        ElevatedButton(
-                                          onPressed: () {
-                                            Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      const ResetPasswordPage()),
-                                            );
-                                          },
-                                          style: ElevatedButton.styleFrom(
-                                            backgroundColor:
-                                                const Color(0xFF0096FF),
-                                            shape: RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(6),
-                                            ),
-                                            padding: const EdgeInsets.symmetric(
-                                                horizontal: 69, vertical: 15),
-                                          ),
-                                          child: const Text(
-                                            "Send Verification Link",
-                                            style: TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 15,
-                                              fontWeight: FontWeight.w600,
-                                              fontFamily: 'Poppins',
-                                            ),
-                                          ),
-                                        ),
-                                        const SizedBox(height: 40),
+                                        SizedBox(height: 40),
                                       ],
                                     ),
                                   ),
