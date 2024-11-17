@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 
 class ListSongRecom extends StatelessWidget {
   final int? total;
+  final double? additionSizeImage;
+  final double? additionSizeFont;
   final String images;
   final String title;
   final String artist;
@@ -9,6 +11,8 @@ class ListSongRecom extends StatelessWidget {
 
   const ListSongRecom({
     this.total = 5,
+    this.additionSizeImage = 1,
+    this.additionSizeFont = 1,
     required this.images,
     required this.title,
     required this.artist,
@@ -46,8 +50,8 @@ class ListSongRecom extends StatelessWidget {
             child: Row(
               children: [
                 Container(
-                  width: imageSize,
-                  height: imageSize,
+                  width: imageSize * additionSizeImage!,
+                  height: imageSize * additionSizeImage!,
                   decoration: BoxDecoration(
                     image: DecorationImage(
                       image: AssetImage(images),
@@ -69,14 +73,14 @@ class ListSongRecom extends StatelessWidget {
                             style: TextStyle(
                               fontFamily: 'Poppins',
                               fontWeight: FontWeight.w600,
-                              fontSize: titleFontSize,
+                              fontSize: titleFontSize * additionSizeFont!,
                             ),
                           ),
                           Text(
                             artist,
                             style: TextStyle(
                               fontFamily: 'Poppins',
-                              fontSize: artistFontSize,
+                              fontSize: artistFontSize * additionSizeFont!,
                               fontWeight: FontWeight.w300,
                             ),
                           ),
@@ -87,7 +91,8 @@ class ListSongRecom extends StatelessWidget {
                         child: Text(
                           duration,
                           style: TextStyle(
-                            fontSize: durationFontSize,
+                            fontFamily: 'Poppins',
+                            fontSize: durationFontSize * additionSizeFont!,
                           ),
                         ),
                       ),
