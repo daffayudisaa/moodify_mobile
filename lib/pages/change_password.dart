@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:hugeicons/hugeicons.dart';
+import 'package:moodify_mobile/widgets/buttons/button.dart';
 
 class ChangePasswordPage extends StatefulWidget {
   const ChangePasswordPage({Key? key}) : super(key: key);
@@ -16,18 +18,38 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
 
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+
+    double multiplier = screenWidth < 600
+        ? 1.0
+        : screenWidth < 1200
+            ? 1.2
+            : 1.4;
+
+    double titleFontSize = 14 * multiplier;
+
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
         toolbarHeight: 60,
         backgroundColor: Colors.white,
-        title: const Text(
+        title: Text(
           "Change Password",
           style: TextStyle(
               fontFamily: 'Poppins',
-              fontSize: 24,
+              fontSize: titleFontSize * 1.7,
               fontWeight: FontWeight.w600,
-              color: Color(0xFF004373)),
+              color: const Color(0xFF004373)),
+        ),
+        leading: IconButton(
+          padding: const EdgeInsets.symmetric(horizontal: 20),
+          icon: const HugeIcon(
+              icon: HugeIcons.strokeRoundedArrowLeft02,
+              color: Color(0xFF004373),
+              size: 30),
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
         ),
       ),
       body: Padding(
@@ -135,45 +157,23 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
               ),
             ),
             const SizedBox(height: 30),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            const Row(
               children: [
-                ElevatedButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.red,
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 50, vertical: 15),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                  ),
-                  child: const Text(
-                    "Cancel",
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
-                    ),
+                Expanded(
+                  child: FillButtonRoute(
+                    route: '/navbar',
+                    index: 3,
+                    color: Color(0xFFFF5855),
+                    text: 'Cancel',
                   ),
                 ),
-                ElevatedButton(
-                  onPressed: () {},
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.blue,
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 60, vertical: 15),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                  ),
-                  child: const Text(
-                    "Save",
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
-                    ),
+                SizedBox(width: 15),
+                Expanded(
+                  child: FillButtonRoute(
+                    route: '/navbar',
+                    index: 0,
+                    color: Color(0xFF42B1FF),
+                    text: 'Save',
                   ),
                 ),
               ],

@@ -3,43 +3,48 @@ import 'package:flutter/material.dart';
 class FillButtonRoute extends StatelessWidget {
   final String route;
   final Color color;
+  final Color? textColor;
   final String text;
+  final int? index;
 
   const FillButtonRoute({
     required this.route,
     required this.color,
+    this.textColor = Colors.white,
     required this.text,
+    this.index = 0,
     super.key,
   });
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: double.infinity,
-      child: ElevatedButton(
-        onPressed: () {
-          Navigator.of(context).pop();
-          Navigator.pushNamedAndRemoveUntil(
-              context, route, (Route<dynamic> route) => false);
-        },
-        style: ElevatedButton.styleFrom(
-          backgroundColor: color,
-          elevation: 0,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(6),
-          ),
-          padding: const EdgeInsets.symmetric(
-            vertical: 15,
-          ),
+    return ElevatedButton(
+      onPressed: () {
+        Navigator.of(context).pop();
+        Navigator.pushNamedAndRemoveUntil(
+          context,
+          route,
+          (Route<dynamic> route) => false,
+          arguments: index,
+        );
+      },
+      style: ElevatedButton.styleFrom(
+        backgroundColor: color,
+        elevation: 0,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(6),
         ),
-        child: Text(
-          text,
-          style: const TextStyle(
-            color: Colors.white,
-            fontSize: 15,
-            fontWeight: FontWeight.w600,
-            fontFamily: 'Poppins',
-          ),
+        padding: const EdgeInsets.symmetric(
+          vertical: 15,
+        ),
+      ),
+      child: Text(
+        text,
+        style: TextStyle(
+          color: textColor,
+          fontSize: 15,
+          fontWeight: FontWeight.w600,
+          fontFamily: 'Poppins',
         ),
       ),
     );
@@ -49,11 +54,13 @@ class FillButtonRoute extends StatelessWidget {
 class FillButtonPage extends StatelessWidget {
   final Widget route;
   final Color color;
+  final Color? textColor;
   final String text;
 
   const FillButtonPage({
     required this.route,
     required this.color,
+    this.textColor = Colors.white,
     required this.text,
     super.key,
   });
@@ -81,8 +88,8 @@ class FillButtonPage extends StatelessWidget {
         ),
         child: Text(
           text,
-          style: const TextStyle(
-            color: Colors.white,
+          style: TextStyle(
+            color: textColor,
             fontSize: 15,
             fontWeight: FontWeight.w600,
             fontFamily: 'Poppins',

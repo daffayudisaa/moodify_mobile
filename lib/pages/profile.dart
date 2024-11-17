@@ -5,12 +5,23 @@ import 'package:moodify_mobile/pages/change_password.dart';
 import 'package:moodify_mobile/bloc/profile/profile_bloc.dart';
 import 'package:moodify_mobile/bloc/profile/profile_state.dart';
 import 'package:moodify_mobile/bloc/profile/profile_event.dart';
+import 'package:moodify_mobile/widgets/buttons/button.dart';
 
 class ProfilePage extends StatelessWidget {
   const ProfilePage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+
+    double multiplier = screenWidth < 600
+        ? 1.0
+        : screenWidth < 1200
+            ? 1.2
+            : 1.4;
+
+    double titleFontSize = 14 * multiplier;
+
     return BlocProvider(
       create: (context) => ProfileBloc()
         ..add(LoadProfileEvent()), // Dispatch the LoadProfileEvent
@@ -33,11 +44,13 @@ class ProfilePage extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Container(
-                            child: const Text(
+                            child: Text(
                               "My Profile",
                               style: TextStyle(
-                                fontSize: 24,
-                                fontWeight: FontWeight.w500,
+                                fontFamily: 'Poppins',
+                                fontSize: titleFontSize * 1.7,
+                                fontWeight: FontWeight.w600,
+                                color: const Color(0xFF004373),
                               ),
                             ),
                           ),
@@ -53,7 +66,7 @@ class ProfilePage extends StatelessWidget {
                 if (state is ProfileLoadedState) {
                   return SingleChildScrollView(
                     child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                      padding: const EdgeInsets.symmetric(horizontal: 30.0),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -199,121 +212,89 @@ class ProfilePage extends StatelessWidget {
                             ),
                           ),
                           const SizedBox(height: 20),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          const Row(
                             children: [
-                              ElevatedButton(
-                                onPressed: () {},
-                                style: ElevatedButton.styleFrom(
-                                  backgroundColor: Colors.white,
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 65, vertical: 15),
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(10),
-                                  ),
-                                  foregroundColor: Colors.black,
-                                ),
-                                child: const Text(
-                                  "Edit",
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                  ),
+                              Expanded(
+                                child: FillButtonRoute(
+                                  route: '/navbar',
+                                  color: Color(0xFF263238),
+                                  textColor: Colors.white,
+                                  text: 'Edit',
                                 ),
                               ),
-                              ElevatedButton(
-                                onPressed: () {},
-                                style: ElevatedButton.styleFrom(
-                                  backgroundColor: Color(0xFF42B1FF),
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 65, vertical: 15),
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(10),
-                                  ),
-                                  foregroundColor: Colors.white,
-                                ),
-                                child: const Text(
-                                  "Save",
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                  ),
+                              SizedBox(width: 15),
+                              Expanded(
+                                child: FillButtonRoute(
+                                  route: '/navbar',
+                                  color: Color(0xFF42B1FF),
+                                  text: 'Save',
                                 ),
                               ),
                             ],
                           ),
                           const SizedBox(height: 20),
-                          ElevatedButton(
-                            onPressed: () {
-                              Navigator.of(context).pop();
-                              Navigator.pushNamedAndRemoveUntil(context,
-                                  '/signin', (Route<dynamic> route) => false);
-                            },
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: Color(0xFF263238),
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 142, vertical: 15),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10),
+                          const Row(
+                            children: [
+                              Expanded(
+                                child: FillButtonRoute(
+                                  route: '/signin',
+                                  color: Color.fromRGBO(159, 176, 183, 0.6),
+                                  textColor: Colors.white,
+                                  text: 'Log Out',
+                                ),
                               ),
-                              foregroundColor: Colors.white,
-                            ),
-                            child: const Text(
-                              "Log Out",
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
+                            ],
                           ),
                           const SizedBox(height: 40),
-                          ElevatedButton(
-                            onPressed: () {},
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: Color(0xFFFF5855),
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 117, vertical: 15),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10),
+                          const Row(
+                            children: [
+                              Expanded(
+                                child: FillButtonRoute(
+                                  route: '/navbar',
+                                  color: Color.fromARGB(255, 255, 88, 85),
+                                  textColor: Colors.white,
+                                  text: 'Delete Account',
+                                ),
                               ),
-                              foregroundColor: Colors.white,
-                            ),
-                            child: const Text(
-                              "Delete Account",
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
+                            ],
                           ),
                           const SizedBox(height: 50),
                           Center(
-                          child: RichText(
-                            text: TextSpan(
-                              children: [
-                                const TextSpan(
-                                  text: "To change your password, ",
-                                  style: TextStyle(
-                                    color: Colors.black,
+                            child: RichText(
+                              text: TextSpan(
+                                children: [
+                                  TextSpan(
+                                    text: "To change your password, ",
+                                    style: TextStyle(
+                                        color:
+                                            const Color.fromRGBO(0, 0, 0, 0.6),
+                                        fontFamily: 'Poppins',
+                                        fontSize: titleFontSize * 0.85,
+                                        fontWeight: FontWeight.w600),
                                   ),
-                                ),
-                                TextSpan(
-                                  text: "Click Here",
-                                  style: const TextStyle(
-                                      color: Colors.blue,
-                                      decoration: TextDecoration.underline,
-                                      fontWeight: FontWeight.bold),
-                                  recognizer: TapGestureRecognizer()
-                                    ..onTap = () {
-                                      // Arahkan ke halaman ChangePasswordPage
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) => const ChangePasswordPage(),
-                                        ),
-                                      );
-                                    },
-                                ),
-                              ],
+                                  TextSpan(
+                                    text: "Click Here",
+                                    style: TextStyle(
+                                        fontFamily: 'Poppins',
+                                        color: Colors.blue,
+                                        fontWeight: FontWeight.w600,
+                                        fontSize: titleFontSize * 0.85),
+                                    recognizer: TapGestureRecognizer()
+                                      ..onTap = () {
+                                        // Arahkan ke halaman ChangePasswordPage
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                const ChangePasswordPage(),
+                                          ),
+                                        );
+                                      },
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
-                        ),
                           const SizedBox(height: 60),
                         ],
                       ),
