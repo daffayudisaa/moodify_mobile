@@ -1,11 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:hugeicons/hugeicons.dart';
+import 'package:moodify_mobile/pages/recap_mood.dart';
+import 'package:moodify_mobile/widgets/list/recom_song.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+
+    double multiplier = screenWidth < 600
+        ? 1.0
+        : screenWidth < 1200
+            ? 1.2
+            : 1.4;
+
+    double fontSize = 13 * multiplier;
+    double imageSize = 50 * multiplier;
+
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
@@ -15,7 +28,7 @@ class HomePage extends StatelessWidget {
             floating: true,
             snap: true,
             backgroundColor: Colors.white,
-            toolbarHeight: 110,
+            toolbarHeight: 120,
             title: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 15),
               child: Row(
@@ -25,30 +38,38 @@ class HomePage extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Container(
-                        child: const Text(
+                        child: Text(
                           "Hello Mita,",
                           style: TextStyle(
                             color: Color(0xFF004373),
-                            fontSize: 22,
+                            fontSize: fontSize * 1.65,
                             fontWeight: FontWeight.w400,
                           ),
                         ),
                       ),
                       Container(
-                        child: const Text(
+                        child: Text(
                           "How was your day?",
                           style: TextStyle(
-                            color: Color(0xFF004373),
-                            fontSize: 16,
+                            color: const Color(0xFF004373),
+                            fontSize: fontSize * 1.25,
                             fontWeight: FontWeight.w300,
                           ),
                         ),
                       )
                     ],
                   ),
-                  Container(
-                    child: const CircleAvatar(
-                      radius: 35,
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.pushNamedAndRemoveUntil(
+                        context,
+                        '/navbar',
+                        (Route<dynamic> route) => false,
+                        arguments: 3,
+                      );
+                    },
+                    child: CircleAvatar(
+                      radius: imageSize * 0.7,
                       backgroundImage:
                           const AssetImage('assets/images/User.jpg'),
                     ),
@@ -66,7 +87,6 @@ class HomePage extends StatelessWidget {
                   children: [
                     Container(
                       margin: const EdgeInsets.symmetric(horizontal: 25),
-                      height: 113,
                       width: double.infinity,
                       decoration: BoxDecoration(
                         gradient: const LinearGradient(colors: [
@@ -75,38 +95,42 @@ class HomePage extends StatelessWidget {
                         ]),
                         borderRadius: BorderRadius.circular(16),
                       ),
-                      child: const Column(
+                      child: Column(
                         children: [
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Padding(
-                                padding: EdgeInsets.only(left: 20, right: 5),
+                                padding:
+                                    const EdgeInsets.only(left: 20, right: 5),
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
                                       "Feeling Happy!",
                                       style: TextStyle(
+                                        fontFamily: 'Poppins',
                                         color: Colors.white,
-                                        fontSize: 22,
-                                        fontWeight: FontWeight.w500,
+                                        fontSize: fontSize * 1.65,
+                                        fontWeight: FontWeight.w600,
                                       ),
                                     ),
                                     Text(
-                                      "Enjoy every moment, you deserve it!",
+                                      "Enjoy every moment!",
                                       style: TextStyle(
+                                        fontFamily: 'Poppins',
                                         color: Colors.white,
-                                        fontSize: 11,
+                                        fontSize: fontSize * 1.1,
                                         fontWeight: FontWeight.w400,
                                       ),
                                     ),
-                                    SizedBox(height: 20),
+                                    const SizedBox(height: 20),
                                     Text(
-                                      "Wednesday, 10 September 2024",
+                                      "Wed, 10 September 2024",
                                       style: TextStyle(
+                                        fontFamily: 'Poppins',
                                         color: Colors.white,
-                                        fontSize: 12,
+                                        fontSize: fontSize * 0.95,
                                         fontWeight: FontWeight.w500,
                                       ),
                                     ),
@@ -114,8 +138,9 @@ class HomePage extends StatelessWidget {
                                 ),
                               ),
                               Image(
-                                image: AssetImage(
+                                image: const AssetImage(
                                     'assets/meowdy/Meowdy-Happy.png'),
+                                height: imageSize * 2.3,
                               )
                             ],
                           ),
@@ -125,22 +150,22 @@ class HomePage extends StatelessWidget {
                     const SizedBox(height: 20),
                     Container(
                       margin: const EdgeInsets.symmetric(horizontal: 25),
-                      height: 100,
                       width: double.infinity,
                       decoration: BoxDecoration(
                         border: Border.all(
-                          color: Color.fromRGBO(160, 211, 245, 0.23),
+                          color: const Color.fromRGBO(160, 211, 245, 0.30),
                           width: 1,
                         ),
                         borderRadius: BorderRadius.circular(16),
                       ),
-                      child: const Center(
+                      child: Center(
                         child: Padding(
-                          padding: EdgeInsets.all(25),
+                          padding: const EdgeInsets.all(25),
                           child: Text(
                             "Happiness is when what you think, what you say, and what you do are in harmony.",
                             style: TextStyle(
-                              fontSize: 14,
+                              fontFamily: 'Poppins',
+                              fontSize: fontSize,
                               fontWeight: FontWeight.w400,
                             ),
                             textAlign: TextAlign.center,
@@ -155,90 +180,37 @@ class HomePage extends StatelessWidget {
                           context,
                           '/navbar',
                           (Route<dynamic> route) => false,
-                          arguments: 2, // Pass the index for MusicRecomPage
+                          arguments: 2,
                         );
                       },
                       child: Container(
                         margin: const EdgeInsets.symmetric(horizontal: 25),
                         alignment: Alignment.topLeft,
-                        child: const Row(
+                        child: Row(
                           children: [
-                            const Text(
+                            Text(
                               'Recommended Songs',
                               style: TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.w500,
+                                fontFamily: 'Poppins',
+                                fontSize: fontSize * 1.4,
+                                fontWeight: FontWeight.w600,
                               ),
                             ),
                             HugeIcon(
                               icon: HugeIcons.strokeRoundedArrowRight01,
                               color: Colors.black,
-                              size: 20,
+                              size: fontSize * 1.5,
                             ),
                           ],
                         ),
                       ),
                     ),
                     const SizedBox(height: 5),
-                    Column(
-                      children: List.generate(
-                        5,
-                        (index) {
-                          return Padding(
-                            padding: const EdgeInsets.symmetric(
-                                vertical: 8, horizontal: 30),
-                            child: Row(
-                              children: [
-                                Container(
-                                  width: 50,
-                                  height: 50,
-                                  decoration: BoxDecoration(
-                                    image: const DecorationImage(
-                                      image: AssetImage(
-                                          'assets/images/AlbumCover.jpg'),
-                                      fit: BoxFit.cover,
-                                    ),
-                                    borderRadius: BorderRadius.circular(8),
-                                  ),
-                                ),
-                                const SizedBox(width: 10),
-                                const Expanded(
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: const [
-                                          Text(
-                                            "About You",
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 14),
-                                          ),
-                                          Text(
-                                            "The 1975",
-                                            style: TextStyle(
-                                                fontSize: 12,
-                                                fontWeight: FontWeight.w300),
-                                          ),
-                                        ],
-                                      ),
-                                      Padding(
-                                        padding: EdgeInsets.all(8.0),
-                                        child: Text(
-                                          "5:26",
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            ),
-                          );
-                        },
-                      ),
+                    const ListSongRecom(
+                      images: 'assets/images/AlbumCover.jpg',
+                      title: 'About You',
+                      artist: 'The 1975',
+                      duration: '5:26',
                     ),
                     const SizedBox(height: 20),
                     GestureDetector(
@@ -247,25 +219,26 @@ class HomePage extends StatelessWidget {
                           context,
                           '/navbar',
                           (Route<dynamic> route) => false,
-                          arguments: 1, // Pass the index for MusicRecomPage
+                          arguments: 1,
                         );
                       },
                       child: Container(
                         margin: const EdgeInsets.symmetric(horizontal: 25),
                         alignment: Alignment.topLeft,
-                        child: const Row(
+                        child: Row(
                           children: [
                             Text(
                               'Recap Mood',
                               style: TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.w500,
+                                fontFamily: 'Poppins',
+                                fontSize: fontSize * 1.4,
+                                fontWeight: FontWeight.w600,
                               ),
                             ),
                             HugeIcon(
                               icon: HugeIcons.strokeRoundedArrowRight01,
                               color: Colors.black,
-                              size: 20,
+                              size: fontSize * 1.5,
                             ),
                           ],
                         ),
@@ -279,7 +252,8 @@ class HomePage extends StatelessWidget {
                       crossAxisCount: 4,
                       crossAxisSpacing: 8,
                       mainAxisSpacing: 5,
-                      childAspectRatio: 0.7,
+                      childAspectRatio:
+                          MediaQuery.of(context).size.width > 1200 ? 1.5 : 0.7,
                       children: const [
                         RecapMoodCard(
                           path: 'assets/meowdy/Meowdy-Happy.png',
@@ -311,54 +285,6 @@ class HomePage extends StatelessWidget {
           ),
         ),
       )),
-    );
-  }
-}
-
-class RecapMoodCard extends StatelessWidget {
-  final String path;
-  final String mood;
-  final int count;
-  const RecapMoodCard({
-    required this.path,
-    required this.mood,
-    required this.count,
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: const Color(0xFFA0D3F5),
-        borderRadius: BorderRadius.circular(6),
-      ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Image(
-            image: AssetImage(path),
-            height: 60,
-            width: 60,
-          ),
-          Text(
-            mood,
-            style: const TextStyle(
-              color: Colors.white,
-              fontSize: 12,
-              fontWeight: FontWeight.w500,
-            ),
-          ),
-          Text(
-            "$count",
-            style: const TextStyle(
-              color: Colors.white,
-              fontSize: 12,
-              fontWeight: FontWeight.w400,
-            ),
-          ),
-        ],
-      ),
     );
   }
 }
