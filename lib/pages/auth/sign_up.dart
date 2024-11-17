@@ -16,7 +16,7 @@ class SignUpPage extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 20),
             icon: const HugeIcon(
                 icon: HugeIcons.strokeRoundedArrowLeft02,
-                color: Colors.black,
+                color: Color(0xFF004373),
                 size: 30),
             onPressed: () {
               Navigator.of(context).pop();

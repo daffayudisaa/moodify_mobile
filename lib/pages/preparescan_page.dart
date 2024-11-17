@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hugeicons/hugeicons.dart';
 
 class PreparescanPage extends StatelessWidget {
   const PreparescanPage({super.key});
@@ -19,9 +20,10 @@ class PreparescanPage extends StatelessWidget {
               color: Color(0xFF004373)),
         ),
         leading: IconButton(
-          icon: const Icon(
-            Icons.arrow_back,
-            color: Color(0xFF004373), // Blue color for the back button
+          icon: const HugeIcon(
+            icon: HugeIcons.strokeRoundedArrowLeft02,
+            color: Color(0xFF004373),
+            size: 30,
           ),
           onPressed: () {
             Navigator.of(context).pop();

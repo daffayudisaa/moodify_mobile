@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
+import 'package:hugeicons/hugeicons.dart';
 import 'package:moodify_mobile/pages/displaypicture_page.dart';
 import 'package:moodify_mobile/pages/preparescan_page.dart';
 
@@ -153,9 +154,10 @@ class ScanPageState extends State<ScanPage> {
             ),
         ],
         leading: IconButton(
-          icon: const Icon(
-            Icons.arrow_back,
-            color: Color(0xFF004373), // Blue color for the back button
+          icon: const HugeIcon(
+            icon: HugeIcons.strokeRoundedArrowLeft02,
+            color: Color(0xFF004373),
+            size: 30,
           ),
           onPressed: () {
             Navigator.of(context).pop();

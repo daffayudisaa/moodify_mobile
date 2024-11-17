@@ -32,7 +32,7 @@ class ResetPasswordPage extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(horizontal: 20),
                   icon: const HugeIcon(
                     icon: HugeIcons.strokeRoundedArrowLeft02,
-                    color: Colors.black,
+                    color: Color(0xFF004373),
                     size: 30,
                   ),
                   onPressed: () {
@@ -118,10 +118,16 @@ class ResetPasswordPage extends StatelessWidget {
                                         hintText: 'Confirm New Password',
                                         obscureText: true),
                                     SizedBox(height: 40),
-                                    FillButtonRoute(
-                                      route: '/signin',
-                                      color: Color(0xFF42B1FF),
-                                      text: 'Save',
+                                    Row(
+                                      children: [
+                                        Expanded(
+                                          child: FillButtonRoute(
+                                            route: '/signin',
+                                            color: Color(0xFF42B1FF),
+                                            text: 'Save',
+                                          ),
+                                        ),
+                                      ],
                                     ),
                                     SizedBox(height: 40),
                                   ],

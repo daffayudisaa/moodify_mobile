@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'dart:io';
 
+import 'package:hugeicons/hugeicons.dart';
+
 class DisplayPictureScreen extends StatefulWidget {
   final String imagePath;
 
@@ -86,9 +88,10 @@ class _DisplayPictureScreenState extends State<DisplayPictureScreen> {
         ),
         backgroundColor: Colors.white,
         leading: IconButton(
-          icon: const Icon(
-            Icons.arrow_back,
+          icon: const HugeIcon(
+            icon: HugeIcons.strokeRoundedArrowLeft02,
             color: Color(0xFF004373),
+            size: 30,
           ),
           onPressed: () {
             Navigator.of(context).pop();
