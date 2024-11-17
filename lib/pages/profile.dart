@@ -217,6 +217,7 @@ class ProfilePage extends StatelessWidget {
                               Expanded(
                                 child: FillButtonRoute(
                                   route: '/navbar',
+                                  index: 3,
                                   color: Color(0xFF263238),
                                   textColor: Colors.white,
                                   text: 'Edit',
@@ -226,6 +227,7 @@ class ProfilePage extends StatelessWidget {
                               Expanded(
                                 child: FillButtonRoute(
                                   route: '/navbar',
+                                  index: 3,
                                   color: Color(0xFF42B1FF),
                                   text: 'Save',
                                 ),

@@ -9,6 +9,15 @@ class ForgotPasswordPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+
+    double multiplier = screenWidth < 600
+        ? 1.0
+        : screenWidth < 1200
+            ? 1.2
+            : 1.4;
+
+    double titleFontSize = 14 * multiplier;
     return Scaffold(
       body: Container(
         decoration: const BoxDecoration(
@@ -43,12 +52,12 @@ class ForgotPasswordPage extends StatelessWidget {
               child: Center(
                 child: Column(
                   children: [
-                    const Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 25),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 25),
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Column(
+                          const Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Image(
@@ -57,7 +66,7 @@ class ForgotPasswordPage extends StatelessWidget {
                               ),
                             ],
                           ),
-                          SizedBox(width: 20),
+                          const SizedBox(width: 20),
                           Expanded(
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -65,19 +74,19 @@ class ForgotPasswordPage extends StatelessWidget {
                                 Text(
                                   'Forgot Password',
                                   style: TextStyle(
-                                    color: Color(0xFF263238),
+                                    color: const Color(0xFF263238),
                                     fontFamily: 'Poppins',
-                                    fontSize: 36,
+                                    fontSize: titleFontSize * 2.5,
                                     fontWeight: FontWeight.w600,
                                     height: 1,
                                   ),
                                 ),
-                                SizedBox(height: 15),
+                                const SizedBox(height: 15),
                                 Text(
                                   'No worries, let’s help you get back on track!',
                                   style: TextStyle(
                                     fontFamily: 'Poppins',
-                                    fontSize: 13,
+                                    fontSize: titleFontSize * 0.95,
                                     height: 1.2,
                                   ),
                                 ),
@@ -90,8 +99,8 @@ class ForgotPasswordPage extends StatelessWidget {
                     Expanded(
                       child: Container(
                           color: Colors.white,
-                          child: const Padding(
-                            padding: EdgeInsets.only(
+                          child: Padding(
+                            padding: const EdgeInsets.only(
                               right: 40,
                               left: 40,
                               top: 30,
@@ -106,21 +115,21 @@ class ForgotPasswordPage extends StatelessWidget {
                                           'To reset your password, please enter your email, click the button below, and check yor inbox for further instructions.',
                                           style: TextStyle(
                                             fontFamily: 'Poppins',
-                                            fontSize: 14,
+                                            fontSize: titleFontSize * 0.9,
                                             height: 1.2,
                                           ),
                                           textAlign: TextAlign.center,
                                         ),
-                                        SizedBox(height: 20),
-                                        CustomTextField(
+                                        const SizedBox(height: 20),
+                                        const CustomTextField(
                                             hintText: 'Email Address'),
-                                        SizedBox(height: 40),
-                                        FillButtonPage(
+                                        const SizedBox(height: 40),
+                                        const FillButtonPage(
                                           route: ResetPasswordPage(),
                                           color: Color(0xFF42B1FF),
                                           text: 'Send Verification Link',
                                         ),
-                                        SizedBox(height: 40),
+                                        const SizedBox(height: 40),
                                       ],
                                     ),
                                   ),

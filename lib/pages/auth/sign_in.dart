@@ -9,9 +9,18 @@ class SignInPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final screenHeight = MediaQuery.of(context).size.height;
-    final screenWidth = MediaQuery.of(context).size.width;
     final topContainerHeight = screenHeight * 0.35;
     final imageHeight = topContainerHeight * 0.45;
+
+    double screenWidth = MediaQuery.of(context).size.width;
+
+    double multiplier = screenWidth < 600
+        ? 1.0
+        : screenWidth < 1200
+            ? 1.2
+            : 1.4;
+
+    double titleFontSize = 14 * multiplier;
 
     return Scaffold(
       body: SingleChildScrollView(
@@ -124,14 +133,14 @@ class SignInPage extends StatelessWidget {
                               builder: (context) => const ForgotPasswordPage()),
                         );
                       },
-                      child: const Row(
+                      child: Row(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
                           Text(
                             "Forgot your password?",
                             style: TextStyle(
-                              color: Color(0xFF0096FF),
-                              fontSize: 12,
+                              color: const Color(0xFF0096FF),
+                              fontSize: titleFontSize * 0.8,
                               fontWeight: FontWeight.w500,
                               fontFamily: 'Poppins',
                             ),
@@ -170,12 +179,12 @@ class SignInPage extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 30),
-                    const Text(
+                    Text(
                       "Or Continue With",
                       style: TextStyle(
-                          color: Color.fromRGBO(0, 0, 0, 0.6),
+                          color: const Color.fromRGBO(0, 0, 0, 0.6),
                           fontFamily: 'Poppins',
-                          fontSize: 12,
+                          fontSize: titleFontSize * 0.85,
                           fontWeight: FontWeight.w600),
                     ),
                     const SizedBox(height: 15),
@@ -229,12 +238,12 @@ class SignInPage extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        const Text(
+                        Text(
                           "Don't have an account?",
                           style: TextStyle(
-                              color: Color.fromRGBO(0, 0, 0, 0.6),
+                              color: const Color.fromRGBO(0, 0, 0, 0.6),
                               fontFamily: 'Poppins',
-                              fontSize: 12,
+                              fontSize: titleFontSize * 0.85,
                               fontWeight: FontWeight.w600),
                         ),
                         const SizedBox(width: 5),
@@ -246,14 +255,14 @@ class SignInPage extends StatelessWidget {
                                   builder: (context) => const SignUpPage()),
                             );
                           },
-                          child: const Row(
+                          child: Row(
                             mainAxisAlignment: MainAxisAlignment.end,
                             children: [
                               Text(
                                 "Register",
                                 style: TextStyle(
-                                  color: Color(0xFF0096FF),
-                                  fontSize: 12,
+                                  color: const Color(0xFF0096FF),
+                                  fontSize: titleFontSize * 0.85,
                                   fontWeight: FontWeight.w600,
                                   fontFamily: 'Poppins',
                                 ),

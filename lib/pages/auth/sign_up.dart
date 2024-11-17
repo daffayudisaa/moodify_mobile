@@ -8,6 +8,16 @@ class SignUpPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+
+    double multiplier = screenWidth < 600
+        ? 1.0
+        : screenWidth < 1200
+            ? 1.2
+            : 1.4;
+
+    double titleFontSize = 14 * multiplier;
+
     return Scaffold(
         resizeToAvoidBottomInset: true,
         appBar: AppBar(
@@ -55,23 +65,23 @@ class SignUpPage extends StatelessWidget {
             height: MediaQuery.of(context).size.height,
             child: Column(
               children: [
-                const Text(
+                Text(
                   "Create an Account",
                   style: TextStyle(
-                    color: Color(0xFF004373),
-                    fontSize: 28,
+                    color: const Color(0xFF004373),
+                    fontSize: titleFontSize * 1.6,
                     fontWeight: FontWeight.w600,
                     fontFamily: 'Poppins',
                   ),
                 ),
-                const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 20),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
                   child: Text(
                     "Unlock a world where your feelings guide the sound.",
                     textAlign: TextAlign.center,
                     style: TextStyle(
-                      color: Color(0xFF004373),
-                      fontSize: 14,
+                      color: const Color(0xFF004373),
+                      fontSize: titleFontSize * 0.95,
                       fontWeight: FontWeight.w400,
                       fontFamily: 'Poppins',
                     ),
@@ -106,21 +116,27 @@ class SignUpPage extends StatelessWidget {
                 const CustomTextField(
                     hintText: 'Confirm Password', obscureText: true),
                 const SizedBox(height: 30),
-                const FillButtonRoute(
-                  route: '/signin',
-                  color: Color(0xFF42B1FF),
-                  text: 'Create Account',
+                const Row(
+                  children: [
+                    Expanded(
+                      child: FillButtonRoute(
+                        route: '/signin',
+                        color: Color(0xFF42B1FF),
+                        text: 'Create Account',
+                      ),
+                    ),
+                  ],
                 ),
                 const SizedBox(height: 30),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Text(
+                    Text(
                       "Already have an account?",
                       style: TextStyle(
-                          color: Color.fromRGBO(0, 0, 0, 0.6),
+                          color: const Color.fromRGBO(0, 0, 0, 0.6),
                           fontFamily: 'Poppins',
-                          fontSize: 12,
+                          fontSize: titleFontSize * 0.85,
                           fontWeight: FontWeight.w600),
                     ),
                     const SizedBox(width: 5),
@@ -130,14 +146,14 @@ class SignUpPage extends StatelessWidget {
                         Navigator.pushNamedAndRemoveUntil(context, '/signin',
                             (Route<dynamic> route) => false);
                       },
-                      child: const Row(
+                      child: Row(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
                           Text(
                             "Sign In",
                             style: TextStyle(
-                              color: Color(0xFF0096FF),
-                              fontSize: 12,
+                              color: const Color(0xFF0096FF),
+                              fontSize: titleFontSize * 0.85,
                               fontWeight: FontWeight.w600,
                               fontFamily: 'Poppins',
                             ),

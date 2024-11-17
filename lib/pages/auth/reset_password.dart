@@ -8,6 +8,16 @@ class ResetPasswordPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+
+    double multiplier = screenWidth < 600
+        ? 1.0
+        : screenWidth < 1200
+            ? 1.2
+            : 1.4;
+
+    double titleFontSize = 14 * multiplier;
+
     return Scaffold(
       body: GestureDetector(
         onTap: () => FocusScope.of(context).unfocus(),
@@ -44,12 +54,12 @@ class ResetPasswordPage extends StatelessWidget {
                 child: Center(
                   child: Column(
                     children: [
-                      const Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 25),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 25),
                         child: Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Column(
+                            const Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Image(
@@ -58,7 +68,7 @@ class ResetPasswordPage extends StatelessWidget {
                                 ),
                               ],
                             ),
-                            SizedBox(width: 20),
+                            const SizedBox(width: 20),
                             Expanded(
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -66,19 +76,19 @@ class ResetPasswordPage extends StatelessWidget {
                                   Text(
                                     'New Password',
                                     style: TextStyle(
-                                      color: Color(0xFF263238),
+                                      color: const Color(0xFF263238),
                                       fontFamily: 'Poppins',
-                                      fontSize: 36,
+                                      fontSize: titleFontSize * 2.5,
                                       fontWeight: FontWeight.w600,
                                       height: 1,
                                     ),
                                   ),
-                                  SizedBox(height: 15),
+                                  const SizedBox(height: 15),
                                   Text(
                                     'Set a new password and get back to enjoying Moodify.',
                                     style: TextStyle(
                                       fontFamily: 'Poppins',
-                                      fontSize: 13,
+                                      fontSize: titleFontSize * 0.9,
                                       height: 1.2,
                                     ),
                                   ),
@@ -91,8 +101,8 @@ class ResetPasswordPage extends StatelessWidget {
                       Expanded(
                         child: Container(
                             color: Colors.white,
-                            child: const Padding(
-                              padding: EdgeInsets.only(
+                            child: Padding(
+                              padding: const EdgeInsets.only(
                                 right: 40,
                                 left: 40,
                                 top: 30,
@@ -104,21 +114,21 @@ class ResetPasswordPage extends StatelessWidget {
                                       'Time to set a new password! Make it strong, unique, and something you’ll remember!',
                                       style: TextStyle(
                                         fontFamily: 'Poppins',
-                                        fontSize: 16,
+                                        fontSize: titleFontSize * 0.9,
                                         height: 1.2,
                                       ),
                                       textAlign: TextAlign.center,
                                     ),
-                                    SizedBox(height: 30),
-                                    CustomTextField(
+                                    const SizedBox(height: 30),
+                                    const CustomTextField(
                                         hintText: 'New Password',
                                         obscureText: true),
-                                    SizedBox(height: 20),
-                                    CustomTextField(
+                                    const SizedBox(height: 20),
+                                    const CustomTextField(
                                         hintText: 'Confirm New Password',
                                         obscureText: true),
-                                    SizedBox(height: 40),
-                                    Row(
+                                    const SizedBox(height: 40),
+                                    const Row(
                                       children: [
                                         Expanded(
                                           child: FillButtonRoute(
@@ -129,7 +139,7 @@ class ResetPasswordPage extends StatelessWidget {
                                         ),
                                       ],
                                     ),
-                                    SizedBox(height: 40),
+                                    const SizedBox(height: 40),
                                   ],
                                 ),
                               ),
