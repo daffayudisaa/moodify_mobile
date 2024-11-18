@@ -24,6 +24,7 @@ dependencies:
   flutter_bloc: ^8.1.6
 
   pie_chart: ^5.4.0
+  flutter_svg: ^2.0.14
 
 dev_dependencies:
   flutter_test:
@@ -35,6 +36,7 @@ flutter:
   uses-material-design: true
   assets:
     - assets/icons/
+    - assets/icons/navbar/
     - assets/images/
     - assets/meowdy/
 
@@ -86,4 +88,3 @@ flutter:
         - asset: assets/fonts/Poppins/Poppins-ThinItalic.ttf
           weight: 100
           style: italic
-
