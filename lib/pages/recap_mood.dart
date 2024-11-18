@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:moodify_mobile/widgets/cards/mood_card.dart';
 import 'package:pie_chart/pie_chart.dart';
 import 'package:hugeicons/hugeicons.dart';
 
@@ -49,25 +50,35 @@ class _MoodRecapState extends State<RecapMoodPage>
 
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+
+    double multiplier = screenWidth < 600
+        ? 1.0
+        : screenWidth < 1200
+            ? 1.2
+            : 1.4;
+
+    double titleFontSize = 14 * multiplier;
+
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
         child: NestedScrollView(
           headerSliverBuilder: (context, innerBoxIsScrolled) => [
-            const SliverAppBar(
+            SliverAppBar(
               floating: true,
               snap: true,
               backgroundColor: Colors.white,
               toolbarHeight: 60,
               title: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 15),
+                padding: const EdgeInsets.symmetric(horizontal: 15),
                 child: Text(
                   'Recap Mood',
                   style: TextStyle(
                     fontFamily: 'Poppins',
-                    fontSize: 24,
+                    fontSize: titleFontSize * 1.7,
                     fontWeight: FontWeight.w600,
-                    color: Color(0xFF004373),
+                    color: const Color(0xFF004373),
                   ),
                 ),
               ),
@@ -88,13 +99,15 @@ class _MoodRecapState extends State<RecapMoodPage>
                     Tab(text: 'Recap'),
                     Tab(text: 'History'),
                   ],
-                  labelStyle: const TextStyle(
+                  labelStyle: TextStyle(
                     fontFamily: 'Poppins',
+                    fontSize: titleFontSize,
                     fontWeight: FontWeight.w600,
                     color: Colors.blue,
                   ),
-                  unselectedLabelStyle: const TextStyle(
+                  unselectedLabelStyle: TextStyle(
                     fontFamily: 'Poppins',
+                    fontSize: titleFontSize,
                     fontWeight: FontWeight.normal,
                     color: Colors.black,
                   ),
@@ -118,6 +131,16 @@ class _MoodRecapState extends State<RecapMoodPage>
   }
 
   Widget _buildRecap() {
+    double screenWidth = MediaQuery.of(context).size.width;
+    double screenHeight = MediaQuery.of(context).size.height;
+
+    double multiplier = screenWidth < 600
+        ? 1.0
+        : screenWidth < 1200
+            ? 1.2
+            : 1.4;
+
+    double titleFontSize = 14 * multiplier;
     return SingleChildScrollView(
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 10),
@@ -125,8 +148,9 @@ class _MoodRecapState extends State<RecapMoodPage>
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
-              margin: const EdgeInsets.symmetric(horizontal: 20),
-              height: 250,
+              margin: const EdgeInsets.symmetric(horizontal: 25),
+              padding: const EdgeInsets.only(top: 5, bottom: 15),
+              height: screenHeight * 0.35,
               width: double.infinity,
               decoration: BoxDecoration(
                 border: Border.all(
@@ -141,14 +165,14 @@ class _MoodRecapState extends State<RecapMoodPage>
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    const Center(
+                    Center(
                       child: Align(
                         alignment: Alignment.centerLeft,
                         child: Text(
                           'Stats',
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
-                            fontSize: 18,
+                            fontSize: titleFontSize * 1.3,
                           ),
                         ),
                       ),
@@ -161,20 +185,21 @@ class _MoodRecapState extends State<RecapMoodPage>
                             dataMap: dataMap,
                             animationDuration:
                                 const Duration(milliseconds: 800),
-                            chartLegendSpacing: 48,
+                            chartLegendSpacing: screenWidth * 0.1,
                             chartRadius: chartSize,
                             colorList: colorList,
                             initialAngleInDegree: 0,
                             chartType: ChartType.ring,
                             ringStrokeWidth: 45,
-                            legendOptions: const LegendOptions(
+                            legendOptions: LegendOptions(
                               showLegendsInRow: false,
                               legendPosition: LegendPosition.left,
                               showLegends: true,
                               legendShape: BoxShape.circle,
                               legendTextStyle: TextStyle(
-                                fontWeight: FontWeight.w600,
-                              ),
+                                  fontFamily: 'Poppins',
+                                  fontWeight: FontWeight.w400,
+                                  fontSize: titleFontSize),
                             ),
                             chartValuesOptions: const ChartValuesOptions(
                               showChartValueBackground: true,
@@ -236,9 +261,12 @@ class _MoodRecapState extends State<RecapMoodPage>
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
               crossAxisCount: 4,
-              crossAxisSpacing: 8,
-              mainAxisSpacing: 10,
-              childAspectRatio: 0.7,
+              crossAxisSpacing:
+                  MediaQuery.of(context).size.width > 1200 ? 12 : 8,
+              mainAxisSpacing:
+                  MediaQuery.of(context).size.width > 1200 ? 15 : 10,
+              childAspectRatio:
+                  MediaQuery.of(context).size.width > 1200 ? 1.5 : 0.7,
               children: const [
                 RecapMoodCard(
                   path: 'assets/meowdy/Meowdy-Happy.png',
@@ -289,6 +317,16 @@ class _MoodRecapState extends State<RecapMoodPage>
   }
 
   Widget _buildHistory() {
+    double screenWidth = MediaQuery.of(context).size.width;
+    double screenHeight = MediaQuery.of(context).size.height;
+
+    double multiplier = screenWidth < 600
+        ? 1.0
+        : screenWidth < 1200
+            ? 1.2
+            : 1.4;
+
+    double titleFontSize = 14 * multiplier;
     return Center(
       child: SingleChildScrollView(
         child: Column(
@@ -345,7 +383,7 @@ class _MoodRecapState extends State<RecapMoodPage>
               children: List.generate(10, (index) {
                 return Container(
                   padding:
-                      const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                      const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
                   margin:
                       const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                   width: double.infinity,
@@ -362,8 +400,8 @@ class _MoodRecapState extends State<RecapMoodPage>
                         borderRadius: BorderRadius.circular(10),
                         child: Image.asset(
                           'assets/images/User.jpg',
-                          width: 90,
-                          height: 130,
+                          width: screenWidth * 0.25,
+                          height: screenHeight * 0.2,
                           fit: BoxFit.cover,
                         ),
                       ),
@@ -372,9 +410,9 @@ class _MoodRecapState extends State<RecapMoodPage>
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            const Padding(
-                              padding:
-                                  EdgeInsets.only(left: 10, right: 10, top: 10),
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                  left: 10, right: 10, top: 10),
                               child: Column(
                                 children: [
                                   Align(
@@ -382,7 +420,7 @@ class _MoodRecapState extends State<RecapMoodPage>
                                     child: Text(
                                       'Dec, 11 2024',
                                       style: TextStyle(
-                                        fontSize: 14,
+                                        fontSize: titleFontSize * 0.85,
                                         color: Colors.grey,
                                       ),
                                     ),
@@ -392,7 +430,7 @@ class _MoodRecapState extends State<RecapMoodPage>
                                     child: Text(
                                       'Mood: Happy',
                                       style: TextStyle(
-                                          fontSize: 16,
+                                          fontSize: titleFontSize * 1.1,
                                           fontWeight: FontWeight.w600,
                                           fontFamily: 'Poppins'),
                                       overflow: TextOverflow.ellipsis,
@@ -451,6 +489,15 @@ class _MoodRecapState extends State<RecapMoodPage>
   }
 
   Widget _buildEmojiItem(String emoji, String label) {
+    double screenWidth = MediaQuery.of(context).size.width;
+
+    double multiplier = screenWidth < 600
+        ? 1.0
+        : screenWidth < 1200
+            ? 1.2
+            : 1.4;
+
+    double titleFontSize = 14 * multiplier;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -458,13 +505,13 @@ class _MoodRecapState extends State<RecapMoodPage>
           children: [
             Text(
               emoji,
-              style: const TextStyle(fontSize: 23),
+              style: TextStyle(fontSize: titleFontSize * 1.5),
             ),
             const SizedBox(width: 5),
             Text(
               label,
-              style: const TextStyle(
-                fontSize: 16,
+              style: TextStyle(
+                fontSize: titleFontSize * 1.1,
                 fontWeight: FontWeight.w400,
                 color: Colors.black,
               ),
@@ -502,70 +549,31 @@ class _MoodRecapState extends State<RecapMoodPage>
   }
 
   Widget _buildPercentageItem(String emoji, String percentage) {
+    double screenWidth = MediaQuery.of(context).size.width;
+
+    double multiplier = screenWidth < 600
+        ? 1.0
+        : screenWidth < 1200
+            ? 1.2
+            : 1.4;
+
+    double titleFontSize = 14 * multiplier;
     return Row(
       children: [
         Text(
           emoji,
-          style: const TextStyle(fontSize: 20),
+          style: TextStyle(fontSize: titleFontSize * 1.3),
         ),
         const SizedBox(width: 5),
         Text(
           percentage,
-          style: const TextStyle(
-            fontSize: 16,
+          style: TextStyle(
+            fontSize: titleFontSize * 1.1,
             fontWeight: FontWeight.w400,
             color: Colors.black,
           ),
         ),
       ],
-    );
-  }
-}
-
-class RecapMoodCard extends StatelessWidget {
-  final String path;
-  final String mood;
-  final int count;
-  const RecapMoodCard({
-    required this.path,
-    required this.mood,
-    required this.count,
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: const Color(0xFFA0D3F5),
-        borderRadius: BorderRadius.circular(6),
-      ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Image(
-            image: AssetImage(path),
-            height: 60,
-            width: 60,
-          ),
-          Text(
-            mood,
-            style: const TextStyle(
-              color: Colors.white,
-              fontSize: 12,
-              fontWeight: FontWeight.w500,
-            ),
-          ),
-          Text(
-            "$count",
-            style: const TextStyle(
-              color: Colors.white,
-              fontSize: 12,
-              fontWeight: FontWeight.w400,
-            ),
-          ),
-        ],
-      ),
     );
   }
 }

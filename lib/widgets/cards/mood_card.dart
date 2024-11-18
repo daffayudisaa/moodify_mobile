@@ -13,11 +13,20 @@ class RecapMoodCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final screenHeight = MediaQuery.of(context).size.height;
+    double screenWidth = MediaQuery.of(context).size.width;
+
+    double multiplier = screenWidth < 600
+        ? 1.0
+        : screenWidth < 1200
+            ? 1.2
+            : 1.7;
+
+    double titleFontSize = 14 * multiplier;
+    double imageSize = 18 * multiplier;
 
     return Container(
       decoration: BoxDecoration(
-        color: const Color(0xFFA0D3F5),
+        color: const Color(0xFFA0D3F5).withOpacity(0.65),
         borderRadius: BorderRadius.circular(6),
       ),
       child: Column(
@@ -25,15 +34,14 @@ class RecapMoodCard extends StatelessWidget {
         children: [
           Image(
             image: AssetImage(path),
-            height: screenHeight * 0.06,
-            width: 60,
+            height: imageSize * 3,
           ),
           Text(
             mood,
             style: TextStyle(
               fontFamily: 'Poppins',
               color: Colors.white,
-              fontSize: screenHeight * 0.015,
+              fontSize: titleFontSize * 0.85,
               fontWeight: FontWeight.w600,
             ),
           ),
@@ -42,7 +50,7 @@ class RecapMoodCard extends StatelessWidget {
             style: TextStyle(
               fontFamily: 'Poppins',
               color: Colors.white,
-              fontSize: screenHeight * 0.013,
+              fontSize: titleFontSize * 0.85,
               fontWeight: FontWeight.w400,
             ),
           ),

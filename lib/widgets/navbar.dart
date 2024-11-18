@@ -104,14 +104,6 @@ class _NavbarState extends State<Navbar> {
             ),
           ),
           SizedBox(height: MediaQuery.of(context).size.height * 0.01),
-          Text(
-            'Scan',
-            style: TextStyle(
-              color: Colors.grey,
-              fontSize: textSize,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
         ],
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,

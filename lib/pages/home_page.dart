@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hugeicons/hugeicons.dart';
-import 'package:moodify_mobile/pages/recap_mood.dart';
+import 'package:moodify_mobile/widgets/cards/mood_card.dart';
 import 'package:moodify_mobile/widgets/list/recom_song.dart';
 
 class HomePage extends StatelessWidget {

@@ -18,6 +18,15 @@ class FillButtonRoute extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+
+    double multiplier = screenWidth < 600
+        ? 1.0
+        : screenWidth < 1200
+            ? 1.2
+            : 1.4;
+
+    double fontSize = 13 * multiplier;
     return ElevatedButton(
       onPressed: () {
         Navigator.of(context).pop();
@@ -42,7 +51,7 @@ class FillButtonRoute extends StatelessWidget {
         text,
         style: TextStyle(
           color: textColor,
-          fontSize: 15,
+          fontSize: fontSize,
           fontWeight: FontWeight.w600,
           fontFamily: 'Poppins',
         ),
@@ -67,6 +76,15 @@ class FillButtonPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+
+    double multiplier = screenWidth < 600
+        ? 1.0
+        : screenWidth < 1200
+            ? 1.2
+            : 1.4;
+
+    double fontSize = 13 * multiplier;
     return SizedBox(
       width: double.infinity,
       child: ElevatedButton(
@@ -90,7 +108,7 @@ class FillButtonPage extends StatelessWidget {
           text,
           style: TextStyle(
             color: textColor,
-            fontSize: 15,
+            fontSize: fontSize,
             fontWeight: FontWeight.w600,
             fontFamily: 'Poppins',
           ),

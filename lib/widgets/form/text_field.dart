@@ -12,13 +12,22 @@ class CustomTextField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+
+    double multiplier = screenWidth < 600
+        ? 1.0
+        : screenWidth < 1200
+            ? 1.2
+            : 1.4;
+
+    double fontSize = 13 * multiplier;
     return TextField(
       obscureText: obscureText,
       decoration: InputDecoration(
         hintText: hintText,
-        hintStyle: const TextStyle(
+        hintStyle: TextStyle(
           fontFamily: 'Poppins',
-          fontSize: 14,
+          fontSize: fontSize * 0.9,
           color: Colors.black54,
         ),
         contentPadding: const EdgeInsets.symmetric(

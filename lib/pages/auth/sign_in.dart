@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:moodify_mobile/pages/auth/forgot_password.dart';
 import 'package:moodify_mobile/pages/auth/sign_up.dart';
+import 'package:moodify_mobile/widgets/buttons/button.dart';
 import 'package:moodify_mobile/widgets/form/text_field.dart';
 
 class SignInPage extends StatelessWidget {
@@ -149,34 +150,16 @@ class SignInPage extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 25),
-                    SizedBox(
-                      width: double.infinity,
-                      child: ElevatedButton(
-                        onPressed: () {
-                          Navigator.of(context).pop();
-                          Navigator.pushNamedAndRemoveUntil(context, '/navbar',
-                              (Route<dynamic> route) => false);
-                        },
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: const Color(0xFF42B1FF),
-                          elevation: 0,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(6),
-                          ),
-                          padding: const EdgeInsets.symmetric(
-                            vertical: 15,
+                    const Row(
+                      children: [
+                        Expanded(
+                          child: FillButtonRoute(
+                            route: '/navbar',
+                            color: Color(0xFF42B1FF),
+                            text: 'Sign In',
                           ),
                         ),
-                        child: const Text(
-                          "Sign In",
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 15,
-                            fontWeight: FontWeight.w600,
-                            fontFamily: 'Poppins',
-                          ),
-                        ),
-                      ),
+                      ],
                     ),
                     const SizedBox(height: 30),
                     Text(
@@ -211,21 +194,21 @@ class SignInPage extends StatelessWidget {
                             vertical: 15,
                           ),
                         ),
-                        child: const Row(
+                        child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Image(
+                            const Image(
                               height: 18,
                               width: 18,
                               image:
                                   AssetImage('assets/images/Google-Logo.png'),
                             ),
-                            SizedBox(width: 10),
+                            const SizedBox(width: 10),
                             Text(
                               "Google",
                               style: TextStyle(
                                 color: Color.fromARGB(255, 0, 0, 0),
-                                fontSize: 15,
+                                fontSize: titleFontSize,
                                 fontWeight: FontWeight.w600,
                                 fontFamily: 'Poppins',
                               ),
