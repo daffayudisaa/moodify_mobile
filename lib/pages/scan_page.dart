@@ -100,6 +100,15 @@ class ScanPageState extends State<ScanPage> {
   }
 
   Widget _buildCameraPreview() {
+    double screenWidth = MediaQuery.of(context).size.width;
+
+    double multiplier = screenWidth < 600
+        ? 1.0
+        : screenWidth < 1200
+            ? 1.7
+            : 1.5;
+
+    double previewSize = 320 * multiplier;
     return FutureBuilder<void>(
       future: _initializeControllerFuture,
       builder: (context, snapshot) {
@@ -115,8 +124,8 @@ class ScanPageState extends State<ScanPage> {
             child: ClipRRect(
               borderRadius: BorderRadius.circular(20),
               child: SizedBox(
-                width: 320,
-                height: 480,
+                width: previewSize,
+                height: previewSize * 1.5,
                 child: CameraPreview(_controller!),
               ),
             ),
@@ -131,33 +140,45 @@ class ScanPageState extends State<ScanPage> {
 
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+
+    double multiplier = screenWidth < 600
+        ? 1.0
+        : screenWidth < 1200
+            ? 1.7
+            : 1.5;
+
+    double titleFontSize = 14 * multiplier;
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        title: const Text(
+        title: Text(
           'Take a Picture',
           style: TextStyle(
-            color: Color(0xFF004373),
-            fontWeight: FontWeight.bold,
+            fontFamily: 'Poppins',
+            fontSize: titleFontSize * 1.5,
+            color: const Color(0xFF004373),
+            fontWeight: FontWeight.w600,
           ),
         ),
         backgroundColor: Colors.white,
         actions: [
           if (cameras != null && cameras!.length > 1)
             IconButton(
-              icon: const Icon(
+              icon: Icon(
                 Icons.cameraswitch,
                 color: Color(0xFF004373),
+                size: titleFontSize * 1.7,
               ),
               onPressed:
                   _controller?.value.isInitialized == true ? _flipCamera : null,
             ),
         ],
         leading: IconButton(
-          icon: const HugeIcon(
+          icon: HugeIcon(
             icon: HugeIcons.strokeRoundedArrowLeft02,
-            color: Color(0xFF004373),
-            size: 30,
+            color: const Color(0xFF004373),
+            size: titleFontSize * 1.8,
           ),
           onPressed: () {
             Navigator.of(context).pop();

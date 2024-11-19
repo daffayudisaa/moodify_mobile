@@ -76,22 +76,34 @@ class _DisplayPictureScreenState extends State<DisplayPictureScreen> {
 
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+
+    double multiplier = screenWidth < 600
+        ? 1.0
+        : screenWidth < 1200
+            ? 1.2
+            : 1.0;
+
+    double titleFontSize = 14 * multiplier;
+    double imageSize = 30 * multiplier;
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        title: const Text(
+        title: Text(
           'Display the Picture',
           style: TextStyle(
-            color: Color(0xFF004373),
-            fontWeight: FontWeight.bold,
+            fontFamily: 'Poppins',
+            fontSize: titleFontSize * 1.5,
+            color: const Color(0xFF004373),
+            fontWeight: FontWeight.w600,
           ),
         ),
         backgroundColor: Colors.white,
         leading: IconButton(
-          icon: const HugeIcon(
+          icon: HugeIcon(
             icon: HugeIcons.strokeRoundedArrowLeft02,
-            color: Color(0xFF004373),
-            size: 30,
+            color: const Color(0xFF004373),
+            size: titleFontSize * 1.8,
           ),
           onPressed: () {
             Navigator.of(context).pop();
@@ -103,6 +115,7 @@ class _DisplayPictureScreenState extends State<DisplayPictureScreen> {
         children: [
           Center(
             child: Image.file(
+              height: imageSize * 19,
               File(widget.imagePath),
               fit: BoxFit.contain,
             ),
@@ -112,12 +125,12 @@ class _DisplayPictureScreenState extends State<DisplayPictureScreen> {
           if (!_isLoading)
             TextButton(
               onPressed: _uploadImage,
-              child: const Text(
+              child: Text(
                 'Kirim',
                 style: TextStyle(
                   color: Colors.white,
                   fontWeight: FontWeight.bold,
-                  fontSize: 16,
+                  fontSize: titleFontSize * 1.2,
                 ),
               ),
               style: TextButton.styleFrom(
