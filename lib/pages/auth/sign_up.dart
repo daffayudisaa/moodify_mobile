@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:hugeicons/hugeicons.dart';
 import 'package:moodify_mobile/widgets/buttons/button.dart';
+import 'package:moodify_mobile/widgets/form/dateofbirth_picker.dart';
+import 'package:moodify_mobile/widgets/form/dropdown_dynamic.dart';
 import 'package:moodify_mobile/widgets/form/text_field.dart';
 
 class SignUpPage extends StatelessWidget {
@@ -107,11 +109,12 @@ class SignUpPage extends StatelessWidget {
                   ],
                 ),
                 const SizedBox(height: 20),
-                const CustomTextField(hintText: 'Gender'),
+                const DropdownDynammic(
+                    items: ['Male', 'Female', 'Privacy'], text: 'Gender'),
                 const SizedBox(height: 20),
-                const CustomTextField(hintText: 'Birth Date'),
+                const DateOfBirthInput(),
                 const SizedBox(height: 20),
-                const CustomTextField(hintText: 'Passwrod', obscureText: true),
+                const CustomTextField(hintText: 'Password', obscureText: true),
                 const SizedBox(height: 20),
                 const CustomTextField(
                     hintText: 'Confirm Password', obscureText: true),

@@ -23,6 +23,10 @@ class CustomTextField extends StatelessWidget {
     double fontSize = 13 * multiplier;
     return TextField(
       obscureText: obscureText,
+      style: TextStyle(
+        fontFamily: 'Poppins',
+        fontSize: fontSize * 1.1,
+      ),
       decoration: InputDecoration(
         hintText: hintText,
         hintStyle: TextStyle(
