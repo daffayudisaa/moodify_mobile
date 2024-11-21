@@ -1,14 +1,31 @@
 import 'package:flutter/material.dart';
 
 class DateOfBirthInput extends StatefulWidget {
-  const DateOfBirthInput({super.key});
+  final TextEditingController? controller;
+
+  const DateOfBirthInput({Key? key, this.controller}) : super(key: key);
 
   @override
   _DateOfBirthInputState createState() => _DateOfBirthInputState();
 }
 
 class _DateOfBirthInputState extends State<DateOfBirthInput> {
-  TextEditingController dateController = TextEditingController();
+  late TextEditingController _dateController;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _dateController = widget.controller ?? TextEditingController();
+  }
+
+  @override
+  void dispose() {
+    if (widget.controller == null) {
+      _dateController.dispose();
+    }
+    super.dispose();
+  }
 
   void _selectDate(BuildContext context) async {
     final DateTime? pickedDate = await showDatePicker(
@@ -21,7 +38,9 @@ class _DateOfBirthInputState extends State<DateOfBirthInput> {
           data: ThemeData.light().copyWith(
             primaryColor: Colors.blue,
             colorScheme: const ColorScheme.light(
-                primary: Colors.blue, secondary: Colors.blue),
+              primary: Colors.blue,
+              secondary: Colors.blue,
+            ),
             buttonTheme:
                 const ButtonThemeData(textTheme: ButtonTextTheme.primary),
             dialogBackgroundColor: Colors.white,
@@ -32,7 +51,7 @@ class _DateOfBirthInputState extends State<DateOfBirthInput> {
     );
     if (pickedDate != null) {
       setState(() {
-        dateController.text =
+        _dateController.text =
             "${pickedDate.day.toString().padLeft(2, '0')}-${pickedDate.month.toString().padLeft(2, '0')}-${pickedDate.year}";
       });
     }
@@ -45,7 +64,7 @@ class _DateOfBirthInputState extends State<DateOfBirthInput> {
         Expanded(
           child: DateCustomField(
             hintText: 'Birth Date',
-            controller: dateController,
+            controller: _dateController,
             keyboardType: TextInputType.datetime,
             readOnly: true,
             onTap: () => _selectDate(context),
@@ -96,7 +115,7 @@ class DateCustomField extends StatelessWidget {
           onTap: onTap,
           style: TextStyle(
             fontFamily: 'Poppins',
-            fontSize: fontSize,
+            fontSize: fontSize * 1.1,
           ),
           decoration: InputDecoration(
             hintText: hintText,

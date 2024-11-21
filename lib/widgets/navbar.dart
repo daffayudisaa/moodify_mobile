@@ -71,38 +71,43 @@ class _NavbarState extends State<Navbar> {
     double fabSize = MediaQuery.of(context).size.width * 0.15;
     fabSize = fabSize.clamp(45.0, 65.0);
 
+    bool isKeyboardOpen = MediaQuery.of(context).viewInsets.bottom > 0;
+
     return Scaffold(
+      resizeToAvoidBottomInset: true,
       body: PageStorage(
         child: currentScreen,
         bucket: bucket,
       ),
-      floatingActionButton: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          SizedBox(height: MediaQuery.of(context).size.height * 0.03),
-          SizedBox(
-            height: fabSize,
-            width: fabSize,
-            child: FloatingActionButton(
-              backgroundColor: Colors.blue,
-              splashColor: Colors.transparent,
-              child: Image(
-                image: const AssetImage('assets/icons/navbar/Scan.png'),
-                color: Colors.white,
-                width: iconSize * 1.4,
-              ),
-              onPressed: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) => const PreparescanPage(),
+      floatingActionButton: isKeyboardOpen
+          ? null
+          : Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                SizedBox(height: MediaQuery.of(context).size.height * 0.03),
+                SizedBox(
+                  height: fabSize,
+                  width: fabSize,
+                  child: FloatingActionButton(
+                    backgroundColor: Colors.blue,
+                    splashColor: Colors.transparent,
+                    child: Image(
+                      image: const AssetImage('assets/icons/navbar/Scan.png'),
+                      color: Colors.white,
+                      width: iconSize * 1.4,
+                    ),
+                    onPressed: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => const PreparescanPage(),
+                        ),
+                      );
+                    },
                   ),
-                );
-              },
+                ),
+                SizedBox(height: MediaQuery.of(context).size.height * 0.01),
+              ],
             ),
-          ),
-          SizedBox(height: MediaQuery.of(context).size.height * 0.01),
-        ],
-      ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       bottomNavigationBar: BottomAppBar(
         color: Colors.white,

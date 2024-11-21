@@ -14,7 +14,7 @@ class UpdateProfileEvent extends ProfileEvent {
   final String lastName;
   final String email;
   final String gender;
-  final String birthDate;
+  final DateTime birthDate;
 
   const UpdateProfileEvent({
     required this.firstName,

@@ -3,11 +3,13 @@ import 'package:flutter/material.dart';
 class CustomTextField extends StatelessWidget {
   final String hintText;
   final bool obscureText;
+  final TextEditingController? controller;
 
   const CustomTextField({
     super.key,
     required this.hintText,
     this.obscureText = false,
+    this.controller, // Menambahkan parameter controller
   });
 
   @override
@@ -22,6 +24,7 @@ class CustomTextField extends StatelessWidget {
 
     double fontSize = 13 * multiplier;
     return TextField(
+      controller: controller, // Mengatur nilai awal melalui controller
       obscureText: obscureText,
       style: TextStyle(
         fontFamily: 'Poppins',

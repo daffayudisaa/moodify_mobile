@@ -7,12 +7,12 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     // Register event handlers
     on<LoadProfileEvent>((event, emit) async {
       // Simulasi pengambilan data dari API atau database
-      emit(const ProfileLoadedState(
+      emit(ProfileLoadedState(
         firstName: 'Mita',
         lastName: 'Paramita',
         email: 'mitaparam@gmail.com',
         gender: 'Female',
-        birthDate: '01/01/2000',
+        birthDate: DateTime(1999, 12, 31),
       ));
     });
 

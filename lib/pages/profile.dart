@@ -1,11 +1,16 @@
-import 'package:flutter/material.dart';
 import 'package:flutter/gestures.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:moodify_mobile/pages/change_password.dart';
+import 'package:intl/intl.dart';
 import 'package:moodify_mobile/bloc/profile/profile_bloc.dart';
 import 'package:moodify_mobile/bloc/profile/profile_state.dart';
-import 'package:moodify_mobile/bloc/profile/profile_event.dart';
+import 'package:moodify_mobile/pages/change_password.dart';
+import 'package:moodify_mobile/widgets/form/dateofbirth_picker.dart';
+import 'package:moodify_mobile/widgets/form/dropdown_dynamic.dart';
+import 'package:moodify_mobile/widgets/form/text_field.dart';
 import 'package:moodify_mobile/widgets/buttons/button.dart';
+
+import '../bloc/profile/profile_event.dart';
 
 class ProfilePage extends StatelessWidget {
   const ProfilePage({Key? key}) : super(key: key);
@@ -23,8 +28,7 @@ class ProfilePage extends StatelessWidget {
     double titleFontSize = 14 * multiplier;
 
     return BlocProvider(
-      create: (context) => ProfileBloc()
-        ..add(LoadProfileEvent()), // Dispatch the LoadProfileEvent
+      create: (context) => ProfileBloc()..add(LoadProfileEvent()),
       child: Scaffold(
         backgroundColor: Colors.white,
         body: SafeArea(
@@ -37,26 +41,14 @@ class ProfilePage extends StatelessWidget {
                 toolbarHeight: 80,
                 title: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 15),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Container(
-                            child: Text(
-                              "My Profile",
-                              style: TextStyle(
-                                fontFamily: 'Poppins',
-                                fontSize: titleFontSize * 1.7,
-                                fontWeight: FontWeight.w600,
-                                color: const Color(0xFF004373),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
+                  child: Text(
+                    "My Profile",
+                    style: TextStyle(
+                      fontFamily: 'Poppins',
+                      fontSize: titleFontSize * 1.7,
+                      fontWeight: FontWeight.w600,
+                      color: const Color(0xFF004373),
+                    ),
                   ),
                 ),
               ),
@@ -64,6 +56,20 @@ class ProfilePage extends StatelessWidget {
             body: BlocBuilder<ProfileBloc, ProfileState>(
               builder: (context, state) {
                 if (state is ProfileLoadedState) {
+                  String birthDateString =
+                      DateFormat('dd-MM-yyyy').format(state.birthDate);
+
+                  final firstNameController =
+                      TextEditingController(text: state.firstName);
+                  final lastNameController =
+                      TextEditingController(text: state.lastName);
+                  final emailController =
+                      TextEditingController(text: state.email);
+                  final genderController =
+                      TextEditingController(text: state.gender);
+                  final birthDateController =
+                      TextEditingController(text: birthDateString);
+
                   return SingleChildScrollView(
                     child: Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 30.0),
@@ -83,134 +89,68 @@ class ProfilePage extends StatelessWidget {
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    const Text(
+                                    Text(
                                       "First Name",
                                       style: TextStyle(
-                                        fontSize: 12,
+                                        fontSize: titleFontSize * 0.9,
                                         color: Colors.grey,
                                       ),
                                     ),
                                     const SizedBox(height: 4),
-                                    Container(
-                                      padding: const EdgeInsets.all(15.0),
-                                      decoration: BoxDecoration(
-                                        color:
-                                            Color(0xFFA0D3F5).withOpacity(0.2),
-                                        borderRadius:
-                                            BorderRadius.circular(10.0),
-                                      ),
-                                      alignment: Alignment.centerLeft,
-                                      child: Text(
-                                        state.firstName,
-                                        style: const TextStyle(
-                                          color: Colors.black,
-                                        ),
-                                        textAlign: TextAlign.left,
-                                      ),
-                                    ),
+                                    CustomTextField(
+                                        hintText: 'First Name',
+                                        controller: firstNameController),
                                     const SizedBox(height: 13),
-                                    const Text(
+                                    Text(
                                       "Last Name",
                                       style: TextStyle(
-                                        fontSize: 12,
+                                        fontSize: titleFontSize * 0.9,
                                         color: Colors.grey,
                                       ),
                                     ),
                                     const SizedBox(height: 4),
-                                    Container(
-                                      padding: const EdgeInsets.all(15.0),
-                                      decoration: BoxDecoration(
-                                        color:
-                                            Color(0xFFA0D3F5).withOpacity(0.2),
-                                        borderRadius:
-                                            BorderRadius.circular(10.0),
-                                      ),
-                                      alignment: Alignment.centerLeft,
-                                      child: Text(
-                                        state.lastName,
-                                        style: const TextStyle(
-                                          color: Colors.black,
-                                        ),
-                                        textAlign: TextAlign.left,
-                                      ),
-                                    ),
+                                    CustomTextField(
+                                        hintText: 'Last Name',
+                                        controller: lastNameController),
                                   ],
                                 ),
                               ),
                             ],
                           ),
                           const SizedBox(height: 20),
-                          const Text(
+                          Text(
                             "Email",
                             style: TextStyle(
-                              fontSize: 12,
+                              fontSize: titleFontSize * 0.9,
                               color: Colors.grey,
                             ),
                           ),
                           const SizedBox(height: 4),
-                          Container(
-                            padding: const EdgeInsets.all(15.0),
-                            decoration: BoxDecoration(
-                              color: Color(0xFFA0D3F5).withOpacity(0.2),
-                              borderRadius: BorderRadius.circular(10.0),
-                            ),
-                            alignment: Alignment.centerLeft,
-                            child: Text(
-                              state.email,
-                              style: const TextStyle(
-                                color: Colors.black,
-                              ),
-                              textAlign: TextAlign.left,
-                            ),
-                          ),
+                          CustomTextField(
+                              hintText: 'Email', controller: emailController),
                           const SizedBox(height: 7),
-                          const Text(
+                          Text(
                             "Gender",
                             style: TextStyle(
-                              fontSize: 12,
+                              fontSize: titleFontSize * 0.9,
                               color: Colors.grey,
                             ),
                           ),
                           const SizedBox(height: 4),
-                          Container(
-                            padding: const EdgeInsets.all(15.0),
-                            decoration: BoxDecoration(
-                              color: Color(0xFFA0D3F5).withOpacity(0.2),
-                              borderRadius: BorderRadius.circular(10.0),
-                            ),
-                            alignment: Alignment.centerLeft,
-                            child: Text(
-                              state.gender,
-                              style: const TextStyle(
-                                color: Colors.black,
-                              ),
-                              textAlign: TextAlign.left,
-                            ),
-                          ),
+                          DropdownDynamic(
+                              initialValue: genderController.text,
+                              items: const ['Male', 'Female', 'Privacy'],
+                              text: 'Gender'),
                           const SizedBox(height: 7),
-                          const Text(
+                          Text(
                             "Birth Date",
                             style: TextStyle(
-                              fontSize: 12,
+                              fontSize: titleFontSize * 0.9,
                               color: Colors.grey,
                             ),
                           ),
                           const SizedBox(height: 4),
-                          Container(
-                            padding: const EdgeInsets.all(15.0),
-                            decoration: BoxDecoration(
-                              color: Color(0xFFA0D3F5).withOpacity(0.2),
-                              borderRadius: BorderRadius.circular(10.0),
-                            ),
-                            alignment: Alignment.centerLeft,
-                            child: Text(
-                              state.birthDate,
-                              style: const TextStyle(
-                                color: Colors.black,
-                              ),
-                              textAlign: TextAlign.left,
-                            ),
-                          ),
+                          DateOfBirthInput(controller: birthDateController),
                           const SizedBox(height: 20),
                           const Row(
                             children: [
@@ -283,7 +223,6 @@ class ProfilePage extends StatelessWidget {
                                         fontSize: titleFontSize * 0.85),
                                     recognizer: TapGestureRecognizer()
                                       ..onTap = () {
-                                        // Arahkan ke halaman ChangePasswordPage
                                         Navigator.push(
                                           context,
                                           MaterialPageRoute(
@@ -303,9 +242,9 @@ class ProfilePage extends StatelessWidget {
                     ),
                   );
                 } else if (state is ProfileInitialState) {
-                  return Center(child: CircularProgressIndicator());
+                  return const Center(child: CircularProgressIndicator());
                 } else {
-                  return Center(child: Text('Failed to load profile'));
+                  return const Center(child: Text('Failed to load profile'));
                 }
               },
             ),

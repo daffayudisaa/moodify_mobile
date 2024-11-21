@@ -1,17 +1,29 @@
 import 'package:flutter/material.dart';
 
-class DropdownDynammic extends StatefulWidget {
+class DropdownDynamic extends StatefulWidget {
   final String text;
   final List<String> items;
+  final String? initialValue; // Menambahkan parameter untuk nilai awal
 
-  const DropdownDynammic({super.key, required this.items, required this.text});
+  const DropdownDynamic({
+    super.key,
+    required this.items,
+    required this.text,
+    this.initialValue, // Inisialisasi nilai awal opsional
+  });
 
   @override
-  State<DropdownDynammic> createState() => _DropdownDynammicState();
+  State<DropdownDynamic> createState() => _DropdownDynamicState();
 }
 
-class _DropdownDynammicState extends State<DropdownDynammic> {
+class _DropdownDynamicState extends State<DropdownDynamic> {
   String? selectedValue;
+
+  @override
+  void initState() {
+    super.initState();
+    selectedValue = widget.initialValue; // Mengatur nilai awal
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +38,7 @@ class _DropdownDynammicState extends State<DropdownDynammic> {
     double fontSize = 13 * multiplier;
 
     return DropdownButtonFormField<String>(
-      value: selectedValue,
+      value: selectedValue, // Menampilkan nilai awal jika ada
       dropdownColor: Colors.white,
       isExpanded: true,
       decoration: InputDecoration(
@@ -64,6 +76,7 @@ class _DropdownDynammicState extends State<DropdownDynammic> {
           style: TextStyle(
             fontFamily: 'Poppins',
             fontSize: fontSize * 0.9,
+            fontWeight: FontWeight.w500,
             color: Colors.black54,
           ),
         ),
@@ -75,7 +88,8 @@ class _DropdownDynammicState extends State<DropdownDynammic> {
             item,
             style: TextStyle(
               fontFamily: 'Poppins',
-              fontSize: fontSize,
+              fontWeight: FontWeight.w400,
+              fontSize: fontSize * 1.1,
               color: Colors.black87,
             ),
           ),

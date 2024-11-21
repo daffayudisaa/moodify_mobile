@@ -14,7 +14,7 @@ class ProfileLoadedState extends ProfileState {
   final String lastName;
   final String email;
   final String gender;
-  final String birthDate;
+  final DateTime birthDate;
 
   const ProfileLoadedState({
     required this.firstName,
