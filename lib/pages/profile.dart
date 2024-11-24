@@ -1,6 +1,6 @@
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hugeicons/hugeicons.dart';
 import 'package:intl/intl.dart';
 import 'package:moodify_mobile/bloc/profile/profile_bloc.dart';
 import 'package:moodify_mobile/bloc/profile/profile_state.dart';
@@ -41,14 +41,89 @@ class ProfilePage extends StatelessWidget {
                 toolbarHeight: 80,
                 title: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 15),
-                  child: Text(
-                    "My Profile",
-                    style: TextStyle(
-                      fontFamily: 'Poppins',
-                      fontSize: titleFontSize * 1.7,
-                      fontWeight: FontWeight.w600,
-                      color: const Color(0xFF004373),
-                    ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        "My Profile",
+                        style: TextStyle(
+                          fontFamily: 'Poppins',
+                          fontSize: titleFontSize * 1.7,
+                          fontWeight: FontWeight.w600,
+                          color: const Color(0xFF004373),
+                        ),
+                      ),
+                      IconButton(
+                        onPressed: () {
+                          showMenu(
+                              context: context,
+                              position: RelativeRect.fromLTRB(
+                                MediaQuery.of(context).size.width - 60,
+                                100,
+                                20,
+                                0,
+                              ),
+                              items: [
+                                PopupMenuItem(
+                                  value: 'change_password',
+                                  child: PopupMenuItemWidget(
+                                    title: 'Change Password',
+                                    fontSize: titleFontSize,
+                                    icon: HugeIcons.strokeRoundedKey01,
+                                    color: const Color(0xFF42B1FF),
+                                    onTap: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              const ChangePasswordPage(),
+                                        ),
+                                      );
+                                    },
+                                  ),
+                                ),
+                                PopupMenuItem(
+                                  value: 'logout',
+                                  child: PopupMenuItemWidget(
+                                    fontSize: titleFontSize,
+                                    title: 'Log Out',
+                                    icon: HugeIcons.strokeRoundedLogout02,
+                                    color: const Color(0xFF004373),
+                                    onTap: () {
+                                      Navigator.pushNamedAndRemoveUntil(
+                                        context,
+                                        '/signin',
+                                        (Route<dynamic> route) => false,
+                                      );
+                                    },
+                                  ),
+                                ),
+                                PopupMenuItem(
+                                  value: 'delete_account',
+                                  child: PopupMenuItemWidget(
+                                    fontSize: titleFontSize,
+                                    title: 'Delete Account',
+                                    icon: HugeIcons.strokeRoundedDelete02,
+                                    color: const Color(0xFFEC221F),
+                                    onTap: () {
+                                      Navigator.pushNamedAndRemoveUntil(
+                                        context,
+                                        '/signin',
+                                        (Route<dynamic> route) => false,
+                                      );
+                                    },
+                                  ),
+                                ),
+                              ],
+                              color: Colors.white,
+                              elevation: 1.5);
+                        },
+                        icon: const Icon(
+                          Icons.more_vert,
+                          color: Color(0xFF004373),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ),
@@ -139,7 +214,7 @@ class ProfilePage extends StatelessWidget {
                           const SizedBox(height: 4),
                           DropdownDynamic(
                               initialValue: genderController.text,
-                              items: const ['Male', 'Female', 'Privacy'],
+                              items: const ['Male', 'Female'],
                               text: 'Gender'),
                           const SizedBox(height: 7),
                           Text(
@@ -174,69 +249,7 @@ class ProfilePage extends StatelessWidget {
                               ),
                             ],
                           ),
-                          const SizedBox(height: 20),
-                          const Row(
-                            children: [
-                              Expanded(
-                                child: FillButtonRoute(
-                                  route: '/signin',
-                                  color: Color.fromRGBO(159, 176, 183, 0.6),
-                                  textColor: Colors.white,
-                                  text: 'Log Out',
-                                ),
-                              ),
-                            ],
-                          ),
                           const SizedBox(height: 40),
-                          const Row(
-                            children: [
-                              Expanded(
-                                child: FillButtonRoute(
-                                  route: '/navbar',
-                                  color: Color.fromARGB(255, 255, 88, 85),
-                                  textColor: Colors.white,
-                                  text: 'Delete Account',
-                                ),
-                              ),
-                            ],
-                          ),
-                          const SizedBox(height: 50),
-                          Center(
-                            child: RichText(
-                              text: TextSpan(
-                                children: [
-                                  TextSpan(
-                                    text: "To change your password, ",
-                                    style: TextStyle(
-                                        color:
-                                            const Color.fromRGBO(0, 0, 0, 0.6),
-                                        fontFamily: 'Poppins',
-                                        fontSize: titleFontSize * 0.85,
-                                        fontWeight: FontWeight.w600),
-                                  ),
-                                  TextSpan(
-                                    text: "Click Here",
-                                    style: TextStyle(
-                                        fontFamily: 'Poppins',
-                                        color: Colors.blue,
-                                        fontWeight: FontWeight.w600,
-                                        fontSize: titleFontSize * 0.85),
-                                    recognizer: TapGestureRecognizer()
-                                      ..onTap = () {
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) =>
-                                                const ChangePasswordPage(),
-                                          ),
-                                        );
-                                      },
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                          const SizedBox(height: 60),
                         ],
                       ),
                     ),
@@ -250,6 +263,46 @@ class ProfilePage extends StatelessWidget {
             ),
           ),
         ),
+      ),
+    );
+  }
+}
+
+class PopupMenuItemWidget extends StatelessWidget {
+  final double fontSize;
+  final String title;
+  final IconData? icon;
+  final Color color;
+  final VoidCallback onTap;
+
+  const PopupMenuItemWidget({
+    super.key,
+    required this.fontSize,
+    required this.title,
+    this.icon,
+    required this.color,
+    required this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 8),
+      child: ListTile(
+        leading: Icon(
+          icon,
+          color: color,
+          size: fontSize * 1.6,
+        ),
+        title: Text(
+          title,
+          style: TextStyle(
+            fontFamily: 'Poppins',
+            color: color,
+            fontSize: fontSize * 1.05,
+          ),
+        ),
+        onTap: onTap,
       ),
     );
   }

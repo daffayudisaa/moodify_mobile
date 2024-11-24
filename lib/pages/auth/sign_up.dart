@@ -110,7 +110,7 @@ class SignUpPage extends StatelessWidget {
                 ),
                 const SizedBox(height: 20),
                 const DropdownDynamic(
-                    items: ['Male', 'Female', 'Privacy'], text: 'Gender'),
+                    items: ['Male', 'Female'], text: 'Gender'),
                 const SizedBox(height: 20),
                 const DateOfBirthInput(),
                 const SizedBox(height: 20),
