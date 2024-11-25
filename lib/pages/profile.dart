@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 import 'package:moodify_mobile/bloc/profile/profile_bloc.dart';
 import 'package:moodify_mobile/bloc/profile/profile_state.dart';
 import 'package:moodify_mobile/pages/change_password.dart';
+import 'package:moodify_mobile/utils/screen_utils.dart';
 import 'package:moodify_mobile/widgets/form/dateofbirth_picker.dart';
 import 'package:moodify_mobile/widgets/form/dropdown_dynamic.dart';
 import 'package:moodify_mobile/widgets/form/text_field.dart';
@@ -17,15 +18,7 @@ class ProfilePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double screenWidth = MediaQuery.of(context).size.width;
-
-    double multiplier = screenWidth < 600
-        ? 1.0
-        : screenWidth < 1200
-            ? 1.2
-            : 1.4;
-
-    double titleFontSize = 14 * multiplier;
+    double getFontSize = ScreenUtils.getFontSize(context, 14);
 
     return BlocProvider(
       create: (context) => ProfileBloc()..add(LoadProfileEvent()),
@@ -48,7 +41,7 @@ class ProfilePage extends StatelessWidget {
                         "My Profile",
                         style: TextStyle(
                           fontFamily: 'Poppins',
-                          fontSize: titleFontSize * 1.7,
+                          fontSize: getFontSize * 1.7,
                           fontWeight: FontWeight.w600,
                           color: const Color(0xFF004373),
                         ),
@@ -68,7 +61,7 @@ class ProfilePage extends StatelessWidget {
                                   value: 'change_password',
                                   child: PopupMenuItemWidget(
                                     title: 'Change Password',
-                                    fontSize: titleFontSize,
+                                    fontSize: getFontSize,
                                     icon: HugeIcons.strokeRoundedKey01,
                                     color: const Color(0xFF42B1FF),
                                     onTap: () {
@@ -85,7 +78,7 @@ class ProfilePage extends StatelessWidget {
                                 PopupMenuItem(
                                   value: 'logout',
                                   child: PopupMenuItemWidget(
-                                    fontSize: titleFontSize,
+                                    fontSize: getFontSize,
                                     title: 'Log Out',
                                     icon: HugeIcons.strokeRoundedLogout02,
                                     color: const Color(0xFF004373),
@@ -101,7 +94,7 @@ class ProfilePage extends StatelessWidget {
                                 PopupMenuItem(
                                   value: 'delete_account',
                                   child: PopupMenuItemWidget(
-                                    fontSize: titleFontSize,
+                                    fontSize: getFontSize,
                                     title: 'Delete Account',
                                     icon: HugeIcons.strokeRoundedDelete02,
                                     color: const Color(0xFFEC221F),
@@ -167,7 +160,7 @@ class ProfilePage extends StatelessWidget {
                                     Text(
                                       "First Name",
                                       style: TextStyle(
-                                        fontSize: titleFontSize * 0.9,
+                                        fontSize: getFontSize * 0.9,
                                         color: Colors.grey,
                                       ),
                                     ),
@@ -179,7 +172,7 @@ class ProfilePage extends StatelessWidget {
                                     Text(
                                       "Last Name",
                                       style: TextStyle(
-                                        fontSize: titleFontSize * 0.9,
+                                        fontSize: getFontSize * 0.9,
                                         color: Colors.grey,
                                       ),
                                     ),
@@ -196,7 +189,7 @@ class ProfilePage extends StatelessWidget {
                           Text(
                             "Email",
                             style: TextStyle(
-                              fontSize: titleFontSize * 0.9,
+                              fontSize: getFontSize * 0.9,
                               color: Colors.grey,
                             ),
                           ),
@@ -207,7 +200,7 @@ class ProfilePage extends StatelessWidget {
                           Text(
                             "Gender",
                             style: TextStyle(
-                              fontSize: titleFontSize * 0.9,
+                              fontSize: getFontSize * 0.9,
                               color: Colors.grey,
                             ),
                           ),
@@ -220,31 +213,43 @@ class ProfilePage extends StatelessWidget {
                           Text(
                             "Birth Date",
                             style: TextStyle(
-                              fontSize: titleFontSize * 0.9,
+                              fontSize: getFontSize * 0.9,
                               color: Colors.grey,
                             ),
                           ),
                           const SizedBox(height: 4),
                           DateOfBirthInput(controller: birthDateController),
                           const SizedBox(height: 20),
-                          const Row(
+                          Row(
                             children: [
                               Expanded(
-                                child: FillButtonRoute(
-                                  route: '/navbar',
-                                  index: 3,
+                                child: FillButton(
                                   color: Color(0xFF263238),
                                   textColor: Colors.white,
                                   text: 'Edit',
+                                  onTap: () {
+                                    Navigator.pushNamedAndRemoveUntil(
+                                      context,
+                                      '/navbar',
+                                      (Route<dynamic> route) => false,
+                                      arguments: 3,
+                                    );
+                                  },
                                 ),
                               ),
-                              SizedBox(width: 15),
+                              const SizedBox(width: 15),
                               Expanded(
-                                child: FillButtonRoute(
-                                  route: '/navbar',
-                                  index: 3,
-                                  color: Color(0xFF42B1FF),
+                                child: FillButton(
+                                  color: const Color(0xFF42B1FF),
                                   text: 'Save',
+                                  onTap: () {
+                                    Navigator.pushNamedAndRemoveUntil(
+                                      context,
+                                      '/navbar',
+                                      (Route<dynamic> route) => false,
+                                      arguments: 3,
+                                    );
+                                  },
                                 ),
                               ),
                             ],

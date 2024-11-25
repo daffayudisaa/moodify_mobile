@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hugeicons/hugeicons.dart';
+import 'package:moodify_mobile/utils/screen_utils.dart';
 import 'package:moodify_mobile/widgets/cards/mood_card.dart';
 import 'package:moodify_mobile/widgets/list/recom_song.dart';
 
@@ -8,16 +9,8 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double screenWidth = MediaQuery.of(context).size.width;
-
-    double multiplier = screenWidth < 600
-        ? 1.0
-        : screenWidth < 1200
-            ? 1.2
-            : 1.4;
-
-    double fontSize = 13 * multiplier;
-    double imageSize = 50 * multiplier;
+    double getFontSize = ScreenUtils.getFontSize(context, 13);
+    double getImageSize = ScreenUtils.getImageSize(context, 50);
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -41,8 +34,8 @@ class HomePage extends StatelessWidget {
                         child: Text(
                           "Hello Mita,",
                           style: TextStyle(
-                            color: Color(0xFF004373),
-                            fontSize: fontSize * 1.65,
+                            color: const Color(0xFF004373),
+                            fontSize: getFontSize * 1.65,
                             fontWeight: FontWeight.w400,
                           ),
                         ),
@@ -52,7 +45,7 @@ class HomePage extends StatelessWidget {
                           "How was your day?",
                           style: TextStyle(
                             color: const Color(0xFF004373),
-                            fontSize: fontSize * 1.25,
+                            fontSize: getFontSize * 1.25,
                             fontWeight: FontWeight.w300,
                           ),
                         ),
@@ -69,7 +62,7 @@ class HomePage extends StatelessWidget {
                       );
                     },
                     child: CircleAvatar(
-                      radius: imageSize * 0.7,
+                      radius: getImageSize * 0.7,
                       backgroundImage:
                           const AssetImage('assets/images/User.jpg'),
                     ),
@@ -111,7 +104,7 @@ class HomePage extends StatelessWidget {
                                       style: TextStyle(
                                         fontFamily: 'Poppins',
                                         color: Colors.white,
-                                        fontSize: fontSize * 1.65,
+                                        fontSize: getFontSize * 1.65,
                                         fontWeight: FontWeight.w600,
                                       ),
                                     ),
@@ -120,7 +113,7 @@ class HomePage extends StatelessWidget {
                                       style: TextStyle(
                                         fontFamily: 'Poppins',
                                         color: Colors.white,
-                                        fontSize: fontSize * 1.1,
+                                        fontSize: getFontSize * 1.1,
                                         fontWeight: FontWeight.w400,
                                       ),
                                     ),
@@ -130,7 +123,7 @@ class HomePage extends StatelessWidget {
                                       style: TextStyle(
                                         fontFamily: 'Poppins',
                                         color: Colors.white,
-                                        fontSize: fontSize * 0.95,
+                                        fontSize: getFontSize * 0.95,
                                         fontWeight: FontWeight.w500,
                                       ),
                                     ),
@@ -140,7 +133,7 @@ class HomePage extends StatelessWidget {
                               Image(
                                 image: const AssetImage(
                                     'assets/meowdy/Meowdy-Happy.png'),
-                                height: imageSize * 2.3,
+                                height: getImageSize * 2.3,
                               )
                             ],
                           ),
@@ -165,7 +158,7 @@ class HomePage extends StatelessWidget {
                             "Happiness is when what you think, what you say, and what you do are in harmony.",
                             style: TextStyle(
                               fontFamily: 'Poppins',
-                              fontSize: fontSize,
+                              fontSize: getFontSize,
                               fontWeight: FontWeight.w400,
                             ),
                             textAlign: TextAlign.center,
@@ -192,14 +185,14 @@ class HomePage extends StatelessWidget {
                               'Recommended Songs',
                               style: TextStyle(
                                 fontFamily: 'Poppins',
-                                fontSize: fontSize * 1.4,
+                                fontSize: getFontSize * 1.4,
                                 fontWeight: FontWeight.w600,
                               ),
                             ),
                             HugeIcon(
                               icon: HugeIcons.strokeRoundedArrowRight01,
                               color: Colors.black,
-                              size: fontSize * 1.5,
+                              size: getFontSize * 1.5,
                             ),
                           ],
                         ),
@@ -231,14 +224,14 @@ class HomePage extends StatelessWidget {
                               'Recap Mood',
                               style: TextStyle(
                                 fontFamily: 'Poppins',
-                                fontSize: fontSize * 1.4,
+                                fontSize: getFontSize * 1.4,
                                 fontWeight: FontWeight.w600,
                               ),
                             ),
                             HugeIcon(
                               icon: HugeIcons.strokeRoundedArrowRight01,
                               color: Colors.black,
-                              size: fontSize * 1.5,
+                              size: getFontSize * 1.5,
                             ),
                           ],
                         ),

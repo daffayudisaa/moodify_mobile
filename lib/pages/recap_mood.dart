@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:moodify_mobile/utils/screen_utils.dart';
 import 'package:moodify_mobile/widgets/cards/mood_card.dart';
 import 'package:pie_chart/pie_chart.dart';
 import 'package:hugeicons/hugeicons.dart';
@@ -50,15 +51,7 @@ class _MoodRecapState extends State<RecapMoodPage>
 
   @override
   Widget build(BuildContext context) {
-    double screenWidth = MediaQuery.of(context).size.width;
-
-    double multiplier = screenWidth < 600
-        ? 1.0
-        : screenWidth < 1200
-            ? 1.2
-            : 1.4;
-
-    double titleFontSize = 14 * multiplier;
+    double getFontSize = ScreenUtils.getFontSize(context, 14);
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -76,7 +69,7 @@ class _MoodRecapState extends State<RecapMoodPage>
                   'Recap Mood',
                   style: TextStyle(
                     fontFamily: 'Poppins',
-                    fontSize: titleFontSize * 1.7,
+                    fontSize: getFontSize * 1.7,
                     fontWeight: FontWeight.w600,
                     color: const Color(0xFF004373),
                   ),
@@ -101,13 +94,13 @@ class _MoodRecapState extends State<RecapMoodPage>
                   ],
                   labelStyle: TextStyle(
                     fontFamily: 'Poppins',
-                    fontSize: titleFontSize,
+                    fontSize: getFontSize,
                     fontWeight: FontWeight.w600,
                     color: Colors.blue,
                   ),
                   unselectedLabelStyle: TextStyle(
                     fontFamily: 'Poppins',
-                    fontSize: titleFontSize,
+                    fontSize: getFontSize,
                     fontWeight: FontWeight.normal,
                     color: Colors.black,
                   ),
@@ -319,14 +312,8 @@ class _MoodRecapState extends State<RecapMoodPage>
   Widget _buildHistory() {
     double screenWidth = MediaQuery.of(context).size.width;
     double screenHeight = MediaQuery.of(context).size.height;
+    double getFontSize = ScreenUtils.getFontSize(context, 14);
 
-    double multiplier = screenWidth < 600
-        ? 1.0
-        : screenWidth < 1200
-            ? 1.2
-            : 1.4;
-
-    double titleFontSize = 14 * multiplier;
     return Center(
       child: SingleChildScrollView(
         child: Column(
@@ -420,7 +407,7 @@ class _MoodRecapState extends State<RecapMoodPage>
                                     child: Text(
                                       'Dec, 11 2024',
                                       style: TextStyle(
-                                        fontSize: titleFontSize * 0.85,
+                                        fontSize: getFontSize * 0.85,
                                         color: Colors.grey,
                                       ),
                                     ),
@@ -430,7 +417,7 @@ class _MoodRecapState extends State<RecapMoodPage>
                                     child: Text(
                                       'Mood: Happy',
                                       style: TextStyle(
-                                          fontSize: titleFontSize * 1.1,
+                                          fontSize: getFontSize * 1.1,
                                           fontWeight: FontWeight.w600,
                                           fontFamily: 'Poppins'),
                                       overflow: TextOverflow.ellipsis,
@@ -489,15 +476,8 @@ class _MoodRecapState extends State<RecapMoodPage>
   }
 
   Widget _buildEmojiItem(String emoji, String label) {
-    double screenWidth = MediaQuery.of(context).size.width;
+    double getFontSize = ScreenUtils.getFontSize(context, 14);
 
-    double multiplier = screenWidth < 600
-        ? 1.0
-        : screenWidth < 1200
-            ? 1.2
-            : 1.4;
-
-    double titleFontSize = 14 * multiplier;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -505,13 +485,13 @@ class _MoodRecapState extends State<RecapMoodPage>
           children: [
             Text(
               emoji,
-              style: TextStyle(fontSize: titleFontSize * 1.5),
+              style: TextStyle(fontSize: getFontSize * 1.5),
             ),
             const SizedBox(width: 5),
             Text(
               label,
               style: TextStyle(
-                fontSize: titleFontSize * 1.1,
+                fontSize: getFontSize * 1.1,
                 fontWeight: FontWeight.w400,
                 color: Colors.black,
               ),
@@ -549,26 +529,19 @@ class _MoodRecapState extends State<RecapMoodPage>
   }
 
   Widget _buildPercentageItem(String emoji, String percentage) {
-    double screenWidth = MediaQuery.of(context).size.width;
+    double getFontSize = ScreenUtils.getFontSize(context, 14);
 
-    double multiplier = screenWidth < 600
-        ? 1.0
-        : screenWidth < 1200
-            ? 1.2
-            : 1.4;
-
-    double titleFontSize = 14 * multiplier;
     return Row(
       children: [
         Text(
           emoji,
-          style: TextStyle(fontSize: titleFontSize * 1.3),
+          style: TextStyle(fontSize: getFontSize * 1.3),
         ),
         const SizedBox(width: 5),
         Text(
           percentage,
           style: TextStyle(
-            fontSize: titleFontSize * 1.1,
+            fontSize: getFontSize * 1.1,
             fontWeight: FontWeight.w400,
             color: Colors.black,
           ),

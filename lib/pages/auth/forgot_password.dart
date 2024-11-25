@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hugeicons/hugeicons.dart';
 import 'package:moodify_mobile/pages/auth/reset_password.dart';
+import 'package:moodify_mobile/utils/screen_utils.dart';
 import 'package:moodify_mobile/widgets/buttons/button.dart';
 import 'package:moodify_mobile/widgets/form/text_field.dart';
 
@@ -9,15 +10,8 @@ class ForgotPasswordPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double screenWidth = MediaQuery.of(context).size.width;
+    double getFontSize = ScreenUtils.getFontSize(context, 14);
 
-    double multiplier = screenWidth < 600
-        ? 1.0
-        : screenWidth < 1200
-            ? 1.2
-            : 1.4;
-
-    double titleFontSize = 14 * multiplier;
     return Scaffold(
       body: Container(
         decoration: const BoxDecoration(
@@ -76,7 +70,7 @@ class ForgotPasswordPage extends StatelessWidget {
                                   style: TextStyle(
                                     color: const Color(0xFF263238),
                                     fontFamily: 'Poppins',
-                                    fontSize: titleFontSize * 2.5,
+                                    fontSize: getFontSize * 2.5,
                                     fontWeight: FontWeight.w600,
                                     height: 1,
                                   ),
@@ -86,7 +80,7 @@ class ForgotPasswordPage extends StatelessWidget {
                                   'No worries, let’s help you get back on track!',
                                   style: TextStyle(
                                     fontFamily: 'Poppins',
-                                    fontSize: titleFontSize * 0.95,
+                                    fontSize: getFontSize * 0.95,
                                     height: 1.2,
                                   ),
                                 ),
@@ -115,7 +109,7 @@ class ForgotPasswordPage extends StatelessWidget {
                                           'To reset your password, please enter your email, click the button below, and check yor inbox for further instructions.',
                                           style: TextStyle(
                                             fontFamily: 'Poppins',
-                                            fontSize: titleFontSize * 0.9,
+                                            fontSize: getFontSize * 0.9,
                                             height: 1.2,
                                           ),
                                           textAlign: TextAlign.center,
@@ -124,10 +118,23 @@ class ForgotPasswordPage extends StatelessWidget {
                                         const CustomTextField(
                                             hintText: 'Email Address'),
                                         const SizedBox(height: 40),
-                                        const FillButtonPage(
-                                          route: ResetPasswordPage(),
-                                          color: Color(0xFF42B1FF),
-                                          text: 'Send Verification Link',
+                                        Row(
+                                          children: [
+                                            Expanded(
+                                              child: FillButton(
+                                                color: const Color(0xFF42B1FF),
+                                                text: 'Send Verification Link',
+                                                onTap: () {
+                                                  Navigator.push(
+                                                    context,
+                                                    MaterialPageRoute(
+                                                        builder: (context) =>
+                                                            const ResetPasswordPage()),
+                                                  );
+                                                },
+                                              ),
+                                            ),
+                                          ],
                                         ),
                                         const SizedBox(height: 40),
                                       ],

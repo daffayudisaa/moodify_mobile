@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hugeicons/hugeicons.dart';
+import 'package:moodify_mobile/utils/screen_utils.dart';
 import 'package:moodify_mobile/widgets/buttons/button.dart';
 
 class ChangePasswordPage extends StatefulWidget {
@@ -18,15 +19,7 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
 
   @override
   Widget build(BuildContext context) {
-    double screenWidth = MediaQuery.of(context).size.width;
-
-    double multiplier = screenWidth < 600
-        ? 1.0
-        : screenWidth < 1200
-            ? 1.2
-            : 1.4;
-
-    double titleFontSize = 14 * multiplier;
+    double getFontSize = ScreenUtils.getFontSize(context, 14);
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -37,7 +30,7 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
           "Change Password",
           style: TextStyle(
               fontFamily: 'Poppins',
-              fontSize: titleFontSize * 1.7,
+              fontSize: getFontSize * 1.7,
               fontWeight: FontWeight.w600,
               color: const Color(0xFF004373)),
         ),
@@ -62,9 +55,9 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
               controller: _currentPasswordController,
               decoration: InputDecoration(
                 hintText: 'Curent Password',
-                hintStyle: const TextStyle(
+                hintStyle: TextStyle(
                   fontFamily: 'Poppins',
-                  fontSize: 14,
+                  fontSize: getFontSize * 0.9,
                   color: Colors.black54,
                 ),
                 contentPadding: const EdgeInsets.symmetric(
@@ -95,9 +88,9 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
               controller: _newPasswordController,
               decoration: InputDecoration(
                 hintText: 'New Password',
-                hintStyle: const TextStyle(
+                hintStyle: TextStyle(
                   fontFamily: 'Poppins',
-                  fontSize: 14,
+                  fontSize: getFontSize * 0.9,
                   color: Colors.black54,
                 ),
                 contentPadding: const EdgeInsets.symmetric(
@@ -128,9 +121,9 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
               controller: _confirmPasswordController,
               decoration: InputDecoration(
                 hintText: 'Confirm Password',
-                hintStyle: const TextStyle(
+                hintStyle: TextStyle(
                   fontFamily: 'Poppins',
-                  fontSize: 14,
+                  fontSize: getFontSize * 0.9,
                   color: Colors.black54,
                 ),
                 contentPadding: const EdgeInsets.symmetric(
@@ -157,23 +150,35 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
               ),
             ),
             const SizedBox(height: 30),
-            const Row(
+            Row(
               children: [
                 Expanded(
-                  child: FillButtonRoute(
-                    route: '/navbar',
-                    index: 3,
-                    color: Color(0xFFFF5855),
+                  child: FillButton(
+                    color: const Color(0xFFFF5855),
                     text: 'Cancel',
+                    onTap: () {
+                      Navigator.pushNamedAndRemoveUntil(
+                        context,
+                        '/navbar',
+                        (Route<dynamic> route) => false,
+                        arguments: 3,
+                      );
+                    },
                   ),
                 ),
-                SizedBox(width: 15),
+                const SizedBox(width: 15),
                 Expanded(
-                  child: FillButtonRoute(
-                    route: '/navbar',
-                    index: 0,
-                    color: Color(0xFF42B1FF),
+                  child: FillButton(
+                    color: const Color(0xFF42B1FF),
                     text: 'Save',
+                    onTap: () {
+                      Navigator.pushNamedAndRemoveUntil(
+                        context,
+                        '/navbar',
+                        (Route<dynamic> route) => false,
+                        arguments: 3,
+                      );
+                    },
                   ),
                 ),
               ],

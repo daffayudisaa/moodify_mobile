@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
 import 'package:moodify_mobile/pages/home_page.dart';
 import 'package:moodify_mobile/pages/music_recom_page.dart';
-import 'package:moodify_mobile/pages/preparescan_page.dart';
+import 'package:moodify_mobile/pages/scan/preparescan_page.dart';
 import 'package:moodify_mobile/pages/profile.dart';
 import 'package:moodify_mobile/pages/recap_mood.dart';
 

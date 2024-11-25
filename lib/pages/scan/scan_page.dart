@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
 import 'package:hugeicons/hugeicons.dart';
-import 'package:moodify_mobile/pages/displaypicture_page.dart';
-import 'package:moodify_mobile/pages/preparescan_page.dart';
+import 'package:moodify_mobile/pages/scan/displaypicture_page.dart';
+import 'package:moodify_mobile/pages/scan/preparescan_page.dart';
+import 'package:moodify_mobile/utils/screen_utils.dart';
 
 class ScanPage extends StatefulWidget {
   const ScanPage({
@@ -140,15 +141,8 @@ class ScanPageState extends State<ScanPage> {
 
   @override
   Widget build(BuildContext context) {
-    double screenWidth = MediaQuery.of(context).size.width;
+    double getFontSize = ScreenUtils.getFontSize(context, 14);
 
-    double multiplier = screenWidth < 600
-        ? 1.0
-        : screenWidth < 1200
-            ? 1.7
-            : 1.5;
-
-    double titleFontSize = 14 * multiplier;
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -156,7 +150,7 @@ class ScanPageState extends State<ScanPage> {
           'Take a Picture',
           style: TextStyle(
             fontFamily: 'Poppins',
-            fontSize: titleFontSize * 1.5,
+            fontSize: getFontSize * 1.5,
             color: const Color(0xFF004373),
             fontWeight: FontWeight.w600,
           ),
@@ -167,8 +161,8 @@ class ScanPageState extends State<ScanPage> {
             IconButton(
               icon: Icon(
                 Icons.cameraswitch,
-                color: Color(0xFF004373),
-                size: titleFontSize * 1.7,
+                color: const Color(0xFF004373),
+                size: getFontSize * 1.7,
               ),
               onPressed:
                   _controller?.value.isInitialized == true ? _flipCamera : null,
@@ -178,7 +172,7 @@ class ScanPageState extends State<ScanPage> {
           icon: HugeIcon(
             icon: HugeIcons.strokeRoundedArrowLeft02,
             color: const Color(0xFF004373),
-            size: titleFontSize * 1.8,
+            size: getFontSize * 1.8,
           ),
           onPressed: () {
             Navigator.of(context).pop();

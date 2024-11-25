@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:moodify_mobile/pages/auth/forgot_password.dart';
 import 'package:moodify_mobile/pages/auth/sign_up.dart';
+import 'package:moodify_mobile/utils/screen_utils.dart';
 import 'package:moodify_mobile/widgets/buttons/button.dart';
 import 'package:moodify_mobile/widgets/form/text_field.dart';
 
@@ -12,16 +13,8 @@ class SignInPage extends StatelessWidget {
     final screenHeight = MediaQuery.of(context).size.height;
     final topContainerHeight = screenHeight * 0.35;
     final imageHeight = topContainerHeight * 0.45;
-
     double screenWidth = MediaQuery.of(context).size.width;
-
-    double multiplier = screenWidth < 600
-        ? 1.0
-        : screenWidth < 1200
-            ? 1.2
-            : 1.4;
-
-    double titleFontSize = 14 * multiplier;
+    double getFontSize = ScreenUtils.getFontSize(context, 13);
 
     return Scaffold(
       body: SingleChildScrollView(
@@ -141,7 +134,7 @@ class SignInPage extends StatelessWidget {
                             "Forgot your password?",
                             style: TextStyle(
                               color: const Color(0xFF0096FF),
-                              fontSize: titleFontSize * 0.8,
+                              fontSize: getFontSize * 0.8,
                               fontWeight: FontWeight.w500,
                               fontFamily: 'Poppins',
                             ),
@@ -150,13 +143,19 @@ class SignInPage extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 25),
-                    const Row(
+                    Row(
                       children: [
                         Expanded(
-                          child: FillButtonRoute(
-                            route: '/navbar',
-                            color: Color(0xFF42B1FF),
+                          child: FillButton(
+                            color: const Color(0xFF42B1FF),
                             text: 'Sign In',
+                            onTap: () {
+                              Navigator.pushNamedAndRemoveUntil(
+                                context,
+                                '/navbar',
+                                (Route<dynamic> route) => false,
+                              );
+                            },
                           ),
                         ),
                       ],
@@ -167,7 +166,7 @@ class SignInPage extends StatelessWidget {
                       style: TextStyle(
                           color: const Color.fromRGBO(0, 0, 0, 0.6),
                           fontFamily: 'Poppins',
-                          fontSize: titleFontSize * 0.85,
+                          fontSize: getFontSize * 0.85,
                           fontWeight: FontWeight.w600),
                     ),
                     const SizedBox(height: 15),
@@ -207,8 +206,8 @@ class SignInPage extends StatelessWidget {
                             Text(
                               "Google",
                               style: TextStyle(
-                                color: Color.fromARGB(255, 0, 0, 0),
-                                fontSize: titleFontSize,
+                                color: const Color.fromARGB(255, 0, 0, 0),
+                                fontSize: getFontSize,
                                 fontWeight: FontWeight.w600,
                                 fontFamily: 'Poppins',
                               ),
@@ -226,7 +225,7 @@ class SignInPage extends StatelessWidget {
                           style: TextStyle(
                               color: const Color.fromRGBO(0, 0, 0, 0.6),
                               fontFamily: 'Poppins',
-                              fontSize: titleFontSize * 0.85,
+                              fontSize: getFontSize * 0.85,
                               fontWeight: FontWeight.w600),
                         ),
                         const SizedBox(width: 5),
@@ -245,7 +244,7 @@ class SignInPage extends StatelessWidget {
                                 "Register",
                                 style: TextStyle(
                                   color: const Color(0xFF0096FF),
-                                  fontSize: titleFontSize * 0.85,
+                                  fontSize: getFontSize * 0.85,
                                   fontWeight: FontWeight.w600,
                                   fontFamily: 'Poppins',
                                 ),

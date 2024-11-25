@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hugeicons/hugeicons.dart';
+import 'package:moodify_mobile/utils/screen_utils.dart';
 import 'package:moodify_mobile/widgets/buttons/button.dart';
 import 'package:moodify_mobile/widgets/form/dateofbirth_picker.dart';
 import 'package:moodify_mobile/widgets/form/dropdown_dynamic.dart';
@@ -10,15 +11,7 @@ class SignUpPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double screenWidth = MediaQuery.of(context).size.width;
-
-    double multiplier = screenWidth < 600
-        ? 1.0
-        : screenWidth < 1200
-            ? 1.2
-            : 1.4;
-
-    double titleFontSize = 14 * multiplier;
+    double getFontSize = ScreenUtils.getFontSize(context, 13);
 
     return Scaffold(
         resizeToAvoidBottomInset: true,
@@ -71,7 +64,7 @@ class SignUpPage extends StatelessWidget {
                   "Create an Account",
                   style: TextStyle(
                     color: const Color(0xFF004373),
-                    fontSize: titleFontSize * 1.6,
+                    fontSize: getFontSize * 1.6,
                     fontWeight: FontWeight.w600,
                     fontFamily: 'Poppins',
                   ),
@@ -83,7 +76,7 @@ class SignUpPage extends StatelessWidget {
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       color: const Color(0xFF004373),
-                      fontSize: titleFontSize * 0.95,
+                      fontSize: getFontSize * 0.95,
                       fontWeight: FontWeight.w400,
                       fontFamily: 'Poppins',
                     ),
@@ -119,13 +112,19 @@ class SignUpPage extends StatelessWidget {
                 const CustomTextField(
                     hintText: 'Confirm Password', obscureText: true),
                 const SizedBox(height: 30),
-                const Row(
+                Row(
                   children: [
                     Expanded(
-                      child: FillButtonRoute(
-                        route: '/signin',
+                      child: FillButton(
                         color: Color(0xFF42B1FF),
                         text: 'Create Account',
+                        onTap: () {
+                          Navigator.pushNamedAndRemoveUntil(
+                            context,
+                            '/signin',
+                            (Route<dynamic> route) => false,
+                          );
+                        },
                       ),
                     ),
                   ],
@@ -139,7 +138,7 @@ class SignUpPage extends StatelessWidget {
                       style: TextStyle(
                           color: const Color.fromRGBO(0, 0, 0, 0.6),
                           fontFamily: 'Poppins',
-                          fontSize: titleFontSize * 0.85,
+                          fontSize: getFontSize * 0.85,
                           fontWeight: FontWeight.w600),
                     ),
                     const SizedBox(width: 5),
@@ -156,7 +155,7 @@ class SignUpPage extends StatelessWidget {
                             "Sign In",
                             style: TextStyle(
                               color: const Color(0xFF0096FF),
-                              fontSize: titleFontSize * 0.85,
+                              fontSize: getFontSize * 0.85,
                               fontWeight: FontWeight.w600,
                               fontFamily: 'Poppins',
                             ),

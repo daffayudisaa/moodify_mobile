@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:moodify_mobile/utils/screen_utils.dart';
 import 'package:moodify_mobile/widgets/list/recom_song.dart';
 
 class MusicRecomPage extends StatelessWidget {
@@ -6,16 +7,8 @@ class MusicRecomPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double screenWidth = MediaQuery.of(context).size.width;
-
-    double multiplier = screenWidth < 600
-        ? 1.0
-        : screenWidth < 1200
-            ? 1.2
-            : 1.4;
-
-    double titleFontSize = 14 * multiplier;
-    double verticalPadding = 8 * multiplier;
+    double getFontSize = ScreenUtils.getFontSize(context, 14);
+    double getVerticalPadding = ScreenUtils.getImageSize(context, 8);
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -33,7 +26,7 @@ class MusicRecomPage extends StatelessWidget {
                   'Recomended Song',
                   style: TextStyle(
                     fontFamily: 'Poppins',
-                    fontSize: titleFontSize * 1.7,
+                    fontSize: getFontSize * 1.7,
                     fontWeight: FontWeight.w600,
                     color: const Color(0xFF004373),
                   ),
@@ -48,7 +41,7 @@ class MusicRecomPage extends StatelessWidget {
               children: [
                 Container(
                   margin: EdgeInsets.symmetric(
-                      horizontal: 30, vertical: verticalPadding),
+                      horizontal: 30, vertical: getVerticalPadding),
                   alignment: Alignment.topLeft,
                   child: Row(
                     children: [
@@ -56,7 +49,7 @@ class MusicRecomPage extends StatelessWidget {
                         'Songs That Match With Your Mood',
                         style: TextStyle(
                           fontFamily: 'Poppins',
-                          fontSize: titleFontSize * 0.95,
+                          fontSize: getFontSize * 0.95,
                           fontWeight: FontWeight.w400,
                         ),
                       ),

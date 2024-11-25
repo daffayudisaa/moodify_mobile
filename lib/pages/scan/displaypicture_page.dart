@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'dart:io';
 
 import 'package:hugeicons/hugeicons.dart';
+import 'package:moodify_mobile/utils/screen_utils.dart';
 
 class DisplayPictureScreen extends StatefulWidget {
   final String imagePath;
@@ -76,16 +77,9 @@ class _DisplayPictureScreenState extends State<DisplayPictureScreen> {
 
   @override
   Widget build(BuildContext context) {
-    double screenWidth = MediaQuery.of(context).size.width;
+    double getFontSize = ScreenUtils.getFontSize(context, 14);
+    double getImageSize = ScreenUtils.getImageSize(context, 130);
 
-    double multiplier = screenWidth < 600
-        ? 1.0
-        : screenWidth < 1200
-            ? 1.2
-            : 1.0;
-
-    double titleFontSize = 14 * multiplier;
-    double imageSize = 30 * multiplier;
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -93,7 +87,7 @@ class _DisplayPictureScreenState extends State<DisplayPictureScreen> {
           'Display the Picture',
           style: TextStyle(
             fontFamily: 'Poppins',
-            fontSize: titleFontSize * 1.5,
+            fontSize: getFontSize * 1.5,
             color: const Color(0xFF004373),
             fontWeight: FontWeight.w600,
           ),
@@ -103,7 +97,7 @@ class _DisplayPictureScreenState extends State<DisplayPictureScreen> {
           icon: HugeIcon(
             icon: HugeIcons.strokeRoundedArrowLeft02,
             color: const Color(0xFF004373),
-            size: titleFontSize * 1.8,
+            size: getFontSize * 1.8,
           ),
           onPressed: () {
             Navigator.of(context).pop();
@@ -115,7 +109,7 @@ class _DisplayPictureScreenState extends State<DisplayPictureScreen> {
         children: [
           Center(
             child: Image.file(
-              height: imageSize * 19,
+              height: getImageSize * 19,
               File(widget.imagePath),
               fit: BoxFit.contain,
             ),
@@ -130,7 +124,7 @@ class _DisplayPictureScreenState extends State<DisplayPictureScreen> {
                 style: TextStyle(
                   color: Colors.white,
                   fontWeight: FontWeight.bold,
-                  fontSize: titleFontSize * 1.2,
+                  fontSize: getFontSize * 1.2,
                 ),
               ),
               style: TextButton.styleFrom(

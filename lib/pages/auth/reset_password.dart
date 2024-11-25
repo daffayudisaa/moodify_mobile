@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hugeicons/hugeicons.dart';
+import 'package:moodify_mobile/utils/screen_utils.dart';
 import 'package:moodify_mobile/widgets/buttons/button.dart';
 import 'package:moodify_mobile/widgets/form/text_field.dart';
 
@@ -8,15 +9,7 @@ class ResetPasswordPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double screenWidth = MediaQuery.of(context).size.width;
-
-    double multiplier = screenWidth < 600
-        ? 1.0
-        : screenWidth < 1200
-            ? 1.2
-            : 1.4;
-
-    double titleFontSize = 14 * multiplier;
+    double getFontSize = ScreenUtils.getFontSize(context, 14);
 
     return Scaffold(
       body: GestureDetector(
@@ -78,7 +71,7 @@ class ResetPasswordPage extends StatelessWidget {
                                     style: TextStyle(
                                       color: const Color(0xFF263238),
                                       fontFamily: 'Poppins',
-                                      fontSize: titleFontSize * 2.5,
+                                      fontSize: getFontSize * 2.5,
                                       fontWeight: FontWeight.w600,
                                       height: 1,
                                     ),
@@ -88,7 +81,7 @@ class ResetPasswordPage extends StatelessWidget {
                                     'Set a new password and get back to enjoying Moodify.',
                                     style: TextStyle(
                                       fontFamily: 'Poppins',
-                                      fontSize: titleFontSize * 0.9,
+                                      fontSize: getFontSize * 0.9,
                                       height: 1.2,
                                     ),
                                   ),
@@ -114,7 +107,7 @@ class ResetPasswordPage extends StatelessWidget {
                                       'Time to set a new password! Make it strong, unique, and something you’ll remember!',
                                       style: TextStyle(
                                         fontFamily: 'Poppins',
-                                        fontSize: titleFontSize * 0.9,
+                                        fontSize: getFontSize * 0.9,
                                         height: 1.2,
                                       ),
                                       textAlign: TextAlign.center,
@@ -128,13 +121,19 @@ class ResetPasswordPage extends StatelessWidget {
                                         hintText: 'Confirm New Password',
                                         obscureText: true),
                                     const SizedBox(height: 40),
-                                    const Row(
+                                    Row(
                                       children: [
                                         Expanded(
-                                          child: FillButtonRoute(
-                                            route: '/signin',
+                                          child: FillButton(
                                             color: Color(0xFF42B1FF),
                                             text: 'Save',
+                                            onTap: () {
+                                              Navigator.pushNamedAndRemoveUntil(
+                                                context,
+                                                '/signin',
+                                                (Route<dynamic> route) => false,
+                                              );
+                                            },
                                           ),
                                         ),
                                       ],
