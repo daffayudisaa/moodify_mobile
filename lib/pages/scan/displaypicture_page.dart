@@ -77,8 +77,15 @@ class _DisplayPictureScreenState extends State<DisplayPictureScreen> {
 
   @override
   Widget build(BuildContext context) {
-    double getFontSize = ScreenUtils.getFontSize(context, 14);
-    double getImageSize = ScreenUtils.getImageSize(context, 130);
+    double screenWidth = MediaQuery.of(context).size.width;
+
+    double multiplier = screenWidth < 600
+        ? 1.0
+        : screenWidth < 1200
+            ? 1.2
+            : 1.0;
+    double getFontSize = 14 * multiplier;
+    double getImageSize = 30.5 * multiplier;
 
     return Scaffold(
       backgroundColor: Colors.white,
