@@ -83,12 +83,12 @@ class PreparescanPage extends StatelessWidget {
                     style: TextStyle(
                         fontSize: getFontSize * 1, fontWeight: FontWeight.bold),
                   ),
-                  const SizedBox(height: 10), // Spasi antar teks
+                  const SizedBox(height: 10),
                   Text(
                     '• Ditch the Accessories: Take off your glasses, hats, or anything that might hide your face.',
                     style: TextStyle(fontSize: getFontSize * 0.9),
                   ),
-                  const SizedBox(height: 5), // Spasi antar poin
+                  const SizedBox(height: 5),
                   Text(
                     '• Find Good Lighting: Make sure you’re in a bright spot—no harsh shadows, please!',
                     style: TextStyle(fontSize: getFontSize * 0.9),

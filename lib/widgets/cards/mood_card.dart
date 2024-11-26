@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:moodify_mobile/utils/screen_utils.dart';
 
 class RecapMoodCard extends StatelessWidget {
   final String path;
@@ -13,16 +14,8 @@ class RecapMoodCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double screenWidth = MediaQuery.of(context).size.width;
-
-    double multiplier = screenWidth < 600
-        ? 1.0
-        : screenWidth < 1200
-            ? 1.2
-            : 1.7;
-
-    double titleFontSize = 14 * multiplier;
-    double imageSize = 18 * multiplier;
+    double getFontSize = ScreenUtils.getFontSize(context, 14);
+    double getImageSize = ScreenUtils.getImageSize(context, 18);
 
     return Container(
       decoration: BoxDecoration(
@@ -34,14 +27,14 @@ class RecapMoodCard extends StatelessWidget {
         children: [
           Image(
             image: AssetImage(path),
-            height: imageSize * 3,
+            height: getImageSize * 3.25,
           ),
           Text(
             mood,
             style: TextStyle(
               fontFamily: 'Poppins',
               color: Colors.white,
-              fontSize: titleFontSize * 0.85,
+              fontSize: getFontSize * 0.9,
               fontWeight: FontWeight.w600,
             ),
           ),
@@ -50,8 +43,8 @@ class RecapMoodCard extends StatelessWidget {
             style: TextStyle(
               fontFamily: 'Poppins',
               color: Colors.white,
-              fontSize: titleFontSize * 0.85,
-              fontWeight: FontWeight.w400,
+              fontSize: getFontSize * 1.1,
+              fontWeight: FontWeight.w600,
             ),
           ),
         ],

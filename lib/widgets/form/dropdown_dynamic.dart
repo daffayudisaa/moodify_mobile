@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:moodify_mobile/utils/screen_utils.dart';
 
 class DropdownDynamic extends StatefulWidget {
   final String text;
@@ -27,15 +28,7 @@ class _DropdownDynamicState extends State<DropdownDynamic> {
 
   @override
   Widget build(BuildContext context) {
-    double screenWidth = MediaQuery.of(context).size.width;
-
-    double multiplier = screenWidth < 600
-        ? 1.0
-        : screenWidth < 1200
-            ? 1.2
-            : 1.4;
-
-    double fontSize = 13 * multiplier;
+    double getFontSize = ScreenUtils.getFontSize(context, 13);
 
     return DropdownButtonFormField<String>(
       value: selectedValue, // Menampilkan nilai awal jika ada
@@ -47,7 +40,7 @@ class _DropdownDynamicState extends State<DropdownDynamic> {
         hintText: widget.text,
         hintStyle: TextStyle(
           fontFamily: 'Poppins',
-          fontSize: fontSize * 0.9,
+          fontSize: getFontSize * 0.9,
           color: Colors.black54,
         ),
         contentPadding: const EdgeInsets.symmetric(
@@ -75,7 +68,7 @@ class _DropdownDynamicState extends State<DropdownDynamic> {
           widget.text,
           style: TextStyle(
             fontFamily: 'Poppins',
-            fontSize: fontSize * 0.9,
+            fontSize: getFontSize * 0.9,
             fontWeight: FontWeight.w500,
             color: Colors.black54,
           ),
@@ -89,7 +82,7 @@ class _DropdownDynamicState extends State<DropdownDynamic> {
             style: TextStyle(
               fontFamily: 'Poppins',
               fontWeight: FontWeight.w400,
-              fontSize: fontSize * 1.1,
+              fontSize: getFontSize * 1.1,
               color: Colors.black87,
             ),
           ),

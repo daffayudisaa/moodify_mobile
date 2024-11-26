@@ -19,7 +19,7 @@ class ScanPage extends StatefulWidget {
 
 class ScanPageState extends State<ScanPage> {
   CameraController? _controller;
-  // Initialize with a Future that completes immediately
+
   Future<void> _initializeControllerFuture = Future.value();
   List<CameraDescription>? cameras;
   int selectedCameraIndex = 0;
@@ -27,14 +27,19 @@ class ScanPageState extends State<ScanPage> {
   @override
   void initState() {
     super.initState();
-    // Set the future immediately in initState
     _initializeControllerFuture = _initializeCameras();
   }
 
   Future<void> _initializeCameras() async {
     try {
       cameras = await availableCameras();
+
       if (cameras != null && cameras!.isNotEmpty) {
+        final frontCamera = cameras!.firstWhere(
+          (camera) => camera.lensDirection == CameraLensDirection.front,
+          orElse: () => cameras![0],
+        );
+        selectedCameraIndex = cameras!.indexOf(frontCamera);
         return _initializeCamera(cameras![selectedCameraIndex]);
       } else {
         throw CameraException(
@@ -110,6 +115,9 @@ class ScanPageState extends State<ScanPage> {
             : 1.5;
 
     double previewSize = 320 * multiplier;
+
+    bool isFrontCamera = cameras?[selectedCameraIndex].lensDirection ==
+        CameraLensDirection.front;
     return FutureBuilder<void>(
       future: _initializeControllerFuture,
       builder: (context, snapshot) {
@@ -127,7 +135,13 @@ class ScanPageState extends State<ScanPage> {
               child: SizedBox(
                 width: previewSize,
                 height: previewSize * 1.5,
-                child: CameraPreview(_controller!),
+                child: Transform(
+                  alignment: Alignment.center,
+                  transform: isFrontCamera
+                      ? Matrix4.rotationY(3.14159)
+                      : Matrix4.identity(),
+                  child: CameraPreview(_controller!),
+                ),
               ),
             ),
           );
@@ -207,6 +221,9 @@ class ScanPageState extends State<ScanPage> {
                     await Navigator.of(context).push(
                       MaterialPageRoute(
                         builder: (context) => DisplayPictureScreen(
+                          isFrontCamera:
+                              cameras?[selectedCameraIndex].lensDirection ==
+                                  CameraLensDirection.front,
                           imagePath: image.path,
                         ),
                       ),

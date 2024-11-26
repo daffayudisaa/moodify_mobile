@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:moodify_mobile/utils/screen_utils.dart';
 
 class DateOfBirthInput extends StatefulWidget {
   final TextEditingController? controller;
@@ -95,15 +96,7 @@ class DateCustomField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double screenWidth = MediaQuery.of(context).size.width;
-
-    double multiplier = screenWidth < 600
-        ? 1.0
-        : screenWidth < 1200
-            ? 1.2
-            : 1.4;
-
-    double fontSize = 13 * multiplier;
+    double getFontSize = ScreenUtils.getFontSize(context, 13);
 
     return Stack(
       children: [
@@ -115,13 +108,13 @@ class DateCustomField extends StatelessWidget {
           onTap: onTap,
           style: TextStyle(
             fontFamily: 'Poppins',
-            fontSize: fontSize * 1.1,
+            fontSize: getFontSize * 1.1,
           ),
           decoration: InputDecoration(
             hintText: hintText,
             hintStyle: TextStyle(
               fontFamily: 'Poppins',
-              fontSize: fontSize * 0.9,
+              fontSize: getFontSize * 0.9,
               color: Colors.black54,
             ),
             contentPadding: const EdgeInsets.symmetric(

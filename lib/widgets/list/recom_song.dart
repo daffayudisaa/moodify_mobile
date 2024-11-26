@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:moodify_mobile/utils/screen_utils.dart';
 
 class ListSongRecom extends StatelessWidget {
   final int? total;
@@ -22,13 +23,7 @@ class ListSongRecom extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double screenWidth = MediaQuery.of(context).size.width;
-
-    double multiplier = screenWidth < 600
-        ? 1.0
-        : screenWidth < 1200
-            ? 1.2
-            : 1.4;
+    double multiplier = ScreenUtils.getMultiplier(context);
 
     double imageSize = 50 * multiplier;
     double titleFontSize = 14 * multiplier;

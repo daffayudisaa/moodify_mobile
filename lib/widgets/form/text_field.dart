@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:moodify_mobile/utils/screen_utils.dart';
 
 class CustomTextField extends StatelessWidget {
   final String hintText;
@@ -9,32 +10,25 @@ class CustomTextField extends StatelessWidget {
     super.key,
     required this.hintText,
     this.obscureText = false,
-    this.controller, // Menambahkan parameter controller
+    this.controller,
   });
 
   @override
   Widget build(BuildContext context) {
-    double screenWidth = MediaQuery.of(context).size.width;
+    double getFontSize = ScreenUtils.getFontSize(context, 13);
 
-    double multiplier = screenWidth < 600
-        ? 1.0
-        : screenWidth < 1200
-            ? 1.2
-            : 1.4;
-
-    double fontSize = 13 * multiplier;
     return TextField(
-      controller: controller, // Mengatur nilai awal melalui controller
+      controller: controller,
       obscureText: obscureText,
       style: TextStyle(
         fontFamily: 'Poppins',
-        fontSize: fontSize * 1.1,
+        fontSize: getFontSize * 1.1,
       ),
       decoration: InputDecoration(
         hintText: hintText,
         hintStyle: TextStyle(
           fontFamily: 'Poppins',
-          fontSize: fontSize * 0.9,
+          fontSize: getFontSize * 0.9,
           color: Colors.black54,
         ),
         contentPadding: const EdgeInsets.symmetric(

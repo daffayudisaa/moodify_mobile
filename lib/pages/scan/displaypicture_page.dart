@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
 import 'dart:io';
-
 import 'package:hugeicons/hugeicons.dart';
-import 'package:moodify_mobile/utils/screen_utils.dart';
 
 class DisplayPictureScreen extends StatefulWidget {
   final String imagePath;
+  final bool isFrontCamera; // Add this field to indicate the camera type
 
-  const DisplayPictureScreen({super.key, required this.imagePath});
+  const DisplayPictureScreen({
+    super.key,
+    required this.imagePath,
+    required this.isFrontCamera, // Initialize this field
+  });
 
   @override
   _DisplayPictureScreenState createState() => _DisplayPictureScreenState();
@@ -115,10 +118,18 @@ class _DisplayPictureScreenState extends State<DisplayPictureScreen> {
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Center(
-            child: Image.file(
-              height: getImageSize * 19,
-              File(widget.imagePath),
-              fit: BoxFit.contain,
+            child: Transform(
+              alignment: Alignment.center,
+              transform: widget.isFrontCamera
+                  ? Matrix4.rotationY(
+                      3.14159) // Apply mirror effect if front camera
+                  : Matrix4
+                      .identity(), // Keep normal orientation for back camera
+              child: Image.file(
+                height: getImageSize * 19,
+                File(widget.imagePath),
+                fit: BoxFit.contain,
+              ),
             ),
           ),
           const SizedBox(height: 40),

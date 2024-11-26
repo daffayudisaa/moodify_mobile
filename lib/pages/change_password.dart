@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hugeicons/hugeicons.dart';
 import 'package:moodify_mobile/utils/screen_utils.dart';
 import 'package:moodify_mobile/widgets/buttons/button.dart';
+import 'package:moodify_mobile/widgets/form/text_field.dart';
 
 class ChangePasswordPage extends StatefulWidget {
   const ChangePasswordPage({Key? key}) : super(key: key);
@@ -19,173 +20,99 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
 
   @override
   Widget build(BuildContext context) {
-    double getFontSize = ScreenUtils.getFontSize(context, 14);
+    double fontSize = ScreenUtils.getFontSize(context, 14);
 
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: AppBar(
-        toolbarHeight: 60,
-        backgroundColor: Colors.white,
-        title: Text(
-          "Change Password",
-          style: TextStyle(
-              fontFamily: 'Poppins',
-              fontSize: getFontSize * 1.7,
-              fontWeight: FontWeight.w600,
-              color: const Color(0xFF004373)),
-        ),
-        leading: IconButton(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
-          icon: const HugeIcon(
-              icon: HugeIcons.strokeRoundedArrowLeft02,
-              color: Color(0xFF004373),
-              size: 30),
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
-        ),
-      ),
+      appBar: _buildAppBar(fontSize),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 20),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const SizedBox(height: 5),
-            TextField(
+            CustomTextField(
+              obscureText: true,
               controller: _currentPasswordController,
-              decoration: InputDecoration(
-                hintText: 'Curent Password',
-                hintStyle: TextStyle(
-                  fontFamily: 'Poppins',
-                  fontSize: getFontSize * 0.9,
-                  color: Colors.black54,
-                ),
-                contentPadding: const EdgeInsets.symmetric(
-                  vertical: 15,
-                  horizontal: 20,
-                ),
-                filled: true,
-                fillColor: const Color(0xFFA0D3F5).withOpacity(0.2),
-                border: InputBorder.none,
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(6),
-                  borderSide: const BorderSide(
-                    color: Color(0xFF008EF2),
-                    width: 2,
-                  ),
-                ),
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(6),
-                  borderSide: const BorderSide(
-                    color: Colors.transparent,
-                    width: 1,
-                  ),
-                ),
-              ),
+              hintText: 'Current Password',
             ),
             const SizedBox(height: 20),
-            TextField(
+            CustomTextField(
+              obscureText: true,
               controller: _newPasswordController,
-              decoration: InputDecoration(
-                hintText: 'New Password',
-                hintStyle: TextStyle(
-                  fontFamily: 'Poppins',
-                  fontSize: getFontSize * 0.9,
-                  color: Colors.black54,
-                ),
-                contentPadding: const EdgeInsets.symmetric(
-                  vertical: 15,
-                  horizontal: 20,
-                ),
-                filled: true,
-                fillColor: const Color(0xFFA0D3F5).withOpacity(0.2),
-                border: InputBorder.none,
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(6),
-                  borderSide: const BorderSide(
-                    color: Color(0xFF008EF2),
-                    width: 2,
-                  ),
-                ),
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(6),
-                  borderSide: const BorderSide(
-                    color: Colors.transparent,
-                    width: 1,
-                  ),
-                ),
-              ),
+              hintText: 'New Password',
             ),
             const SizedBox(height: 20),
-            TextField(
+            CustomTextField(
+              obscureText: true,
               controller: _confirmPasswordController,
-              decoration: InputDecoration(
-                hintText: 'Confirm Password',
-                hintStyle: TextStyle(
-                  fontFamily: 'Poppins',
-                  fontSize: getFontSize * 0.9,
-                  color: Colors.black54,
-                ),
-                contentPadding: const EdgeInsets.symmetric(
-                  vertical: 15,
-                  horizontal: 20,
-                ),
-                filled: true,
-                fillColor: const Color(0xFFA0D3F5).withOpacity(0.2),
-                border: InputBorder.none,
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(6),
-                  borderSide: const BorderSide(
-                    color: Color(0xFF008EF2),
-                    width: 2,
-                  ),
-                ),
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(6),
-                  borderSide: const BorderSide(
-                    color: Colors.transparent,
-                    width: 1,
-                  ),
-                ),
-              ),
+              hintText: 'Confirm Password',
             ),
-            const SizedBox(height: 30),
-            Row(
-              children: [
-                Expanded(
-                  child: FillButton(
-                    color: const Color(0xFFFF5855),
-                    text: 'Cancel',
-                    onTap: () {
-                      Navigator.pushNamedAndRemoveUntil(
-                        context,
-                        '/navbar',
-                        (Route<dynamic> route) => false,
-                        arguments: 3,
-                      );
-                    },
-                  ),
-                ),
-                const SizedBox(width: 15),
-                Expanded(
-                  child: FillButton(
-                    color: const Color(0xFF42B1FF),
-                    text: 'Save',
-                    onTap: () {
-                      Navigator.pushNamedAndRemoveUntil(
-                        context,
-                        '/navbar',
-                        (Route<dynamic> route) => false,
-                        arguments: 3,
-                      );
-                    },
-                  ),
-                ),
-              ],
-            ),
+            const SizedBox(height: 40),
+            _buildActionButtons(),
           ],
         ),
       ),
+    );
+  }
+
+  AppBar _buildAppBar(double fontSize) {
+    return AppBar(
+      toolbarHeight: 60,
+      backgroundColor: Colors.white,
+      title: Text(
+        "Change Password",
+        style: TextStyle(
+          fontFamily: 'Poppins',
+          fontSize: fontSize * 1.7,
+          fontWeight: FontWeight.w600,
+          color: const Color(0xFF004373),
+        ),
+      ),
+      leading: IconButton(
+        padding: const EdgeInsets.symmetric(horizontal: 20),
+        icon: const HugeIcon(
+          icon: HugeIcons.strokeRoundedArrowLeft02,
+          color: Color(0xFF004373),
+          size: 30,
+        ),
+        onPressed: () => Navigator.of(context).pop(),
+      ),
+    );
+  }
+
+  Widget _buildActionButtons() {
+    return Row(
+      children: [
+        Expanded(
+          child: FillButton(
+            color: const Color(0xFFFF5855),
+            text: 'Cancel',
+            onTap: () {
+              Navigator.pushNamedAndRemoveUntil(
+                context,
+                '/navbar',
+                (Route<dynamic> route) => false,
+                arguments: 3,
+              );
+            },
+          ),
+        ),
+        const SizedBox(width: 15),
+        Expanded(
+          child: FillButton(
+            color: const Color(0xFF42B1FF),
+            text: 'Save',
+            onTap: () {
+              Navigator.pushNamedAndRemoveUntil(
+                context,
+                '/navbar',
+                (Route<dynamic> route) => false,
+                arguments: 3,
+              );
+            },
+          ),
+        ),
+      ],
     );
   }
 }

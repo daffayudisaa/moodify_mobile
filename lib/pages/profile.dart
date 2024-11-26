@@ -33,7 +33,7 @@ class ProfilePage extends StatelessWidget {
                 backgroundColor: Colors.white,
                 toolbarHeight: 80,
                 title: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 15),
+                  padding: const EdgeInsets.only(left: 15),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -111,9 +111,10 @@ class ProfilePage extends StatelessWidget {
                               color: Colors.white,
                               elevation: 1.5);
                         },
-                        icon: const Icon(
+                        icon: Icon(
                           Icons.more_vert,
-                          color: Color(0xFF004373),
+                          size: getFontSize * 1.7,
+                          color: const Color(0xFF004373),
                         ),
                       ),
                     ],
@@ -219,12 +220,12 @@ class ProfilePage extends StatelessWidget {
                           ),
                           const SizedBox(height: 4),
                           DateOfBirthInput(controller: birthDateController),
-                          const SizedBox(height: 20),
+                          const SizedBox(height: 40),
                           Row(
                             children: [
                               Expanded(
                                 child: FillButton(
-                                  color: Color(0xFF263238),
+                                  color: const Color(0xFF263238),
                                   textColor: Colors.white,
                                   text: 'Edit',
                                   onTap: () {
@@ -254,7 +255,6 @@ class ProfilePage extends StatelessWidget {
                               ),
                             ],
                           ),
-                          const SizedBox(height: 40),
                         ],
                       ),
                     ),
