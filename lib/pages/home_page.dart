@@ -4,8 +4,60 @@ import 'package:moodify_mobile/utils/screen_utils.dart';
 import 'package:moodify_mobile/widgets/cards/mood_card.dart';
 import 'package:moodify_mobile/widgets/list/recom_song.dart';
 
-class HomePage extends StatelessWidget {
-  const HomePage({super.key});
+class HomePage extends StatefulWidget {
+  final String userMood;
+
+  const HomePage({key, required this.userMood}) : super(key: key);
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  late List<String> displayMoods;
+  String selectedMood = 'All';
+
+  @override
+  void initState() {
+    super.initState();
+
+    final Map<String, List<String>> moodMapping = {
+      'sad': ['Sad', 'Calm'],
+      'disgust': ['Energetic', 'Happy'],
+      'angry': ['Energetic', 'Calm'],
+      'fear': ['Happy', 'Calm'],
+      'happy': ['Happy', 'Calm'],
+      'surprise': ['Energetic', 'Sad'],
+      '': ['Happy', 'Sad', 'Calm', 'Energetic']
+    };
+
+    displayMoods = ['All', ...moodMapping[widget.userMood.toLowerCase()] ?? []];
+  }
+
+  final Map<String, List<Map<String, String>>> songsByMood = {
+    'Sad': [
+      {'title': 'Sad Song 1', 'artist': 'Artist 1', 'duration': '4:30'},
+      {'title': 'Sad Song 2', 'artist': 'Artist 2', 'duration': '3:50'},
+    ],
+    'Calm': [
+      {'title': 'Calm Song 1', 'artist': 'Artist 3', 'duration': '5:20'},
+      {'title': 'Calm Song 2', 'artist': 'Artist 4', 'duration': '4:10'},
+      {'title': 'Calm Song 2', 'artist': 'Artist 5', 'duration': '4:10'},
+      {'title': 'Calm Song 2', 'artist': 'Artist 6', 'duration': '4:10'},
+      {'title': 'Calm Song 2', 'artist': 'Artist 666', 'duration': '4:10'},
+      {'title': 'Calm Song 2', 'artist': 'Artist 4', 'duration': '4:10'},
+      {'title': 'Calm Song 2', 'artist': 'Artist 4', 'duration': '4:10'},
+      {'title': 'Calm Song 2', 'artist': 'Artist 4', 'duration': '4:10'},
+    ],
+    'Energetic': [
+      {'title': 'Energetic Song 1', 'artist': 'Artist 5', 'duration': '3:40'},
+      {'title': 'Energetic Song 2', 'artist': 'Artist 6', 'duration': '4:00'},
+    ],
+    'Happy': [
+      {'title': 'Happy Song 1', 'artist': 'Artist 7', 'duration': '4:15'},
+      {'title': 'Happy Song 2', 'artist': 'Artist 8', 'duration': '5:00'},
+    ],
+  };
 
   @override
   Widget build(BuildContext context) {
@@ -56,6 +108,19 @@ class HomePage extends StatelessWidget {
         ),
       );
     }
+
+    List<Map<String, String>> filteredSongs = [];
+    if (selectedMood == 'All') {
+      for (var mood in displayMoods) {
+        if (mood != 'All') {
+          filteredSongs.addAll(songsByMood[mood] ?? []);
+        }
+      }
+    } else {
+      filteredSongs = songsByMood[selectedMood] ?? [];
+    }
+
+    filteredSongs = filteredSongs.take(5).toList();
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -167,12 +232,33 @@ class HomePage extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 5),
-                const ListSongRecom(
-                  images: 'assets/images/AlbumCover.jpg',
-                  title: 'About You',
-                  artist: 'The 1975',
-                  duration: '5:26',
-                ),
+                if (filteredSongs.isNotEmpty)
+                  Column(
+                    children: filteredSongs.map((song) {
+                      return ListSongRecom(
+                        total: 1,
+                        images: 'assets/images/AlbumCover.jpg',
+                        title: song['title']!,
+                        artist: song['artist']!,
+                        duration: song['duration']!,
+                      );
+                    }).toList(),
+                  )
+                else
+                  Center(
+                    child: Padding(
+                      padding: const EdgeInsets.all(20.0),
+                      child: Text(
+                        'No songs available for $selectedMood mood.',
+                        style: TextStyle(
+                          fontFamily: 'Poppins',
+                          fontSize: getFontSize,
+                          color: Colors.grey,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                  ),
                 const SizedBox(height: 20),
                 GestureDetector(
                   onTap: () => navigateToPage(1),

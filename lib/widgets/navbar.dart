@@ -27,9 +27,9 @@ class _NavbarState extends State<Navbar> {
     super.initState();
     currentTab = widget.initialTab;
     screens = [
-      const HomePage(),
+      const HomePage(userMood: 'happy'),
       const RecapMoodPage(),
-      const MusicRecomPage(userMood: ''),
+      const MusicRecomPage(userMood: 'sad'),
       const ProfilePage(),
     ];
     currentScreen = screens[currentTab];
