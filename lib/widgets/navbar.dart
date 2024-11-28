@@ -29,7 +29,7 @@ class _NavbarState extends State<Navbar> {
     screens = [
       const HomePage(),
       const RecapMoodPage(),
-      const MusicRecomPage(),
+      const MusicRecomPage(userMood: ''),
       const ProfilePage(),
     ];
     currentScreen = screens[currentTab];
