@@ -1,6 +1,8 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hugeicons/hugeicons.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:moodify_mobile/presentation/bloc/profile/profile_bloc.dart';
 import 'package:moodify_mobile/presentation/bloc/profile/profile_state.dart';
@@ -12,8 +14,16 @@ import 'package:moodify_mobile/presentation/widgets/form/text_field.dart';
 import 'package:moodify_mobile/presentation/widgets/buttons/button.dart';
 import 'package:moodify_mobile/presentation/bloc/profile/profile_event.dart';
 
-class ProfilePage extends StatelessWidget {
+class ProfilePage extends StatefulWidget {
   const ProfilePage({Key? key}) : super(key: key);
+
+  @override
+  _ProfilePageState createState() => _ProfilePageState();
+}
+
+class _ProfilePageState extends State<ProfilePage> {
+  File? _profileImage;
+  bool isEditing = false;
 
   @override
   Widget build(BuildContext context) {
@@ -147,10 +157,37 @@ class ProfilePage extends StatelessWidget {
                           Row(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              const CircleAvatar(
-                                radius: 80,
-                                backgroundImage:
-                                    AssetImage('assets/images/User.jpg'),
+                              GestureDetector(
+                                onTap: isEditing ? _pickImage : null,
+                                child: CircleAvatar(
+                                  radius: 80,
+                                  backgroundImage: _profileImage != null
+                                      ? FileImage(_profileImage!)
+                                      : const AssetImage(
+                                              'assets/images/User.jpg')
+                                          as ImageProvider,
+                                  child: Stack(
+                                    children: [
+                                      Align(
+                                        alignment: Alignment.bottomRight,
+                                        child: Container(
+                                          decoration: BoxDecoration(
+                                            color: isEditing == false
+                                                ? Colors.grey
+                                                : Colors.blue,
+                                            shape: BoxShape.circle,
+                                          ),
+                                          padding: const EdgeInsets.all(6),
+                                          child: const Icon(
+                                            Icons.edit,
+                                            color: Colors.white,
+                                            size: 20,
+                                          ),
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                ),
                               ),
                               const SizedBox(width: 16),
                               Expanded(
@@ -166,8 +203,10 @@ class ProfilePage extends StatelessWidget {
                                     ),
                                     const SizedBox(height: 4),
                                     CustomTextField(
-                                        hintText: 'First Name',
-                                        controller: firstNameController),
+                                      hintText: 'First Name',
+                                      controller: firstNameController,
+                                      isEditing: !isEditing,
+                                    ),
                                     const SizedBox(height: 13),
                                     Text(
                                       "Last Name",
@@ -178,8 +217,10 @@ class ProfilePage extends StatelessWidget {
                                     ),
                                     const SizedBox(height: 4),
                                     CustomTextField(
-                                        hintText: 'Last Name',
-                                        controller: lastNameController),
+                                      hintText: 'Last Name',
+                                      controller: lastNameController,
+                                      isEditing: !isEditing,
+                                    ),
                                   ],
                                 ),
                               ),
@@ -195,7 +236,10 @@ class ProfilePage extends StatelessWidget {
                           ),
                           const SizedBox(height: 4),
                           CustomTextField(
-                              hintText: 'Email', controller: emailController),
+                            hintText: 'Email',
+                            controller: emailController,
+                            isEditing: !isEditing,
+                          ),
                           const SizedBox(height: 7),
                           Text(
                             "Gender",
@@ -206,9 +250,11 @@ class ProfilePage extends StatelessWidget {
                           ),
                           const SizedBox(height: 4),
                           DropdownDynamic(
-                              initialValue: genderController.text,
-                              items: const ['Male', 'Female'],
-                              text: 'Gender'),
+                            initialValue: genderController.text,
+                            items: const ['Male', 'Female'],
+                            text: 'Gender',
+                            enabled: isEditing,
+                          ),
                           const SizedBox(height: 7),
                           Text(
                             "Birth Date",
@@ -218,8 +264,11 @@ class ProfilePage extends StatelessWidget {
                             ),
                           ),
                           const SizedBox(height: 4),
-                          DateOfBirthInput(controller: birthDateController),
-                          const SizedBox(height: 40),
+                          DateOfBirthInput(
+                            controller: birthDateController,
+                            enabled: isEditing,
+                          ),
+                          const SizedBox(height: 30),
                           Row(
                             children: [
                               Expanded(
@@ -228,12 +277,9 @@ class ProfilePage extends StatelessWidget {
                                   textColor: Colors.white,
                                   text: 'Edit',
                                   onTap: () {
-                                    Navigator.pushNamedAndRemoveUntil(
-                                      context,
-                                      '/navbar',
-                                      (Route<dynamic> route) => false,
-                                      arguments: 3,
-                                    );
+                                    setState(() {
+                                      isEditing = true;
+                                    });
                                   },
                                 ),
                               ),
@@ -242,18 +288,55 @@ class ProfilePage extends StatelessWidget {
                                 child: FillButton(
                                   color: const Color(0xFF42B1FF),
                                   text: 'Save',
-                                  onTap: () {
-                                    Navigator.pushNamedAndRemoveUntil(
-                                      context,
-                                      '/navbar',
-                                      (Route<dynamic> route) => false,
-                                      arguments: 3,
+                                  onTap: () async {
+                                    bool? confirm = await showDialog<bool>(
+                                      context: context,
+                                      builder: (context) => AlertDialog(
+                                        backgroundColor: Colors.white,
+                                        title: const Text('Confirm Save'),
+                                        content: const Text(
+                                            'Are you sure you want to save the changes?'),
+                                        actions: <Widget>[
+                                          TextButton(
+                                            onPressed: () {
+                                              Navigator.pop(context, false);
+                                            },
+                                            child: const Text('Cancel'),
+                                          ),
+                                          TextButton(
+                                            onPressed: () {
+                                              Navigator.pop(context, true);
+                                            },
+                                            child: const Text('Save'),
+                                          ),
+                                        ],
+                                      ),
                                     );
+
+                                    if (confirm ?? false) {
+                                      context.read<ProfileBloc>().add(
+                                            UpdateProfileEvent(
+                                              firstName:
+                                                  firstNameController.text,
+                                              lastName: lastNameController.text,
+                                              email: emailController.text,
+                                              gender: genderController.text,
+                                              birthDate: DateFormat(
+                                                      'dd-MM-yyyy')
+                                                  .parse(
+                                                      birthDateController.text),
+                                            ),
+                                          );
+                                      setState(() {
+                                        isEditing = false;
+                                      });
+                                    }
                                   },
                                 ),
                               ),
                             ],
                           ),
+                          const SizedBox(height: 40),
                         ],
                       ),
                     ),
@@ -269,6 +352,21 @@ class ProfilePage extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Future<void> _pickImage() async {
+    ImagePicker picker = ImagePicker();
+    XFile? pickedImage = await picker.pickImage(
+      source: ImageSource.gallery, // atau ImageSource.camera
+      imageQuality: 80, // Kualitas gambar
+      maxWidth: 1080, // Resolusi maksimum
+    );
+
+    if (pickedImage != null) {
+      setState(() {
+        _profileImage = File(pickedImage.path);
+      });
+    }
   }
 }
 

@@ -5,14 +5,16 @@ class CustomTextField extends StatelessWidget {
   final String hintText;
   final bool obscureText;
   final TextEditingController? controller;
-  final Function(String)? onChanged; // Menambahkan parameter onChanged
+  final Function(String)? onChanged;
+  final bool? isEditing;
 
   const CustomTextField({
     super.key,
     required this.hintText,
     this.obscureText = false,
     this.controller,
-    this.onChanged, // Menambahkan parameter onChanged
+    this.onChanged,
+    this.isEditing,
   });
 
   @override
@@ -22,10 +24,12 @@ class CustomTextField extends StatelessWidget {
     return TextField(
       controller: controller,
       obscureText: obscureText,
-      onChanged: onChanged, // Menghubungkan onChanged ke TextField
+      onChanged: onChanged,
+      readOnly: isEditing ?? false,
       style: TextStyle(
         fontFamily: 'Poppins',
         fontSize: getFontSize * 1.1,
+        color: isEditing == true ? Colors.grey.shade600 : Colors.black87,
       ),
       decoration: InputDecoration(
         hintText: hintText,
@@ -43,8 +47,10 @@ class CustomTextField extends StatelessWidget {
         border: InputBorder.none,
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(6),
-          borderSide: const BorderSide(
-            color: Color(0xFF008EF2),
+          borderSide: BorderSide(
+            color: isEditing == true
+                ? Colors.transparent
+                : const Color(0xFF008EF2),
             width: 2,
           ),
         ),

@@ -74,7 +74,6 @@ class _NavbarState extends State<Navbar> {
     bool isKeyboardOpen = MediaQuery.of(context).viewInsets.bottom > 0;
 
     return Scaffold(
-      resizeToAvoidBottomInset: true,
       body: PageStorage(
         child: currentScreen,
         bucket: bucket,
@@ -110,6 +109,8 @@ class _NavbarState extends State<Navbar> {
             ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       bottomNavigationBar: BottomAppBar(
+        shadowColor: Colors.black,
+        elevation: 15,
         color: Colors.white,
         child: Container(
           height: bottomBarHeight,

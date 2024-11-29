@@ -4,13 +4,15 @@ import 'package:moodify_mobile/utils/screen_utils.dart';
 class DropdownDynamic extends StatefulWidget {
   final String text;
   final List<String> items;
-  final String? initialValue; // Menambahkan parameter untuk nilai awal
+  final String? initialValue;
+  final bool? enabled;
 
   const DropdownDynamic({
     super.key,
     required this.items,
     required this.text,
-    this.initialValue, // Inisialisasi nilai awal opsional
+    this.initialValue,
+    this.enabled,
   });
 
   @override
@@ -23,7 +25,7 @@ class _DropdownDynamicState extends State<DropdownDynamic> {
   @override
   void initState() {
     super.initState();
-    selectedValue = widget.initialValue; // Mengatur nilai awal
+    selectedValue = widget.initialValue;
   }
 
   @override
@@ -31,7 +33,7 @@ class _DropdownDynamicState extends State<DropdownDynamic> {
     double getFontSize = ScreenUtils.getFontSize(context, 13);
 
     return DropdownButtonFormField<String>(
-      value: selectedValue, // Menampilkan nilai awal jika ada
+      value: selectedValue,
       dropdownColor: Colors.white,
       isExpanded: true,
       decoration: InputDecoration(
@@ -83,16 +85,20 @@ class _DropdownDynamicState extends State<DropdownDynamic> {
               fontFamily: 'Poppins',
               fontWeight: FontWeight.w400,
               fontSize: getFontSize * 1.1,
-              color: Colors.black87,
+              color: widget.enabled == false
+                  ? Colors.grey.shade600
+                  : Colors.black87,
             ),
           ),
         );
       }).toList(),
-      onChanged: (value) {
-        setState(() {
-          selectedValue = value;
-        });
-      },
+      onChanged: widget.enabled == false
+          ? null
+          : (value) {
+              setState(() {
+                selectedValue = value;
+              });
+            },
     );
   }
 }
