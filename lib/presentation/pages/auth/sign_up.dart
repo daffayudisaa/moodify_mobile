@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:hugeicons/hugeicons.dart';
 import 'package:moodify_mobile/utils/screen_utils.dart';
-import 'package:moodify_mobile/widgets/buttons/button.dart';
-import 'package:moodify_mobile/widgets/form/dateofbirth_picker.dart';
-import 'package:moodify_mobile/widgets/form/dropdown_dynamic.dart';
-import 'package:moodify_mobile/widgets/form/text_field.dart';
+import 'package:moodify_mobile/presentation/widgets/buttons/button.dart';
+import 'package:moodify_mobile/presentation/widgets/form/dateofbirth_picker.dart';
+import 'package:moodify_mobile/presentation/widgets/form/dropdown_dynamic.dart';
+import 'package:moodify_mobile/presentation/widgets/form/text_field.dart';
 
 class SignUpPage extends StatelessWidget {
   const SignUpPage({super.key});

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
-import 'package:moodify_mobile/pages/home_page.dart';
-import 'package:moodify_mobile/pages/music_recom_page.dart';
-import 'package:moodify_mobile/pages/scan/preparescan_page.dart';
-import 'package:moodify_mobile/pages/profile.dart';
-import 'package:moodify_mobile/pages/recap_mood.dart';
+import 'package:moodify_mobile/presentation/pages/home/home_page.dart';
+import 'package:moodify_mobile/presentation/pages/music_recom/music_recom_page.dart';
+import 'package:moodify_mobile/presentation/pages/scan/preparescan_page.dart';
+import 'package:moodify_mobile/presentation/pages/profile/profile.dart';
+import 'package:moodify_mobile/presentation/pages/recap_mood/recap_mood.dart';
 
 class Navbar extends StatefulWidget {
   final CameraDescription camera;

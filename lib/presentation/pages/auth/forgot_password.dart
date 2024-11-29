@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:hugeicons/hugeicons.dart';
-import 'package:moodify_mobile/pages/auth/reset_password.dart';
+import 'package:moodify_mobile/presentation/pages/auth/reset_password.dart';
 import 'package:moodify_mobile/utils/screen_utils.dart';
-import 'package:moodify_mobile/widgets/buttons/button.dart';
-import 'package:moodify_mobile/widgets/form/text_field.dart';
+import 'package:moodify_mobile/presentation/widgets/buttons/button.dart';
+import 'package:moodify_mobile/presentation/widgets/form/text_field.dart';
 
 class ForgotPasswordPage extends StatelessWidget {
   const ForgotPasswordPage({super.key});

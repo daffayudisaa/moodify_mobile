@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:hugeicons/hugeicons.dart';
 import 'package:moodify_mobile/utils/screen_utils.dart';
-import 'package:moodify_mobile/widgets/buttons/button.dart';
-import 'package:moodify_mobile/widgets/form/text_field.dart';
+import 'package:moodify_mobile/presentation/widgets/buttons/button.dart';
+import 'package:moodify_mobile/presentation/widgets/form/text_field.dart';
 
 class ChangePasswordPage extends StatefulWidget {
   const ChangePasswordPage({Key? key}) : super(key: key);

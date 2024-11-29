@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:hugeicons/hugeicons.dart';
 import 'package:moodify_mobile/utils/screen_utils.dart';
-import 'package:moodify_mobile/widgets/cards/mood_card.dart';
-import 'package:moodify_mobile/widgets/list/recom_song.dart';
+import 'package:moodify_mobile/presentation/widgets/cards/mood_card.dart';
+import 'package:moodify_mobile/presentation/widgets/list/recom_song.dart';
 
 class HomePage extends StatefulWidget {
   final String userMood;

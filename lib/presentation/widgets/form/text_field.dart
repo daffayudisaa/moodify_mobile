@@ -5,12 +5,14 @@ class CustomTextField extends StatelessWidget {
   final String hintText;
   final bool obscureText;
   final TextEditingController? controller;
+  final Function(String)? onChanged; // Menambahkan parameter onChanged
 
   const CustomTextField({
     super.key,
     required this.hintText,
     this.obscureText = false,
     this.controller,
+    this.onChanged, // Menambahkan parameter onChanged
   });
 
   @override
@@ -20,6 +22,7 @@ class CustomTextField extends StatelessWidget {
     return TextField(
       controller: controller,
       obscureText: obscureText,
+      onChanged: onChanged, // Menghubungkan onChanged ke TextField
       style: TextStyle(
         fontFamily: 'Poppins',
         fontSize: getFontSize * 1.1,

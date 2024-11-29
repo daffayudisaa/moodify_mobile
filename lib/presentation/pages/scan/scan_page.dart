@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
 import 'package:hugeicons/hugeicons.dart';
-import 'package:moodify_mobile/pages/scan/displaypicture_page.dart';
-import 'package:moodify_mobile/pages/scan/preparescan_page.dart';
+import 'package:moodify_mobile/presentation/pages/scan/displaypicture_page.dart';
+import 'package:moodify_mobile/presentation/pages/scan/preparescan_page.dart';
 import 'package:moodify_mobile/utils/screen_utils.dart';
 
 class ScanPage extends StatefulWidget {

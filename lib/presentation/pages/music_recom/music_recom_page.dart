@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:moodify_mobile/utils/screen_utils.dart';
-import 'package:moodify_mobile/widgets/list/recom_song.dart';
+import 'package:moodify_mobile/presentation/widgets/list/recom_song.dart';
 
 class MusicRecomPage extends StatefulWidget {
   final String userMood;

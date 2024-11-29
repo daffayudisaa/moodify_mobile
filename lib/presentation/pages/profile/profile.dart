@@ -2,16 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hugeicons/hugeicons.dart';
 import 'package:intl/intl.dart';
-import 'package:moodify_mobile/bloc/profile/profile_bloc.dart';
-import 'package:moodify_mobile/bloc/profile/profile_state.dart';
-import 'package:moodify_mobile/pages/change_password.dart';
+import 'package:moodify_mobile/presentation/bloc/profile/profile_bloc.dart';
+import 'package:moodify_mobile/presentation/bloc/profile/profile_state.dart';
+import 'package:moodify_mobile/presentation/pages/change_password/change_password.dart';
 import 'package:moodify_mobile/utils/screen_utils.dart';
-import 'package:moodify_mobile/widgets/form/dateofbirth_picker.dart';
-import 'package:moodify_mobile/widgets/form/dropdown_dynamic.dart';
-import 'package:moodify_mobile/widgets/form/text_field.dart';
-import 'package:moodify_mobile/widgets/buttons/button.dart';
-
-import '../bloc/profile/profile_event.dart';
+import 'package:moodify_mobile/presentation/widgets/form/dateofbirth_picker.dart';
+import 'package:moodify_mobile/presentation/widgets/form/dropdown_dynamic.dart';
+import 'package:moodify_mobile/presentation/widgets/form/text_field.dart';
+import 'package:moodify_mobile/presentation/widgets/buttons/button.dart';
+import 'package:moodify_mobile/presentation/bloc/profile/profile_event.dart';
 
 class ProfilePage extends StatelessWidget {
   const ProfilePage({Key? key}) : super(key: key);

@@ -1,16 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:camera/camera.dart';
-import 'package:moodify_mobile/pages/auth/sign_in.dart';
-import 'package:moodify_mobile/pages/scan/scan_page.dart';
-import 'package:moodify_mobile/widgets/navbar.dart';
-import 'package:moodify_mobile/widgets/splash_screen.dart';
+import 'package:moodify_mobile/presentation/bloc/auth/auth_bloc.dart';
+import 'package:moodify_mobile/presentation/pages/auth/sign_in.dart';
+import 'package:moodify_mobile/presentation/pages/scan/scan_page.dart';
+import 'package:moodify_mobile/presentation/widgets/navbar.dart';
+import 'package:moodify_mobile/presentation/widgets/splash_screen.dart';
 
-late List<CameraDescription> cameras;
+late final List<CameraDescription> cameras;
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  cameras = await availableCameras();
+  try {
+    cameras = await availableCameras();
+  } catch (e) {
+    debugPrint('Error initializing cameras: $e');
+    cameras = [];
+  }
 
   runApp(const MyApp());
 }
@@ -20,22 +27,42 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Moodify',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: const SplashScreen(),
-      routes: {
-        '/navbar': (context) {
-          final initialTab =
-              ModalRoute.of(context)?.settings.arguments as int? ?? 0;
-          return Navbar(camera: cameras.first, initialTab: initialTab);
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<AuthBloc>(
+          create: (context) => AuthBloc(),
+        ),
+        // Tambahkan Bloc lainnya di sini jika diperlukan
+      ],
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: 'Moodify',
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+        ),
+        home: const SplashScreen(),
+        routes: {
+          '/navbar': (context) {
+            final initialTab =
+                ModalRoute.of(context)?.settings.arguments as int? ?? 0;
+            return cameras.isNotEmpty
+                ? Navbar(camera: cameras.first, initialTab: initialTab)
+                : const Scaffold(
+                    body: Center(
+                      child: Text('No cameras available'),
+                    ),
+                  );
+          },
+          '/signin': (context) => const SignInPage(),
+          '/scan': (context) => cameras.isNotEmpty
+              ? ScanPage(camera: cameras.first)
+              : const Scaffold(
+                  body: Center(
+                    child: Text('No cameras available'),
+                  ),
+                ),
         },
-        '/signin': (context) => const SignInPage(),
-        '/scan': (context) => ScanPage(camera: cameras.first),
-      },
+      ),
     );
   }
 }

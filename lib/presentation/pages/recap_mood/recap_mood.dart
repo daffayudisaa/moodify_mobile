@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:moodify_mobile/utils/screen_utils.dart';
-import 'package:moodify_mobile/widgets/cards/mood_card.dart';
+import 'package:moodify_mobile/presentation/widgets/cards/mood_card.dart';
 import 'package:pie_chart/pie_chart.dart';
 import 'package:hugeicons/hugeicons.dart';
 
