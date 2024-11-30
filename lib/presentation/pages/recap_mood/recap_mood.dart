@@ -126,14 +126,8 @@ class _MoodRecapState extends State<RecapMoodPage>
   Widget _buildRecap() {
     double screenWidth = MediaQuery.of(context).size.width;
     double screenHeight = MediaQuery.of(context).size.height;
+    double getFontSize = ScreenUtils.getFontSize(context, 14);
 
-    double multiplier = screenWidth < 600
-        ? 1.0
-        : screenWidth < 1200
-            ? 1.2
-            : 1.4;
-
-    double titleFontSize = 14 * multiplier;
     return SingleChildScrollView(
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 10),
@@ -165,7 +159,7 @@ class _MoodRecapState extends State<RecapMoodPage>
                           'Stats',
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
-                            fontSize: titleFontSize * 1.3,
+                            fontSize: getFontSize * 1.3,
                           ),
                         ),
                       ),
@@ -192,7 +186,7 @@ class _MoodRecapState extends State<RecapMoodPage>
                               legendTextStyle: TextStyle(
                                   fontFamily: 'Poppins',
                                   fontWeight: FontWeight.w400,
-                                  fontSize: titleFontSize),
+                                  fontSize: getFontSize),
                             ),
                             chartValuesOptions: const ChartValuesOptions(
                               showChartValueBackground: true,

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:moodify_mobile/utils/mood_mapping.dart';
 import 'package:moodify_mobile/utils/screen_utils.dart';
 import 'package:moodify_mobile/presentation/widgets/list/recom_song.dart';
+import 'package:moodify_mobile/utils/song_filter.dart';
 
 class MusicRecomPage extends StatefulWidget {
   final String userMood;
@@ -19,53 +21,19 @@ class _MusicRecomPageState extends State<MusicRecomPage> {
   void initState() {
     super.initState();
 
-    final Map<String, List<String>> moodMapping = {
-      'sad': ['Sad', 'Calm'],
-      'disgust': ['Energetic', 'Happy'],
-      'angry': ['Energetic', 'Calm'],
-      'fear': ['Happy', 'Calm'],
-      'happy': ['Happy', 'Calm'],
-      'surprise': ['Energetic', 'Sad'],
-      '': ['Happy', 'Sad', 'Calm', 'Energetic']
-    };
-
     displayMoods = ['All', ...moodMapping[widget.userMood.toLowerCase()] ?? []];
   }
-
-  final Map<String, List<Map<String, String>>> songsByMood = {
-    'Sad': [
-      {'title': 'Sad Song 1', 'artist': 'Artist 1', 'duration': '4:30'},
-      {'title': 'Sad Song 2', 'artist': 'Artist 2', 'duration': '3:50'},
-    ],
-    'Calm': [
-      {'title': 'Calm Song 1', 'artist': 'Artist 3', 'duration': '5:20'},
-      {'title': 'Calm Song 2', 'artist': 'Artist 4', 'duration': '4:10'},
-    ],
-    'Energetic': [
-      {'title': 'Energetic Song 1', 'artist': 'Artist 5', 'duration': '3:40'},
-      {'title': 'Energetic Song 2', 'artist': 'Artist 6', 'duration': '4:00'},
-    ],
-    'Happy': [
-      {'title': 'Happy Song 1', 'artist': 'Artist 7', 'duration': '4:15'},
-      {'title': 'Happy Song 2', 'artist': 'Artist 8', 'duration': '5:00'},
-    ],
-  };
 
   @override
   Widget build(BuildContext context) {
     double getFontSize = ScreenUtils.getFontSize(context, 14);
     double getVerticalPadding = ScreenUtils.getImageSize(context, 8);
 
-    List<Map<String, String>> filteredSongs = [];
-    if (selectedMood == 'All') {
-      for (var mood in displayMoods) {
-        if (mood != 'All') {
-          filteredSongs.addAll(songsByMood[mood] ?? []);
-        }
-      }
-    } else {
-      filteredSongs = songsByMood[selectedMood] ?? [];
-    }
+    List<Map<String, String>> filteredSongs = filterSongsByMood(
+      selectedMood,
+      displayMoods,
+      songsByMood,
+    );
 
     return Scaffold(
       backgroundColor: Colors.white,
