@@ -28,6 +28,7 @@ class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
     double getFontSize = ScreenUtils.getFontSize(context, 14);
+    double getimageSize = ScreenUtils.getFontSize(context, 80);
 
     return BlocProvider(
       create: (context) => ProfileBloc()..add(LoadProfileEvent()),
@@ -155,12 +156,12 @@ class _ProfilePageState extends State<ProfilePage> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               GestureDetector(
                                 onTap: isEditing ? _pickImage : null,
                                 child: CircleAvatar(
-                                  radius: 80,
+                                  radius: getimageSize * 0.9,
                                   backgroundImage: _profileImage != null
                                       ? FileImage(_profileImage!)
                                       : const AssetImage(
@@ -178,10 +179,10 @@ class _ProfilePageState extends State<ProfilePage> {
                                             shape: BoxShape.circle,
                                           ),
                                           padding: const EdgeInsets.all(6),
-                                          child: const Icon(
+                                          child: Icon(
                                             Icons.edit,
                                             color: Colors.white,
-                                            size: 20,
+                                            size: getFontSize * 1.4,
                                           ),
                                         ),
                                       )
