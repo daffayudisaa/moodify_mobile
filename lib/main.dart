@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:camera/camera.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:moodify_mobile/presentation/bloc/auth/auth_bloc.dart';
 import 'package:moodify_mobile/presentation/pages/auth/sign_in.dart';
 import 'package:moodify_mobile/presentation/pages/scan/scan_page.dart';
@@ -19,6 +20,7 @@ Future<void> main() async {
     cameras = [];
   }
 
+  await dotenv.load(fileName: ".env");
   runApp(const MyApp());
 }
 

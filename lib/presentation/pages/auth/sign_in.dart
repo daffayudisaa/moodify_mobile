@@ -5,6 +5,7 @@ import 'package:moodify_mobile/presentation/bloc/auth/auth_state.dart';
 import 'package:moodify_mobile/presentation/bloc/auth/auth_event.dart';
 import 'package:moodify_mobile/presentation/pages/auth/forgot_password.dart';
 import 'package:moodify_mobile/presentation/pages/auth/sign_up.dart';
+import 'package:moodify_mobile/presentation/widgets/buttons/button_spotify.dart';
 import 'package:moodify_mobile/utils/screen_utils.dart';
 import 'package:moodify_mobile/presentation/widgets/buttons/button.dart';
 import 'package:moodify_mobile/presentation/widgets/form/text_field.dart';
@@ -224,52 +225,7 @@ class _SignInPageState extends State<SignInPage> {
                         ),
                       ),
                       const SizedBox(height: 15),
-                      SizedBox(
-                        width: double.infinity,
-                        child: ElevatedButton(
-                          onPressed: () {
-                            Navigator.of(context).pop();
-                            Navigator.pushNamedAndRemoveUntil(context,
-                                '/navbar', (Route<dynamic> route) => false);
-                          },
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor:
-                                const Color.fromARGB(255, 255, 255, 255),
-                            elevation: 0,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(6),
-                              side: const BorderSide(
-                                color: Color.fromRGBO(38, 50, 56, 0.4),
-                                width: 0.3,
-                              ),
-                            ),
-                            padding: const EdgeInsets.symmetric(
-                              vertical: 15,
-                            ),
-                          ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              const Image(
-                                height: 18,
-                                width: 18,
-                                image:
-                                    AssetImage('assets/images/Google-Logo.png'),
-                              ),
-                              const SizedBox(width: 10),
-                              Text(
-                                "Google",
-                                style: TextStyle(
-                                  color: const Color.fromARGB(255, 0, 0, 0),
-                                  fontSize: getFontSize,
-                                  fontWeight: FontWeight.w600,
-                                  fontFamily: 'Poppins',
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
+                      button_spotify(getFontSize: getFontSize),
                       const SizedBox(height: 30),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,

@@ -27,6 +27,8 @@ dependencies:
   flutter_svg: ^2.0.14
   intl: ^0.19.0
   image_picker: ^1.1.2
+  spotify_sdk: ^3.0.2
+  flutter_dotenv: ^5.2.1
 
 dev_dependencies:
   flutter_test:
@@ -37,6 +39,7 @@ dev_dependencies:
 flutter:
   uses-material-design: true
   assets:
+    - .env
     - assets/icons/
     - assets/icons/navbar/
     - assets/images/

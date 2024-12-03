@@ -15,17 +15,19 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     emit(AuthLoading());
     try {
       // Panggil API untuk autentikasi
-      final response = await http.post(
-        Uri.parse(
-            'http://10.0.2.2:8000/login'), // Ganti dengan URL API yang sesuai
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: json.encode({
-          'email': event.email,
-          'password': event.password,
-        }),
-      );
+      final response = await http
+          .post(
+            Uri.parse(
+                'http://10.0.2.2:8000/login'), // Ganti dengan URL API yang sesuai
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: json.encode({
+              'email': event.email,
+              'password': event.password,
+            }),
+          )
+          .timeout(const Duration(seconds: 10));
 
       // Cek status code dari response
       if (response.statusCode == 200) {
