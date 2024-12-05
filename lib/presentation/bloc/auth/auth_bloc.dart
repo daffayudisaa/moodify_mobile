@@ -8,6 +8,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   AuthBloc() : super(AuthInitial()) {
     on<SignInRequested>(_onSignInRequested);
     on<SignOutRequested>(_onSignOutRequested);
+    on<SignUpRequested>(_onSignUpRequested);
   }
 
   Future<void> _onSignInRequested(
@@ -48,5 +49,45 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
   void _onSignOutRequested(SignOutRequested event, Emitter<AuthState> emit) {
     emit(AuthInitial());
+  }
+
+  Future<void> _onSignUpRequested(
+      SignUpRequested event, Emitter<AuthState> emit) async {
+    // Use SignUpRequested event here
+    emit(AuthLoading());
+    try {
+      final response = await http
+          .post(
+            Uri.parse(
+                'http://10.0.2.2:8000/signup/'), // Change with correct API URL
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: json.encode({
+              'Email': event.email,
+              'Password': event.password,
+              'Firstname': event.firstName,
+              'Lastname': event.lastName,
+              'Gender': event.gender,
+              'BirthDate': event.birthDate,
+            }),
+          )
+          .timeout(const Duration(seconds: 10));
+
+      // Check the status code of the response
+      if (response.statusCode == 201) {
+        // If signup is successful, assume the server returns a token or other info
+        final data = json.decode(response.body);
+
+        // Perform any further actions if needed (e.g., saving the token)
+        emit(AuthAuthenticated());
+      } else {
+        // If signup fails
+        emit(const AuthError("Sign up failed"));
+      }
+    } catch (e) {
+      // Handle errors when there's an issue with the API request
+      emit(AuthError(e.toString()));
+    }
   }
 }

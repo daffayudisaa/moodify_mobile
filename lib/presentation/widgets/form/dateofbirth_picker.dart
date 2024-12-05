@@ -4,9 +4,14 @@ import 'package:moodify_mobile/utils/screen_utils.dart';
 class DateOfBirthInput extends StatefulWidget {
   final TextEditingController? controller;
   final bool? enabled;
+  final Function(DateTime?)? onDateChanged; // Add onDateChanged callback
 
-  const DateOfBirthInput({Key? key, this.controller, this.enabled})
-      : super(key: key);
+  const DateOfBirthInput({
+    Key? key,
+    this.controller,
+    this.enabled,
+    this.onDateChanged, // Accept the callback in the constructor
+  }) : super(key: key);
 
   @override
   _DateOfBirthInputState createState() => _DateOfBirthInputState();
@@ -57,6 +62,10 @@ class _DateOfBirthInputState extends State<DateOfBirthInput> {
           _dateController.text =
               "${pickedDate.day.toString().padLeft(2, '0')}-${pickedDate.month.toString().padLeft(2, '0')}-${pickedDate.year}";
         });
+        if (widget.onDateChanged != null) {
+          widget
+              .onDateChanged!(pickedDate); // Trigger the onDateChanged callback
+        }
       }
     }
   }

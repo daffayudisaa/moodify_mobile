@@ -6,6 +6,7 @@ class DropdownDynamic extends StatefulWidget {
   final List<String> items;
   final String? initialValue;
   final bool? enabled;
+  final ValueChanged<String?>? onChanged; // Add the onChanged callback here
 
   const DropdownDynamic({
     super.key,
@@ -13,6 +14,7 @@ class DropdownDynamic extends StatefulWidget {
     required this.text,
     this.initialValue,
     this.enabled,
+    this.onChanged, // Pass the callback as a parameter
   });
 
   @override
@@ -98,6 +100,9 @@ class _DropdownDynamicState extends State<DropdownDynamic> {
               setState(() {
                 selectedValue = value;
               });
+              if (widget.onChanged != null) {
+                widget.onChanged!(value); // Call the passed callback
+              }
             },
     );
   }
