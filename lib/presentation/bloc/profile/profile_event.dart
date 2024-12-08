@@ -12,7 +12,6 @@ class LoadProfileEvent extends ProfileEvent {}
 class UpdateProfileEvent extends ProfileEvent {
   final String firstName;
   final String lastName;
-  final String email;
   final String gender;
   final DateTime birthDate;
   final String avatar;
@@ -20,13 +19,13 @@ class UpdateProfileEvent extends ProfileEvent {
   const UpdateProfileEvent({
     required this.firstName,
     required this.lastName,
-    required this.email,
     required this.gender,
     required this.birthDate,
     this.avatar = '',
   });
 
   @override
-  List<Object> get props =>
-      [firstName, lastName, email, gender, birthDate, avatar];
+  List<Object> get props => [firstName, lastName, gender, birthDate, avatar];
 }
+
+class DeleteAccountEvent extends ProfileEvent {}

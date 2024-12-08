@@ -4,6 +4,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hugeicons/hugeicons.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
+import 'package:moodify_mobile/presentation/bloc/auth/auth_bloc.dart';
+import 'package:moodify_mobile/presentation/bloc/auth/auth_event.dart';
 import 'package:moodify_mobile/presentation/bloc/profile/profile_bloc.dart';
 import 'package:moodify_mobile/presentation/bloc/profile/profile_event.dart';
 import 'package:moodify_mobile/presentation/bloc/profile/profile_state.dart';
@@ -92,7 +94,25 @@ class _ProfilePageState extends State<ProfilePage> {
                                     title: 'Log Out',
                                     icon: HugeIcons.strokeRoundedLogout02,
                                     color: const Color(0xFF004373),
-                                    onTap: () {
+                                    onTap: () async {
+                                      context
+                                          .read<AuthBloc>()
+                                          .add(SignOutRequested());
+
+                                      showDialog(
+                                        context: context,
+                                        builder: (context) => const Center(
+                                          child: CircularProgressIndicator(
+                                            color: Colors.blue,
+                                          ),
+                                        ),
+                                      );
+
+                                      await Future.delayed(
+                                          const Duration(seconds: 2));
+
+                                      Navigator.pop(context);
+
                                       Navigator.pushNamedAndRemoveUntil(
                                         context,
                                         '/signin',
@@ -108,12 +128,55 @@ class _ProfilePageState extends State<ProfilePage> {
                                     title: 'Delete Account',
                                     icon: HugeIcons.strokeRoundedDelete02,
                                     color: const Color(0xFFEC221F),
-                                    onTap: () {
-                                      Navigator.pushNamedAndRemoveUntil(
-                                        context,
-                                        '/signin',
-                                        (Route<dynamic> route) => false,
+                                    onTap: () async {
+                                      bool? confirm = await showDialog<bool>(
+                                        context: context,
+                                        builder: (context) => AlertDialog(
+                                          backgroundColor: Colors.white,
+                                          title: const Text('Confirm Deletion'),
+                                          content: const Text(
+                                            'Are you sure you want to delete your account? This action is permanent and cannot be undone.',
+                                          ),
+                                          actions: [
+                                            TextButton(
+                                              onPressed: () {
+                                                Navigator.pop(context, false);
+                                              },
+                                              child: const Text('Cancel'),
+                                            ),
+                                            TextButton(
+                                              onPressed: () {
+                                                Navigator.pop(context, true);
+                                              },
+                                              child: const Text('Delete'),
+                                            ),
+                                          ],
+                                        ),
                                       );
+
+                                      if (confirm == true) {
+                                        showDialog(
+                                          context: context,
+                                          builder: (context) => const Center(
+                                            child: CircularProgressIndicator(
+                                              color: Colors.blue,
+                                            ),
+                                          ),
+                                        );
+
+                                        await Future.delayed(
+                                            const Duration(seconds: 2));
+
+                                        Navigator.pop(context);
+                                        context
+                                            .read<ProfileBloc>()
+                                            .add(DeleteAccountEvent());
+                                        Navigator.pushNamedAndRemoveUntil(
+                                          context,
+                                          '/signin',
+                                          (Route<dynamic> route) => false,
+                                        );
+                                      }
                                     },
                                   ),
                                 ),
@@ -315,7 +378,6 @@ class _ProfilePageState extends State<ProfilePage> {
                                     );
 
                                     if (confirm == true) {
-                                      // Handle save logic (save to database, etc.)
                                       setState(() {
                                         isEditing = false;
                                       });

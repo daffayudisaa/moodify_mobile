@@ -41,7 +41,6 @@ class ProfileLoadedState extends ProfileState {
 class ProfileUpdatedState extends ProfileState {
   final String firstName;
   final String lastName;
-  final String email;
   final String gender;
   final DateTime birthDate;
   final String avatar;
@@ -49,15 +48,13 @@ class ProfileUpdatedState extends ProfileState {
   const ProfileUpdatedState({
     required this.firstName,
     required this.lastName,
-    required this.email,
     required this.gender,
     required this.birthDate,
     this.avatar = '',
   });
 
   @override
-  List<Object> get props =>
-      [firstName, lastName, email, gender, birthDate, avatar];
+  List<Object> get props => [firstName, lastName, gender, birthDate, avatar];
 }
 
 class ProfileErrorState extends ProfileState {
@@ -67,4 +64,8 @@ class ProfileErrorState extends ProfileState {
 
   @override
   List<Object> get props => [errorMessage];
+}
+
+class ProfileDeletedState extends ProfileState {
+  const ProfileDeletedState();
 }
