@@ -77,6 +77,12 @@ class _SignUpPageState extends State<SignUpPage> {
               '/signin',
               (Route<dynamic> route) => false,
             );
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(
+                content: Text("Your account has been successfully created!"),
+                backgroundColor: Colors.green,
+              ),
+            );
           } else if (state is AuthError) {
             Navigator.of(context).pop();
             ScaffoldMessenger.of(context).showSnackBar(
