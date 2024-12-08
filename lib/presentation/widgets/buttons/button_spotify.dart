@@ -16,6 +16,7 @@ class button_spotify extends StatefulWidget {
 }
 
 class _button_spotifyState extends State<button_spotify> {
+  // ignore: unused_field
   bool _connected = false;
   String? _accessToken;
 

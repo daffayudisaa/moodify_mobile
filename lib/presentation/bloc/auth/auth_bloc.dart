@@ -19,7 +19,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       final response = await http
           .post(
             Uri.parse(
-                'http://10.0.2.2:8000/login'), // Ganti dengan URL API yang sesuai
+                'http://sirw.my.id/login/'), // Ganti dengan URL API yang sesuai
             headers: {
               'Content-Type': 'application/json',
             },
@@ -33,6 +33,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       // Cek status code dari response
       if (response.statusCode == 200) {
         // Jika login sukses, anggap server mengembalikan token atau informasi lain
+        // ignore: unused_local_variable
         final data = json.decode(response.body);
 
         // Lakukan tindakan lain jika perlu (misal, menyimpan token)
@@ -59,7 +60,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       final response = await http
           .post(
             Uri.parse(
-                'http://10.0.2.2:8000/signup/'), // Change with correct API URL
+                'http://sirw.my.id/signup/'), // Change with correct API URL
             headers: {
               'Content-Type': 'application/json',
             },
@@ -77,6 +78,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       // Check the status code of the response
       if (response.statusCode == 201) {
         // If signup is successful, assume the server returns a token or other info
+        // ignore: unused_local_variable
         final data = json.decode(response.body);
 
         // Perform any further actions if needed (e.g., saving the token)

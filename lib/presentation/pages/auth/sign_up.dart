@@ -151,7 +151,7 @@ class _SignUpPageState extends State<SignUpPage> {
                 ),
                 const SizedBox(height: 20),
                 DropdownDynamic(
-                  items: const ['Laki-laki', 'Perempuan'],
+                  items: const ['Male', 'Female'],
                   text: 'Gender',
                   initialValue: gender,
                   enabled: true,
@@ -196,6 +196,12 @@ class _SignUpPageState extends State<SignUpPage> {
                             ScaffoldMessenger.of(context).showSnackBar(
                               const SnackBar(
                                   content: Text("Please fill all fields")),
+                            );
+                          } else if (passwordController.text.length < 8) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                  content: Text(
+                                      "Password must be at least 8 characters")),
                             );
                           } else if (passwordController.text !=
                               confirmPasswordController.text) {
