@@ -5,6 +5,7 @@ import 'package:hugeicons/hugeicons.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:moodify_mobile/presentation/bloc/profile/profile_bloc.dart';
+import 'package:moodify_mobile/presentation/bloc/profile/profile_event.dart';
 import 'package:moodify_mobile/presentation/bloc/profile/profile_state.dart';
 import 'package:moodify_mobile/presentation/pages/change_password/change_password.dart';
 import 'package:moodify_mobile/utils/screen_utils.dart';
@@ -12,7 +13,6 @@ import 'package:moodify_mobile/presentation/widgets/form/dateofbirth_picker.dart
 import 'package:moodify_mobile/presentation/widgets/form/dropdown_dynamic.dart';
 import 'package:moodify_mobile/presentation/widgets/form/text_field.dart';
 import 'package:moodify_mobile/presentation/widgets/buttons/button.dart';
-import 'package:moodify_mobile/presentation/bloc/profile/profile_event.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({Key? key}) : super(key: key);
@@ -239,7 +239,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           CustomTextField(
                             hintText: 'Email',
                             controller: emailController,
-                            isEditing: !isEditing,
+                            isEditing: true,
                           ),
                           const SizedBox(height: 7),
                           Text(
@@ -296,8 +296,8 @@ class _ProfilePageState extends State<ProfilePage> {
                                         backgroundColor: Colors.white,
                                         title: const Text('Confirm Save'),
                                         content: const Text(
-                                            'Are you sure you want to save the changes?'),
-                                        actions: <Widget>[
+                                            'Are you sure you want to save these changes?'),
+                                        actions: [
                                           TextButton(
                                             onPressed: () {
                                               Navigator.pop(context, false);
@@ -314,20 +314,8 @@ class _ProfilePageState extends State<ProfilePage> {
                                       ),
                                     );
 
-                                    if (confirm ?? false) {
-                                      context.read<ProfileBloc>().add(
-                                            UpdateProfileEvent(
-                                              firstName:
-                                                  firstNameController.text,
-                                              lastName: lastNameController.text,
-                                              email: emailController.text,
-                                              gender: genderController.text,
-                                              birthDate: DateFormat(
-                                                      'dd-MM-yyyy')
-                                                  .parse(
-                                                      birthDateController.text),
-                                            ),
-                                          );
+                                    if (confirm == true) {
+                                      // Handle save logic (save to database, etc.)
                                       setState(() {
                                         isEditing = false;
                                       });
@@ -337,15 +325,16 @@ class _ProfilePageState extends State<ProfilePage> {
                               ),
                             ],
                           ),
-                          const SizedBox(height: 40),
                         ],
                       ),
                     ),
                   );
-                } else if (state is ProfileInitialState) {
-                  return const Center(child: CircularProgressIndicator());
+                } else if (state is ProfileErrorState) {
+                  return Center(
+                    child: Text(state.errorMessage),
+                  );
                 } else {
-                  return const Center(child: Text('Failed to load profile'));
+                  return const Center(child: CircularProgressIndicator());
                 }
               },
             ),
@@ -356,16 +345,12 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   Future<void> _pickImage() async {
-    ImagePicker picker = ImagePicker();
-    XFile? pickedImage = await picker.pickImage(
-      source: ImageSource.gallery, // atau ImageSource.camera
-      imageQuality: 80, // Kualitas gambar
-      maxWidth: 1080, // Resolusi maksimum
-    );
-
-    if (pickedImage != null) {
+    final ImagePicker picker = ImagePicker();
+    final XFile? pickedFile =
+        await picker.pickImage(source: ImageSource.gallery);
+    if (pickedFile != null) {
       setState(() {
-        _profileImage = File(pickedImage.path);
+        _profileImage = File(pickedFile.path);
       });
     }
   }

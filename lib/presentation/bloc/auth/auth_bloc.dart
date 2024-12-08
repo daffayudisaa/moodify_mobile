@@ -13,9 +13,9 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     on<SignUpRequested>(_onSignUpRequested);
   }
 
-  Future<void> saveUserId(int userId) async {
+  Future<void> saveUserId(String userId) async {
     final prefs = await SharedPreferences.getInstance();
-    await prefs.setInt('user_id', userId);
+    await prefs.setString('user_id', userId);
   }
 
   Future<void> saveAccessToken(String accessToken) async {

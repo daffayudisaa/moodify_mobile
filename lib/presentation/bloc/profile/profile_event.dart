@@ -15,6 +15,7 @@ class UpdateProfileEvent extends ProfileEvent {
   final String email;
   final String gender;
   final DateTime birthDate;
+  final String avatar;
 
   const UpdateProfileEvent({
     required this.firstName,
@@ -22,8 +23,10 @@ class UpdateProfileEvent extends ProfileEvent {
     required this.email,
     required this.gender,
     required this.birthDate,
+    this.avatar = '',
   });
 
   @override
-  List<Object> get props => [firstName, lastName, email, gender, birthDate];
+  List<Object> get props =>
+      [firstName, lastName, email, gender, birthDate, avatar];
 }
