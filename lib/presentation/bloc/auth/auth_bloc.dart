@@ -1,8 +1,10 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:moodify_mobile/presentation/bloc/auth/auth_event.dart';
 import 'package:moodify_mobile/presentation/bloc/auth/auth_state.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
   AuthBloc() : super(AuthInitial()) {
@@ -11,15 +13,24 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     on<SignUpRequested>(_onSignUpRequested);
   }
 
+  Future<void> saveUserId(int userId) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setInt('user_id', userId);
+  }
+
+  Future<void> saveAccessToken(String accessToken) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString(
+        'access_token', accessToken); // Menyimpan token sebagai string
+  }
+
   Future<void> _onSignInRequested(
       SignInRequested event, Emitter<AuthState> emit) async {
     emit(AuthLoading());
     try {
-      // Panggil API untuk autentikasi
       final response = await http
           .post(
-            Uri.parse(
-                'http://sirw.my.id/login/'), // Ganti dengan URL API yang sesuai
+            Uri.parse('http://sirw.my.id/login/'),
             headers: {
               'Content-Type': 'application/json',
             },
@@ -30,37 +41,45 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           )
           .timeout(const Duration(seconds: 10));
 
-      // Cek status code dari response
       if (response.statusCode == 200) {
-        // Jika login sukses, anggap server mengembalikan token atau informasi lain
-        // ignore: unused_local_variable
+        // Parsing respons JSON
         final data = json.decode(response.body);
 
-        // Lakukan tindakan lain jika perlu (misal, menyimpan token)
+        final token = data['access_token'];
+
+        if (JwtDecoder.isExpired(token)) {
+          emit(const AuthError("Token has expired"));
+          return;
+        }
+
+        final decodedToken = JwtDecoder.decode(token);
+        final userId = decodedToken['sub'];
+
+        await saveUserId(userId); // Simpan userId
+        await saveAccessToken(token); // Simpan access token
         emit(AuthAuthenticated());
       } else {
-        // Jika login gagal
         emit(const AuthError("Invalid email or password"));
       }
     } catch (e) {
-      // Tangani error apabila ada masalah saat request API
       emit(AuthError(e.toString()));
     }
   }
 
-  void _onSignOutRequested(SignOutRequested event, Emitter<AuthState> emit) {
+  void _onSignOutRequested(
+      SignOutRequested event, Emitter<AuthState> emit) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.clear(); // Menghapus semua data dari SharedPreferences
     emit(AuthInitial());
   }
 
   Future<void> _onSignUpRequested(
       SignUpRequested event, Emitter<AuthState> emit) async {
-    // Use SignUpRequested event here
     emit(AuthLoading());
     try {
       final response = await http
           .post(
-            Uri.parse(
-                'http://sirw.my.id/signup/'), // Change with correct API URL
+            Uri.parse('http://sirw.my.id/signup/'),
             headers: {
               'Content-Type': 'application/json',
             },
@@ -75,20 +94,15 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           )
           .timeout(const Duration(seconds: 10));
 
-      // Check the status code of the response
       if (response.statusCode == 201) {
-        // If signup is successful, assume the server returns a token or other info
         // ignore: unused_local_variable
         final data = json.decode(response.body);
 
-        // Perform any further actions if needed (e.g., saving the token)
         emit(AuthAuthenticated());
       } else {
-        // If signup fails
         emit(const AuthError("Sign up failed"));
       }
     } catch (e) {
-      // Handle errors when there's an issue with the API request
       emit(AuthError(e.toString()));
     }
   }
