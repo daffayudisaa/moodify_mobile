@@ -25,6 +25,8 @@ class ProfilePage extends StatefulWidget {
 class _ProfilePageState extends State<ProfilePage> {
   File? _profileImage;
   bool isEditing = false;
+  String? gender;
+  String? birthDate;
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +34,7 @@ class _ProfilePageState extends State<ProfilePage> {
     double getimageSize = ScreenUtils.getFontSize(context, 80);
 
     return BlocProvider(
-      create: (context) => ProfileBloc()..add(LoadProfileEvent()),
+      create: (context) => ProfileBloc()..add(LoadProfile()),
       child: Scaffold(
         backgroundColor: Colors.white,
         body: SafeArea(
@@ -167,7 +169,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                         Navigator.pop(context);
                                         context
                                             .read<ProfileBloc>()
-                                            .add(DeleteAccountEvent());
+                                            .add(DeleteAccount());
                                         Navigator.pushNamedAndRemoveUntil(
                                           context,
                                           '/signin',
@@ -194,7 +196,7 @@ class _ProfilePageState extends State<ProfilePage> {
             ],
             body: BlocBuilder<ProfileBloc, ProfileState>(
               builder: (context, state) {
-                if (state is ProfileLoadedState) {
+                if (state is ProfileLoaded) {
                   String birthDateString =
                       DateFormat('dd-MM-yyyy').format(state.birthDate);
 
@@ -315,6 +317,10 @@ class _ProfilePageState extends State<ProfilePage> {
                             items: const ['Male', 'Female'],
                             text: 'Gender',
                             enabled: isEditing,
+                            onChanged: (value) {
+                              gender = value;
+                              genderController.text = gender!;
+                            },
                           ),
                           const SizedBox(height: 7),
                           Text(
@@ -328,13 +334,18 @@ class _ProfilePageState extends State<ProfilePage> {
                           DateOfBirthInput(
                             controller: birthDateController,
                             enabled: isEditing,
+                            onDateChanged: (date) {
+                              birthDate =
+                                  DateFormat('yyyy-MM-dd').format(date!);
+                              birthDateController.text = birthDate!;
+                            },
                           ),
                           const SizedBox(height: 30),
                           Row(
                             children: [
                               Expanded(
                                 child: FillButton(
-                                  color: const Color(0xFF263238),
+                                  color: const Color.fromARGB(255, 15, 33, 42),
                                   textColor: Colors.white,
                                   text: 'Edit',
                                   onTap: () {
@@ -347,40 +358,77 @@ class _ProfilePageState extends State<ProfilePage> {
                               const SizedBox(width: 15),
                               Expanded(
                                 child: FillButton(
-                                  color: const Color(0xFF42B1FF),
-                                  text: 'Save',
-                                  onTap: () async {
-                                    bool? confirm = await showDialog<bool>(
-                                      context: context,
-                                      builder: (context) => AlertDialog(
-                                        backgroundColor: Colors.white,
-                                        title: const Text('Confirm Save'),
-                                        content: const Text(
-                                            'Are you sure you want to save these changes?'),
-                                        actions: [
-                                          TextButton(
-                                            onPressed: () {
-                                              Navigator.pop(context, false);
-                                            },
-                                            child: const Text('Cancel'),
-                                          ),
-                                          TextButton(
-                                            onPressed: () {
-                                              Navigator.pop(context, true);
-                                            },
-                                            child: const Text('Save'),
-                                          ),
-                                        ],
-                                      ),
-                                    );
+                                    color: isEditing
+                                        ? const Color(0xFF42B1FF)
+                                        : const Color(0xFFECF4FF),
+                                    textColor:
+                                        isEditing ? Colors.white : Colors.grey,
+                                    text: 'Save',
+                                    onTap: isEditing
+                                        ? () async {
+                                            bool? confirm =
+                                                await showDialog<bool>(
+                                              context: context,
+                                              builder: (context) => AlertDialog(
+                                                backgroundColor: Colors.white,
+                                                title:
+                                                    const Text('Confirm Save'),
+                                                content: const Text(
+                                                    'Are you sure you want to save these changes?'),
+                                                actions: [
+                                                  TextButton(
+                                                    onPressed: () {
+                                                      Navigator.pop(
+                                                          context, false);
+                                                    },
+                                                    child: const Text('Cancel'),
+                                                  ),
+                                                  TextButton(
+                                                    onPressed: () {
+                                                      Navigator.pop(
+                                                          context, true);
+                                                    },
+                                                    child: const Text('Save'),
+                                                  ),
+                                                ],
+                                              ),
+                                            );
 
-                                    if (confirm == true) {
-                                      setState(() {
-                                        isEditing = false;
-                                      });
-                                    }
-                                  },
-                                ),
+                                            if (confirm == true) {
+                                              final updatedFirstName =
+                                                  firstNameController.text;
+                                              final updatedLastName =
+                                                  lastNameController.text;
+                                              final updatedEmail =
+                                                  emailController.text;
+                                              final updatedGender =
+                                                  genderController.text;
+                                              final updatedBirthDate =
+                                                  birthDateController.text;
+
+                                              context
+                                                  .read<ProfileBloc>()
+                                                  .add(UpdateProfile(
+                                                    firstName: updatedFirstName,
+                                                    lastName: updatedLastName,
+                                                    email: updatedEmail,
+                                                    gender: updatedGender,
+                                                    birthDate: updatedBirthDate,
+                                                  ));
+                                              setState(() {
+                                                isEditing = false;
+                                              });
+                                              ScaffoldMessenger.of(context)
+                                                  .showSnackBar(
+                                                const SnackBar(
+                                                  content: Text(
+                                                      'Profile updated successfully!'),
+                                                  backgroundColor: Colors.green,
+                                                ),
+                                              );
+                                            }
+                                          }
+                                        : () {}),
                               ),
                             ],
                           ),
@@ -388,7 +436,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       ),
                     ),
                   );
-                } else if (state is ProfileErrorState) {
+                } else if (state is ProfileError) {
                   return Center(
                     child: Text(state.errorMessage),
                   );

@@ -1,153 +1,147 @@
 import 'dart:convert';
-import 'package:bloc/bloc.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:http/http.dart' as http;
 import 'package:moodify_mobile/presentation/bloc/profile/profile_event.dart';
 import 'package:moodify_mobile/presentation/bloc/profile/profile_state.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
-  ProfileBloc() : super(ProfileInitialState()) {
-    on<LoadProfileEvent>((event, emit) async {
-      emit(const ProfileLoadingState());
+  ProfileBloc() : super(ProfileInitial()) {
+    on<LoadProfile>(_onLoadProfile);
+    on<DeleteAccount>(_onDeleteAccount);
+    on<UpdateProfile>(_onUpdateProfile);
+  }
 
-      try {
-        // Use the helper function to load user credentials
-        final credentials = await loadUserCredentials();
-        final userId = credentials['userId'];
-        final accessToken = credentials['accessToken'];
+  Future<Map<String, dynamic>> _loadUserCredentials() async {
+    final prefs = await SharedPreferences.getInstance();
+    final userIdString = prefs.getString('user_id');
+    final accessToken = prefs.getString('access_token');
+    final userId = int.tryParse(userIdString ?? '');
+    return {
+      'userId': userId,
+      'accessToken': accessToken,
+    };
+  }
 
-        if (userId == null) {
-          emit(const ProfileErrorState(errorMessage: "User ID not found"));
-          return;
-        }
-
-        if (accessToken == null || accessToken.isEmpty) {
-          emit(const ProfileErrorState(errorMessage: "Access token not found"));
-          return;
-        }
-
-        final response = await http.get(
-          Uri.parse('http://sirw.my.id/users/$userId'),
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': 'Bearer $accessToken',
-          },
-        );
-
-        if (response.statusCode == 200) {
-          final data = json.decode(response.body);
-
-          emit(ProfileLoadedState(
-            firstName: data['Firstname'] ?? 'Default FirstName',
-            lastName: data['Lastname'] ?? 'Default LastName',
-            email: data['Email'] ?? 'Default Email',
-            gender: data['Gender'] ?? 'Unknown',
-            birthDate: DateTime.parse(data['BirthDate']),
-            avatar: data['Avatar'] ?? 'default_avatar_url',
-          ));
-        } else {
-          emit(ProfileErrorState(
-              errorMessage: "Failed to load profile: ${response.body}"));
-        }
-      } catch (e) {
-        emit(ProfileErrorState(errorMessage: e.toString()));
-      }
-    });
-
-    on<UpdateProfileEvent>((event, emit) async {
-      final credentials = await loadUserCredentials();
+  Future<void> _onLoadProfile(
+      LoadProfile event, Emitter<ProfileState> emit) async {
+    emit(ProfileLoading());
+    try {
+      final credentials = await _loadUserCredentials();
       final userId = credentials['userId'];
       final accessToken = credentials['accessToken'];
 
-      if (userId == null) {
-        emit(const ProfileErrorState(errorMessage: "User ID not found"));
+      if (userId == null || accessToken == null || accessToken.isEmpty) {
+        emit(const ProfileError("Invalid user credentials"));
         return;
       }
 
-      if (accessToken == null || accessToken.isEmpty) {
-        emit(const ProfileErrorState(errorMessage: "Access token not found"));
-        return;
+      final response = await http.get(
+        Uri.parse('http://sirw.my.id/users/$userId'),
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $accessToken',
+        },
+      );
+
+      if (response.statusCode == 200) {
+        final data = json.decode(response.body);
+        emit(ProfileLoaded(
+          firstName: data['Firstname'] ?? 'Default FirstName',
+          lastName: data['Lastname'] ?? 'Default LastName',
+          email: data['Email'] ?? 'Default Email',
+          gender: data['Gender'] ?? 'Unknown',
+          birthDate: DateTime.tryParse(data['BirthDate'] ?? '') ??
+              DateTime(2000, 1, 1),
+          avatar: data['Avatar'] ?? 'default_avatar_url',
+        ));
+      } else {
+        emit(ProfileError("Failed to load profile: ${response.body}"));
       }
-
-      try {
-        final response = await http.put(
-          Uri.parse('http://sirw.my.id/users/$userId/profile'),
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': 'Bearer $accessToken',
-          },
-          body: json.encode({
-            'Firstname': event.firstName,
-            'Lastname': event.lastName,
-            'Gender': event.gender,
-            'BirthDate': event.birthDate.toIso8601String(),
-          }),
-        );
-
-        if (response.statusCode == 200) {
-          final data = json.decode(response.body);
-
-          emit(ProfileUpdatedState(
-            firstName: data['Firstname'] ?? event.firstName,
-            lastName: data['Lastname'] ?? event.lastName,
-            gender: data['Gender'] ?? event.gender,
-            birthDate: DateTime.parse(
-                data['BirthDate'] ?? event.birthDate.toIso8601String()),
-            avatar: data['Avatar'] ?? '',
-          ));
-        } else {
-          emit(const ProfileErrorState(
-              errorMessage: 'Failed to update profile.'));
-        }
-      } catch (e) {
-        emit(ProfileErrorState(errorMessage: 'Error: ${e.toString()}'));
-      }
-    });
-
-    on<DeleteAccountEvent>((event, emit) async {
-      emit(const ProfileLoadingState());
-
-      try {
-        final credentials = await loadUserCredentials();
-        final userId = credentials['userId'];
-        final accessToken = credentials['accessToken'];
-
-        if (userId == null || accessToken == null) {
-          emit(const ProfileErrorState(
-              errorMessage: "User credentials not found"));
-          return;
-        }
-
-        final response = await http.delete(
-          Uri.parse('http://sirw.my.id/users/$userId'),
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': 'Bearer $accessToken',
-          },
-        );
-
-        if (response.statusCode == 200) {
-          emit(const ProfileDeletedState());
-        } else {
-          emit(ProfileErrorState(
-              errorMessage: "Failed to delete account: ${response.body}"));
-        }
-      } catch (e) {
-        emit(ProfileErrorState(errorMessage: e.toString()));
-      }
-    });
+    } catch (e) {
+      emit(ProfileError(e.toString()));
+    }
   }
-}
 
-Future<Map<String, dynamic>> loadUserCredentials() async {
-  final prefs = await SharedPreferences.getInstance();
-  final userIdString = prefs.getString('user_id');
-  final accessToken = prefs.getString('access_token');
+  Future<void> _onDeleteAccount(
+      DeleteAccount event, Emitter<ProfileState> emit) async {
+    emit(ProfileLoading());
+    try {
+      final credentials = await _loadUserCredentials();
+      final userId = credentials['userId'];
+      final accessToken = credentials['accessToken'];
 
-  final userId = int.tryParse(userIdString ?? '');
+      if (userId == null || accessToken == null || accessToken.isEmpty) {
+        emit(const ProfileError("Invalid user credentials"));
+        return;
+      }
 
-  return {
-    'userId': userId,
-    'accessToken': accessToken,
-  };
+      final response = await http.delete(
+        Uri.parse('http://sirw.my.id/users/$userId'),
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $accessToken',
+        },
+      );
+
+      if (response.statusCode == 200) {
+        emit(ProfileDeleted());
+      } else {
+        emit(ProfileError("Failed to delete account: ${response.body}"));
+      }
+    } catch (e) {
+      emit(ProfileError(e.toString()));
+    }
+  }
+
+  Future<void> _onUpdateProfile(
+      UpdateProfile event, Emitter<ProfileState> emit) async {
+    emit(ProfileUpdating());
+    try {
+      final credentials = await _loadUserCredentials();
+      final userId = credentials['userId'];
+      final accessToken = credentials['accessToken'];
+
+      if (userId == null || accessToken == null || accessToken.isEmpty) {
+        emit(const ProfileError("Invalid user credentials"));
+        return;
+      }
+
+      final requestBody = json.encode({
+        'Firstname': event.firstName,
+        'Lastname': event.lastName,
+        'Gender': event.gender,
+        'BirthDate': event.birthDate,
+        'Email': event.email,
+      });
+      print("Request Body: $requestBody");
+      final response = await http.put(
+        Uri.parse('http://sirw.my.id/users/$userId/profile'),
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $accessToken',
+        },
+        body: requestBody,
+      );
+      print("Response: ${response.body}");
+
+      if (response.statusCode == 200) {
+        final data = json.decode(response.body);
+        final userData = data['user'];
+
+        emit(ProfileUpdated(
+          firstName: userData['Firstname'],
+          lastName: userData['Lastname'],
+          email: userData['Email'],
+          gender: userData['Gender'],
+          birthDate: DateTime.parse(userData['BirthDate']),
+        ));
+        add(LoadProfile());
+      } else {
+        emit(ProfileError("Failed to update profile: ${response.body}"));
+      }
+    } catch (e) {
+      emit(ProfileError(e.toString()));
+    }
+  }
 }

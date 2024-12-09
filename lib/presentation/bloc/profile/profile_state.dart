@@ -7,16 +7,11 @@ abstract class ProfileState extends Equatable {
   List<Object> get props => [];
 }
 
-class ProfileInitialState extends ProfileState {}
+class ProfileInitial extends ProfileState {}
 
-class ProfileLoadingState extends ProfileState {
-  const ProfileLoadingState();
+class ProfileLoading extends ProfileState {}
 
-  @override
-  List<Object> get props => [];
-}
-
-class ProfileLoadedState extends ProfileState {
+class ProfileLoaded extends ProfileState {
   final String firstName;
   final String lastName;
   final String email;
@@ -24,13 +19,13 @@ class ProfileLoadedState extends ProfileState {
   final DateTime birthDate;
   final String avatar;
 
-  const ProfileLoadedState({
+  const ProfileLoaded({
     required this.firstName,
     required this.lastName,
     required this.email,
     required this.gender,
     required this.birthDate,
-    this.avatar = '',
+    this.avatar = 'default_avatar_url',
   });
 
   @override
@@ -38,34 +33,36 @@ class ProfileLoadedState extends ProfileState {
       [firstName, lastName, email, gender, birthDate, avatar];
 }
 
-class ProfileUpdatedState extends ProfileState {
-  final String firstName;
-  final String lastName;
-  final String gender;
-  final DateTime birthDate;
-  final String avatar;
-
-  const ProfileUpdatedState({
-    required this.firstName,
-    required this.lastName,
-    required this.gender,
-    required this.birthDate,
-    this.avatar = '',
-  });
-
-  @override
-  List<Object> get props => [firstName, lastName, gender, birthDate, avatar];
-}
-
-class ProfileErrorState extends ProfileState {
+class ProfileError extends ProfileState {
   final String errorMessage;
 
-  const ProfileErrorState({required this.errorMessage});
+  const ProfileError(this.errorMessage);
 
   @override
   List<Object> get props => [errorMessage];
 }
 
-class ProfileDeletedState extends ProfileState {
-  const ProfileDeletedState();
+class ProfileDeleted extends ProfileState {}
+
+class ProfileUpdating extends ProfileState {}
+
+class ProfileUpdated extends ProfileState {
+  final String firstName;
+  final String lastName;
+  final String email;
+  final String gender;
+  final DateTime birthDate;
+  // final String avatar;
+
+  const ProfileUpdated({
+    required this.firstName,
+    required this.lastName,
+    required this.email,
+    required this.gender,
+    required this.birthDate,
+    // this.avatar = '',
+  });
+
+  @override
+  List<Object> get props => [firstName, lastName, email, gender, birthDate];
 }

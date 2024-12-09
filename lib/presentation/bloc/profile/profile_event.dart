@@ -7,25 +7,27 @@ abstract class ProfileEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class LoadProfileEvent extends ProfileEvent {}
+class LoadProfile extends ProfileEvent {}
 
-class UpdateProfileEvent extends ProfileEvent {
+class DeleteAccount extends ProfileEvent {}
+
+class UpdateProfile extends ProfileEvent {
   final String firstName;
   final String lastName;
+  final String email;
   final String gender;
-  final DateTime birthDate;
-  final String avatar;
+  final String birthDate;
+  // final String avatar;
 
-  const UpdateProfileEvent({
+  const UpdateProfile({
     required this.firstName,
     required this.lastName,
+    required this.email,
     required this.gender,
     required this.birthDate,
-    this.avatar = '',
+    // this.avatar = 'default_avatar_url',
   });
 
   @override
-  List<Object> get props => [firstName, lastName, gender, birthDate, avatar];
+  List<Object> get props => [firstName, lastName, email, gender, birthDate];
 }
-
-class DeleteAccountEvent extends ProfileEvent {}
