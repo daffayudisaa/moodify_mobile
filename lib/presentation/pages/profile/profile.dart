@@ -9,7 +9,6 @@ import 'package:moodify_mobile/presentation/bloc/auth/auth_event.dart';
 import 'package:moodify_mobile/presentation/bloc/profile/profile_bloc.dart';
 import 'package:moodify_mobile/presentation/bloc/profile/profile_event.dart';
 import 'package:moodify_mobile/presentation/bloc/profile/profile_state.dart';
-import 'package:moodify_mobile/presentation/pages/change_password/change_password.dart';
 import 'package:moodify_mobile/utils/screen_utils.dart';
 import 'package:moodify_mobile/presentation/widgets/form/dateofbirth_picker.dart';
 import 'package:moodify_mobile/presentation/widgets/form/dropdown_dynamic.dart';
@@ -77,12 +76,10 @@ class _ProfilePageState extends State<ProfilePage> {
                                     icon: HugeIcons.strokeRoundedKey01,
                                     color: const Color(0xFF42B1FF),
                                     onTap: () {
-                                      Navigator.push(
+                                      Navigator.pushNamedAndRemoveUntil(
                                         context,
-                                        MaterialPageRoute(
-                                          builder: (context) =>
-                                              const ChangePasswordPage(),
-                                        ),
+                                        '/change_password',
+                                        (Route<dynamic> route) => false,
                                       );
                                     },
                                   ),

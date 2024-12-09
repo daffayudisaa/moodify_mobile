@@ -3,7 +3,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:moodify_mobile/presentation/bloc/auth/auth_bloc.dart';
+import 'package:moodify_mobile/presentation/bloc/change_password/change_pass_bloc.dart';
 import 'package:moodify_mobile/presentation/pages/auth/sign_in.dart';
+import 'package:moodify_mobile/presentation/pages/change_password/change_password.dart';
 import 'package:moodify_mobile/presentation/pages/scan/scan_page.dart';
 import 'package:moodify_mobile/presentation/widgets/navbar.dart';
 import 'package:moodify_mobile/presentation/widgets/splash_screen.dart';
@@ -34,6 +36,9 @@ class MyApp extends StatelessWidget {
         BlocProvider<AuthBloc>(
           create: (context) => AuthBloc(),
         ),
+        BlocProvider<ChangePasswordBloc>(
+          create: (context) => ChangePasswordBloc(),
+        ),
         // Tambahkan Bloc lainnya di sini jika diperlukan
       ],
       child: MaterialApp(
@@ -56,6 +61,7 @@ class MyApp extends StatelessWidget {
                   );
           },
           '/signin': (context) => const SignInPage(),
+          '/change_password': (context) => const ChangePasswordPage(),
           '/scan': (context) => cameras.isNotEmpty
               ? ScanPage(camera: cameras.first)
               : const Scaffold(
