@@ -25,8 +25,8 @@ class ListSongRecom extends StatelessWidget {
   Widget build(BuildContext context) {
     double multiplier = ScreenUtils.getMultiplier(context);
 
-    double imageSize = 50 * multiplier;
-    double titleFontSize = 14 * multiplier;
+    double imageSize = 45 * multiplier;
+    double titleFontSize = 13 * multiplier;
     double artistFontSize = 12 * multiplier;
     double durationFontSize = 13 * multiplier;
     double horizontalPadding = 30 * multiplier;
@@ -49,7 +49,7 @@ class ListSongRecom extends StatelessWidget {
                   height: imageSize * additionSizeImage!,
                   decoration: BoxDecoration(
                     image: DecorationImage(
-                      image: AssetImage(images),
+                      image: NetworkImage(images),
                       fit: BoxFit.cover,
                     ),
                     borderRadius: BorderRadius.circular(8 * multiplier),
@@ -64,7 +64,9 @@ class ListSongRecom extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            title,
+                            title.length > 20
+                                ? '${title.substring(0, 10)}...'
+                                : title,
                             style: TextStyle(
                               fontFamily: 'Poppins',
                               fontWeight: FontWeight.w600,
@@ -72,7 +74,9 @@ class ListSongRecom extends StatelessWidget {
                             ),
                           ),
                           Text(
-                            artist,
+                            artist.length > 20
+                                ? '${artist.substring(0, 20)}...'
+                                : artist,
                             style: TextStyle(
                               fontFamily: 'Poppins',
                               fontSize: artistFontSize * additionSizeFont!,
