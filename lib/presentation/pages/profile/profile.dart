@@ -1,19 +1,19 @@
 import 'dart:io';
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:hugeicons/hugeicons.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
+import 'package:flutter/material.dart';
+import 'package:hugeicons/hugeicons.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:moodify_mobile/utils/screen_utils.dart';
 import 'package:moodify_mobile/presentation/bloc/auth/auth_bloc.dart';
 import 'package:moodify_mobile/presentation/bloc/auth/auth_event.dart';
+import 'package:moodify_mobile/presentation/widgets/buttons/button.dart';
+import 'package:moodify_mobile/presentation/widgets/form/text_field.dart';
 import 'package:moodify_mobile/presentation/bloc/profile/profile_bloc.dart';
 import 'package:moodify_mobile/presentation/bloc/profile/profile_event.dart';
 import 'package:moodify_mobile/presentation/bloc/profile/profile_state.dart';
-import 'package:moodify_mobile/utils/screen_utils.dart';
-import 'package:moodify_mobile/presentation/widgets/form/dateofbirth_picker.dart';
 import 'package:moodify_mobile/presentation/widgets/form/dropdown_dynamic.dart';
-import 'package:moodify_mobile/presentation/widgets/form/text_field.dart';
-import 'package:moodify_mobile/presentation/widgets/buttons/button.dart';
+import 'package:moodify_mobile/presentation/widgets/form/dateofbirth_picker.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({Key? key}) : super(key: key);
@@ -366,34 +366,101 @@ class _ProfilePageState extends State<ProfilePage> {
                                     text: 'Save',
                                     onTap: isEditing
                                         ? () async {
-                                            bool? confirm =
-                                                await showDialog<bool>(
-                                              context: context,
-                                              builder: (context) => AlertDialog(
-                                                backgroundColor: Colors.white,
-                                                title:
-                                                    const Text('Confirm Save'),
-                                                content: const Text(
-                                                    'Are you sure you want to save these changes?'),
-                                                actions: [
-                                                  TextButton(
-                                                    onPressed: () {
-                                                      Navigator.pop(
-                                                          context, false);
-                                                    },
-                                                    child: const Text('Cancel'),
+                                         bool? confirm = await showDialog<bool>(
+                                          context: context,
+                                          builder: (context) => AlertDialog(
+                                            backgroundColor: Colors.white,
+                                            title: Column(
+                                              mainAxisSize: MainAxisSize.min,
+                                              children: [
+                                                Image.asset(
+                                                  'assets/icons/Help.jpg',
+                                                  height: 70,
+                                                  width: 70,
+                                                  fit: BoxFit.contain,
+                                                ),
+                                                const SizedBox(height: 15),
+                                                 Text(
+                                                  'Confirm Save',
+                                                  textAlign: TextAlign.center,
+                                                  style: TextStyle(
+                                                    fontWeight: FontWeight.bold,
+                                                    fontFamily: 'Poppins',
+                                                    fontSize: getFontSize * 1.5,
                                                   ),
-                                                  TextButton(
+                                                ),
+                                              ],
+                                            ),
+                                            content: Padding(
+                                              padding: EdgeInsets.only(top: 0),
+                                              child: Text(
+                                                'Are you sure you want to save these changes?',
+                                                textAlign: TextAlign.center,
+                                                style: TextStyle(
+                                                  fontFamily: 'Poppins',
+                                                  fontSize: getFontSize * 0.9,
+                                                ),
+                                              ),
+                                            ),
+                                            contentPadding: const EdgeInsets.only(left: 25, right: 25, top: 15, bottom: 30),
+                                            actions: [
+                                              Column(
+                                                mainAxisSize: MainAxisSize.min,
+                                                crossAxisAlignment: CrossAxisAlignment.stretch,
+                                                children: [
+                                                  ElevatedButton(
                                                     onPressed: () {
-                                                      Navigator.pop(
-                                                          context, true);
+                                                      Navigator.pop(context, true);
                                                     },
-                                                    child: const Text('Save'),
+                                                    style: ElevatedButton.styleFrom(
+                                                      backgroundColor: Colors.white, 
+                                                      foregroundColor: Colors.black, 
+                                                      padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 15),
+                                                      shape: RoundedRectangleBorder(
+                                                        borderRadius: BorderRadius.circular(8),
+                                                        side: BorderSide(color: Colors.grey.withOpacity(0.2)), 
+                                                      ),
+                                                      shadowColor: Colors.transparent, 
+                                                      elevation: 0, 
+                                                    ),
+                                                    child: Text(
+                                                      'Save',
+                                                      style: TextStyle(
+                                                        fontWeight: FontWeight.bold,
+                                                        fontFamily: 'Poppins',
+                                                        fontSize: getFontSize * 1.1,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  const SizedBox(height: 10),
+                                                  ElevatedButton(
+                                                    onPressed: () {
+                                                      Navigator.pop(context, false);
+                                                    },
+                                                    style: ElevatedButton.styleFrom(
+                                                      backgroundColor: Color(0xFFEF5350), 
+                                                      foregroundColor: Colors.white, 
+                                                      padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 15),
+                                                      shape: RoundedRectangleBorder(
+                                                        borderRadius: BorderRadius.circular(8),
+                                                      ),
+                                                      shadowColor: Colors.transparent, 
+                                                      elevation: 0, 
+                                                    ),
+                                                    child: Text(
+                                                      'Cancel',
+                                                      style: TextStyle(
+                                                        fontWeight: FontWeight.bold,
+                                                        fontFamily: 'Poppins',
+                                                        fontSize: getFontSize * 1.1,
+                                                      ),
+                                                    ),
                                                   ),
                                                 ],
                                               ),
-                                            );
-
+                                            ],
+                                          ),
+                                        );
                                             if (confirm == true) {
                                               final updatedFirstName =
                                                   firstNameController.text;
