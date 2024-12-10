@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:hugeicons/hugeicons.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:moodify_mobile/utils/screen_utils.dart';
 import 'package:moodify_mobile/presentation/bloc/auth/auth_bloc.dart';
 import 'package:moodify_mobile/presentation/bloc/auth/auth_event.dart';
 import 'package:moodify_mobile/presentation/bloc/auth/auth_state.dart';
-import 'package:hugeicons/hugeicons.dart';
-import 'package:moodify_mobile/utils/screen_utils.dart';
 import 'package:moodify_mobile/presentation/widgets/buttons/button.dart';
-import 'package:moodify_mobile/presentation/widgets/form/dateofbirth_picker.dart';
-import 'package:moodify_mobile/presentation/widgets/form/dropdown_dynamic.dart';
 import 'package:moodify_mobile/presentation/widgets/form/text_field.dart';
+import 'package:moodify_mobile/presentation/widgets/form/dropdown_dynamic.dart';
+import 'package:moodify_mobile/presentation/widgets/form/dateofbirth_picker.dart';
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({super.key});
@@ -81,12 +81,17 @@ class _SignUpPageState extends State<SignUpPage> {
               const SnackBar(
                 content: Text("Your account has been successfully created!"),
                 backgroundColor: Colors.green,
+                behavior: SnackBarBehavior.floating, 
+                margin: EdgeInsets.only( bottom: 40, left: 20, right: 20), 
               ),
             );
           } else if (state is AuthError) {
             Navigator.of(context).pop();
             ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text(state.message)),
+              SnackBar(content: Text(state.message),
+              behavior: SnackBarBehavior.floating, 
+              margin: const EdgeInsets.only( bottom: 40, left: 20, right: 20), 
+              ),
             );
           }
         },
@@ -201,19 +206,31 @@ class _SignUpPageState extends State<SignUpPage> {
                               birthdate == null) {
                             ScaffoldMessenger.of(context).showSnackBar(
                               const SnackBar(
-                                  content: Text("Please fill all fields")),
+                                  content: Text("Please fill all fields"),
+                                  backgroundColor: Colors.red,
+                                  behavior: SnackBarBehavior.floating, 
+                                  margin: EdgeInsets.only( bottom: 40, left: 20, right: 20), 
+                                  ),
                             );
                           } else if (passwordController.text.length < 8) {
                             ScaffoldMessenger.of(context).showSnackBar(
                               const SnackBar(
                                   content: Text(
-                                      "Password must be at least 8 characters")),
+                                      "Password must be at least 8 characters"),
+                                      backgroundColor: Colors.red,
+                                      behavior: SnackBarBehavior.floating, 
+                                      margin: EdgeInsets.only( bottom: 40, left: 20, right: 20), 
+                                      ),
                             );
                           } else if (passwordController.text !=
                               confirmPasswordController.text) {
                             ScaffoldMessenger.of(context).showSnackBar(
                               const SnackBar(
-                                  content: Text("Passwords do not match")),
+                                  content: Text("Passwords do not match"),
+                                  backgroundColor: Colors.red,
+                                  behavior: SnackBarBehavior.floating, 
+                                  margin: EdgeInsets.only( bottom: 40, left: 20, right: 20), 
+                                  ),
                             );
                           } else {
                             BlocProvider.of<AuthBloc>(context).add(

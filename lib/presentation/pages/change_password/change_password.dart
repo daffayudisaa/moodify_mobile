@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hugeicons/hugeicons.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:moodify_mobile/utils/screen_utils.dart';
 import 'package:moodify_mobile/presentation/widgets/buttons/button.dart';
 import 'package:moodify_mobile/presentation/widgets/form/text_field.dart';
@@ -79,6 +79,8 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                 const SnackBar(
                   content: Text('Password successfully changed'),
                   backgroundColor: Colors.green,
+                  behavior: SnackBarBehavior.floating, 
+                  margin: EdgeInsets.only( bottom: 40, left: 20, right: 20),
                 ),
               );
 
@@ -86,7 +88,11 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
             });
           } else if (state is ChangePasswordFailure) {
             ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text(state.errorMessage)),
+              SnackBar(content: Text(state.errorMessage), 
+              backgroundColor: Colors.red,
+              behavior: SnackBarBehavior.floating, 
+              margin: const EdgeInsets.only( bottom: 40, left: 20, right: 20),),
+              
             );
           }
         },

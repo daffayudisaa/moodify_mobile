@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:spotify_sdk/spotify_sdk.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class button_spotify extends StatefulWidget {
   const button_spotify({
@@ -110,7 +110,11 @@ class _button_spotifyState extends State<button_spotify> {
 
   void showErrorAndRedirect(String message) {
     ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text(message)),
+      SnackBar(content: Text(message),
+        backgroundColor: Colors.red,
+        behavior: SnackBarBehavior.floating, 
+        margin: EdgeInsets.only(bottom: 40, left: 20, right: 20), 
+      ),
     );
 
     Navigator.pushReplacementNamed(context, '/sign-in');

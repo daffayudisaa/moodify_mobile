@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:moodify_mobile/utils/screen_utils.dart';
+import 'package:moodify_mobile/presentation/pages/auth/sign_up.dart';
 import 'package:moodify_mobile/presentation/bloc/auth/auth_bloc.dart';
 import 'package:moodify_mobile/presentation/bloc/auth/auth_state.dart';
 import 'package:moodify_mobile/presentation/bloc/auth/auth_event.dart';
-import 'package:moodify_mobile/presentation/pages/auth/forgot_password.dart';
-import 'package:moodify_mobile/presentation/pages/auth/sign_up.dart';
-import 'package:moodify_mobile/presentation/widgets/buttons/button_spotify.dart';
-import 'package:moodify_mobile/utils/screen_utils.dart';
 import 'package:moodify_mobile/presentation/widgets/buttons/button.dart';
 import 'package:moodify_mobile/presentation/widgets/form/text_field.dart';
+import 'package:moodify_mobile/presentation/pages/auth/forgot_password.dart';
+import 'package:moodify_mobile/presentation/widgets/buttons/button_spotify.dart';
 
 class SignInPage extends StatefulWidget {
   const SignInPage({super.key});
@@ -60,6 +60,8 @@ class _SignInPageState extends State<SignInPage> {
               SnackBar(
                 content: Text(state.message),
                 backgroundColor: Colors.red,
+                behavior: SnackBarBehavior.floating, 
+                margin: const EdgeInsets.only( bottom: 40, left: 20, right: 20), 
               ),
             );
           }

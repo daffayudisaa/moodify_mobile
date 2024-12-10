@@ -426,7 +426,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                                     child: Text(
                                                       'Save',
                                                       style: TextStyle(
-                                                        fontWeight: FontWeight.bold,
+                                                        fontWeight: FontWeight.w600,
                                                         fontFamily: 'Poppins',
                                                         fontSize: getFontSize * 1.1,
                                                       ),
@@ -450,7 +450,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                                     child: Text(
                                                       'Cancel',
                                                       style: TextStyle(
-                                                        fontWeight: FontWeight.bold,
+                                                        fontWeight: FontWeight.w600,
                                                         fontFamily: 'Poppins',
                                                         fontSize: getFontSize * 1.1,
                                                       ),
@@ -485,14 +485,18 @@ class _ProfilePageState extends State<ProfilePage> {
                                               setState(() {
                                                 isEditing = false;
                                               });
-                                              ScaffoldMessenger.of(context)
-                                                  .showSnackBar(
-                                                const SnackBar(
-                                                  content: Text(
-                                                      'Profile updated successfully!'),
+                                              ScaffoldMessenger.of(context).showSnackBar(
+                                              const SnackBar(
+                                                  content: const Text(
+                                                    'Profile updated successfully!',
+                                                    textAlign: TextAlign.center,
+                                                  ),
                                                   backgroundColor: Colors.green,
+                                                  behavior: SnackBarBehavior.floating, 
+                                                  margin: EdgeInsets.only( left: 20, right: 20), 
                                                 ),
                                               );
+
                                             }
                                           }
                                         : () {}),
