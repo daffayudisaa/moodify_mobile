@@ -21,6 +21,127 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
   final TextEditingController _newPasswordController = TextEditingController();
   final TextEditingController _confirmPasswordController =
       TextEditingController();
+  
+  bool _hasChanges = false;
+
+  void _onTextChanged() {
+    setState(() {
+      _hasChanges = _currentPasswordController.text.isNotEmpty ||
+                    _newPasswordController.text.isNotEmpty ||
+                    _confirmPasswordController.text.isNotEmpty;
+    });
+  }
+
+  Future<void> _showCancelDialog(BuildContext context) async {
+    if (!_hasChanges) return;
+
+    final bool? shouldCancel = await showDialog<bool>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          backgroundColor: Colors.white,
+          title: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Image.asset(
+                'assets/icons/Danger.jpg',
+                height: 70,
+                width: 70,
+                fit: BoxFit.contain,
+              ),
+              const SizedBox(height: 15),
+              Text(
+                'Discard Changes?',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontFamily: 'Poppins',
+                  fontSize: ScreenUtils.getFontSize(context, 14) * 1.5,
+                ),
+              ),
+            ],
+          ),
+          content: Padding(
+            padding: const EdgeInsets.only(top: 0),
+            child: Text(
+              'Are you sure you want to discard the changes?',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontFamily: 'Poppins',
+                fontSize: ScreenUtils.getFontSize(context, 14) * 0.9,
+              ),
+            ),
+          ),
+          contentPadding: const EdgeInsets.only(left: 25, right: 25, top: 15, bottom: 30),
+          actions: [
+            Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.pop(context, true);
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.white, 
+                    foregroundColor: Colors.black, 
+                    padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 15),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8),
+                      side: BorderSide(color: Colors.grey.withOpacity(0.2)), 
+                    ),
+                    shadowColor: Colors.transparent, 
+                    elevation: 0, 
+                  ),
+                  child: Text(
+                    'Yes',
+                    style: TextStyle(
+                      fontWeight: FontWeight.w600,
+                      fontFamily: 'Poppins',
+                      fontSize: ScreenUtils.getFontSize(context, 14) * 1.1,
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 10),
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.pop(context, false);
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color(0xFFEF5350), 
+                    foregroundColor: Colors.white, 
+                    padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 15),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    shadowColor: Colors.transparent, 
+                    elevation: 0, 
+                  ),
+                  child: Text(
+                    'No',
+                    style: TextStyle(
+                      fontWeight: FontWeight.w600,
+                      fontFamily: 'Poppins',
+                      fontSize: ScreenUtils.getFontSize(context, 14) * 1.1,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ],
+        );
+      },
+    );
+
+    if (shouldCancel ?? false) {
+      Navigator.pushNamedAndRemoveUntil(
+        context,
+        '/navbar',
+        (Route<dynamic> route) => false,
+        arguments: 3,
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -47,14 +168,7 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
             color: Color(0xFF004373),
             size: 30,
           ),
-          onPressed: () {
-            Navigator.pushNamedAndRemoveUntil(
-              context,
-              '/navbar',
-              (Route<dynamic> route) => false,
-              arguments: 3,
-            );
-          },
+          onPressed: () => _showCancelDialog(context),
         ),
       ),
       body: BlocListener<ChangePasswordBloc, ChangePasswordState>(
@@ -79,8 +193,8 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                 const SnackBar(
                   content: Text('Password successfully changed'),
                   backgroundColor: Colors.green,
-                  behavior: SnackBarBehavior.floating, 
-                  margin: EdgeInsets.only( bottom: 40, left: 20, right: 20),
+                  behavior: SnackBarBehavior.floating,
+                  margin: EdgeInsets.only(bottom: 40, left: 20, right: 20),
                 ),
               );
 
@@ -88,11 +202,12 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
             });
           } else if (state is ChangePasswordFailure) {
             ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text(state.errorMessage), 
-              backgroundColor: Colors.red,
-              behavior: SnackBarBehavior.floating, 
-              margin: const EdgeInsets.only( bottom: 40, left: 20, right: 20),),
-              
+              SnackBar(
+                content: Text(state.errorMessage),
+                backgroundColor: Colors.red,
+                behavior: SnackBarBehavior.floating,
+                margin: const EdgeInsets.only(bottom: 40, left: 20, right: 20),
+              ),
             );
           }
         },
@@ -105,18 +220,21 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                 obscureText: true,
                 controller: _currentPasswordController,
                 hintText: 'Current Password',
+                onChanged: (text) => _onTextChanged(),
               ),
               const SizedBox(height: 20),
               CustomTextField(
                 obscureText: true,
                 controller: _newPasswordController,
                 hintText: 'New Password',
+                onChanged: (text) => _onTextChanged(),
               ),
               const SizedBox(height: 20),
               CustomTextField(
                 obscureText: true,
                 controller: _confirmPasswordController,
                 hintText: 'Confirm Password',
+                onChanged: (text) => _onTextChanged(),
               ),
               const SizedBox(height: 40),
               Row(
@@ -125,14 +243,7 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                     child: FillButton(
                       color: const Color(0xFFFF5855),
                       text: 'Cancel',
-                      onTap: () {
-                        Navigator.pushNamedAndRemoveUntil(
-                          context,
-                          '/navbar',
-                          (Route<dynamic> route) => false,
-                          arguments: 3,
-                        );
-                      },
+                      onTap: () => _showCancelDialog(context),
                     ),
                   ),
                   const SizedBox(width: 15),
