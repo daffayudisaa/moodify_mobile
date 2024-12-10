@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
 import 'dart:io';
+import 'package:flutter/material.dart';
 import 'package:hugeicons/hugeicons.dart';
 
 class DisplayPictureScreen extends StatefulWidget {
@@ -33,50 +33,83 @@ class _DisplayPictureScreenState extends State<DisplayPictureScreen> {
     _showSuccessDialog();
   }
 
-  void _showSuccessDialog() {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          backgroundColor: Colors.white,
-          title: const Column(
-            children: [
-              Icon(
-                Icons.check_circle,
-                color: Colors.green,
-                size: 60,
+  void _showSuccessDialog() async {
+  bool? confirm = await showDialog<bool>(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        backgroundColor: Colors.white,
+        title: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Image.asset(
+              'assets/icons/Accept.jpg',
+              height: 70,
+              width: 70,
+              fit: BoxFit.contain,
+            ),
+            const SizedBox(height: 10),
+            const Text(
+              'Success',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontFamily: 'Poppins',
+                fontSize: 18,
               ),
-              SizedBox(height: 10),
-              Center(child: Text('Success')),
-            ],
-          ),
-          content: const Text('Gambar berhasil diunggah!'),
-          actions: <Widget>[
-            TextButton(
-              child: const Text(
-                'OK',
-                style:
-                    TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
-              ),
-              style: TextButton.styleFrom(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 30, vertical: 12),
-                backgroundColor: const Color(0xFF42B1FF),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(30),
-                ),
-              ),
-              onPressed: () {
-                Navigator.of(context).pop();
-                Navigator.pushNamedAndRemoveUntil(
-                    context, '/navbar', (Route<dynamic> route) => false);
-              },
             ),
           ],
-        );
-      },
-    );
-  }
+        ),
+        content: const Padding(
+          padding: EdgeInsets.only(top: 0),
+          child: Text(
+            'Gambar berhasil diunggah!',
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontFamily: 'Poppins',
+              fontSize: 14,
+            ),
+          ),
+        ),
+        contentPadding: const EdgeInsets.only(left: 25, right: 25, top: 15, bottom: 30),
+        actions: [
+          Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.pop(context, true); // Dikonfirmasi 'true'
+                  Navigator.pushNamedAndRemoveUntil(
+                    context, '/navbar', (Route<dynamic> route) => false);
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Color(0xFF009951), 
+                  foregroundColor: Colors.white, 
+                  padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 15),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8),
+                    side: BorderSide(color: Colors.grey.withOpacity(0.2)), 
+                  ),
+                  shadowColor: Colors.transparent, 
+                  elevation: 0, 
+                ),
+                child: const Text(
+                  'OK',
+                  style: TextStyle(
+                    fontWeight: FontWeight.w600,
+                    fontFamily: 'Poppins',
+                    fontSize: 16,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ],
+      );
+    },
+  );
+}
 
   @override
   Widget build(BuildContext context) {
