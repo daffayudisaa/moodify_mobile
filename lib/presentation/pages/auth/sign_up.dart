@@ -25,6 +25,8 @@ class _SignUpPageState extends State<SignUpPage> {
   TextEditingController confirmPasswordController = TextEditingController();
   String? gender;
   DateTime? birthdate;
+  bool isPasswordVisible = false;
+  bool isconfirmPasswordVisible = false;
 
   @override
   Widget build(BuildContext context) {
@@ -179,16 +181,56 @@ class _SignUpPageState extends State<SignUpPage> {
                   },
                 ),
                 const SizedBox(height: 20),
-                CustomTextField(
-                    controller: passwordController,
-                    hintText: 'Password',
-                    obscureText: true),
+                Stack(
+                  alignment: Alignment.centerRight,
+                  children: [
+                    CustomTextField(
+                      hintText: 'Password',
+                      obscureText: !isPasswordVisible,
+                      controller: passwordController,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(right: 10.0), // Geser ikon ke kiri
+                      child: IconButton(
+                        icon: Icon(
+                          isPasswordVisible ? Icons.visibility : Icons.visibility_off,
+                          color: Colors.grey,
+                        ),
+                        onPressed: () {
+                          setState(() {
+                            isPasswordVisible = !isPasswordVisible;
+                          });
+                        },
+                      ),
+                    ),
+                  ],
+                ),
                 const SizedBox(height: 20),
-                CustomTextField(
-                    controller: confirmPasswordController,
-                    hintText: 'Confirm Password',
-                    obscureText: true),
-                const SizedBox(height: 30),
+                Stack(
+                  alignment: Alignment.centerRight,
+                  children: [
+                    CustomTextField(
+                      hintText: 'Confirm Password',
+                      obscureText: !isconfirmPasswordVisible,
+                      controller: confirmPasswordController,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(right: 10.0), // Geser ikon ke kiri
+                      child: IconButton(
+                        icon: Icon(
+                          isconfirmPasswordVisible ? Icons.visibility : Icons.visibility_off,
+                          color: Colors.grey,
+                        ),
+                        onPressed: () {
+                          setState(() {
+                            isconfirmPasswordVisible = !isconfirmPasswordVisible;
+                          });
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 20,),
                 Row(
                   children: [
                     Expanded(

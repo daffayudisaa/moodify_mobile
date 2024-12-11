@@ -22,6 +22,9 @@ class _SignInPageState extends State<SignInPage> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
 
+  bool isPasswordVisible = false;
+
+
   @override
   Widget build(BuildContext context) {
     final screenHeight = MediaQuery.of(context).size.height;
@@ -166,10 +169,29 @@ class _SignInPageState extends State<SignInPage> {
                         controller: emailController,
                       ),
                       const SizedBox(height: 25),
-                      CustomTextField(
-                        hintText: 'Password',
-                        obscureText: true,
-                        controller: passwordController,
+                      Stack(
+                        alignment: Alignment.centerRight,
+                        children: [
+                          CustomTextField(
+                            hintText: 'Password',
+                            obscureText: !isPasswordVisible,
+                            controller: passwordController,
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(right: 10.0), // Geser ikon ke kiri
+                            child: IconButton(
+                              icon: Icon(
+                                isPasswordVisible ? Icons.visibility : Icons.visibility_off,
+                                color: Colors.grey,
+                              ),
+                              onPressed: () {
+                                setState(() {
+                                  isPasswordVisible = !isPasswordVisible;
+                                });
+                              },
+                            ),
+                          ),
+                        ],
                       ),
                       const SizedBox(height: 12),
                       GestureDetector(
@@ -278,4 +300,5 @@ class _SignInPageState extends State<SignInPage> {
       ),
     );
   }
+  
 }

@@ -21,6 +21,9 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
   final TextEditingController _newPasswordController = TextEditingController();
   final TextEditingController _confirmPasswordController =
       TextEditingController();
+  bool isCurrentPasswordVisible = false;
+  bool isNewPasswordVisible = false;
+  bool isConfirmNewPasswordVisible = false;
 
   bool _hasChanges = false;
 
@@ -227,25 +230,80 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              CustomTextField(
-                obscureText: true,
-                controller: _currentPasswordController,
-                hintText: 'Current Password',
-                onChanged: (text) => _onTextChanged(),
+              Stack(
+                alignment: Alignment.centerRight,
+                children: [
+                  CustomTextField(
+                    hintText: 'Current Password',
+                    obscureText: !isCurrentPasswordVisible,
+                    controller: _currentPasswordController,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(right: 10.0), // Geser ikon ke kiri
+                    child: IconButton(
+                      icon: Icon(
+                        isCurrentPasswordVisible ? Icons.visibility : Icons.visibility_off,
+                        color: Colors.grey,
+                      ),
+                      onPressed: () {
+                        setState(() {
+                          isCurrentPasswordVisible = !isCurrentPasswordVisible;
+                        });
+                      },
+                    ),
+                  ),
+                ],
+              ),
+
+              const SizedBox(height: 20),
+              Stack(
+                alignment: Alignment.centerRight,
+                children: [
+                  CustomTextField(
+                    hintText: 'New Password',
+                    obscureText: !isNewPasswordVisible,
+                    controller: _newPasswordController,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(right: 10.0), // Geser ikon ke kiri
+                    child: IconButton(
+                      icon: Icon(
+                        isNewPasswordVisible ? Icons.visibility : Icons.visibility_off,
+                        color: Colors.grey,
+                      ),
+                      onPressed: () {
+                        setState(() {
+                          isNewPasswordVisible = !isNewPasswordVisible;
+                        });
+                      },
+                    ),
+                  ),
+                ],
               ),
               const SizedBox(height: 20),
-              CustomTextField(
-                obscureText: true,
-                controller: _newPasswordController,
-                hintText: 'New Password',
-                onChanged: (text) => _onTextChanged(),
-              ),
-              const SizedBox(height: 20),
-              CustomTextField(
-                obscureText: true,
-                controller: _confirmPasswordController,
-                hintText: 'Confirm Password',
-                onChanged: (text) => _onTextChanged(),
+              Stack(
+                alignment: Alignment.centerRight,
+                children: [
+                  CustomTextField(
+                    hintText: 'Confirm New Password',
+                    obscureText: !isConfirmNewPasswordVisible,
+                    controller: _confirmPasswordController,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(right: 10.0), // Geser ikon ke kiri
+                    child: IconButton(
+                      icon: Icon(
+                        isConfirmNewPasswordVisible ? Icons.visibility : Icons.visibility_off,
+                        color: Colors.grey,
+                      ),
+                      onPressed: () {
+                        setState(() {
+                          isConfirmNewPasswordVisible = !isConfirmNewPasswordVisible;
+                        });
+                      },
+                    ),
+                  ),
+                ],
               ),
               const SizedBox(height: 40),
               Row(
