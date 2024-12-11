@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hugeicons/hugeicons.dart';
@@ -8,7 +6,6 @@ import 'package:moodify_mobile/presentation/bloc/recap_mood/history/history_bloc
 import 'package:moodify_mobile/presentation/bloc/recap_mood/history/history_event.dart';
 import 'package:moodify_mobile/presentation/bloc/recap_mood/history/history_state.dart';
 import 'package:moodify_mobile/utils/screen_utils.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class HistoryPage extends StatefulWidget {
   @override
