@@ -1,15 +1,19 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hugeicons/hugeicons.dart';
+import 'package:moodify_mobile/presentation/bloc/scan/scan_bloc.dart';
+import 'package:moodify_mobile/presentation/bloc/scan/scan_even.dart';
+import 'package:moodify_mobile/presentation/bloc/scan/scan_state.dart';
 
 class DisplayPictureScreen extends StatefulWidget {
   final String imagePath;
-  final bool isFrontCamera; // Add this field to indicate the camera type
+  final bool isFrontCamera;
 
   const DisplayPictureScreen({
     super.key,
     required this.imagePath,
-    required this.isFrontCamera, // Initialize this field
+    required this.isFrontCamera,
   });
 
   @override
@@ -17,100 +21,6 @@ class DisplayPictureScreen extends StatefulWidget {
 }
 
 class _DisplayPictureScreenState extends State<DisplayPictureScreen> {
-  bool _isLoading = false;
-
-  Future<void> _uploadImage() async {
-    setState(() {
-      _isLoading = true;
-    });
-
-    await Future.delayed(const Duration(seconds: 1));
-
-    setState(() {
-      _isLoading = false;
-    });
-
-    _showSuccessDialog();
-  }
-
-  void _showSuccessDialog() async {
-  bool? confirm = await showDialog<bool>(
-    context: context,
-    builder: (BuildContext context) {
-      return AlertDialog(
-        backgroundColor: Colors.white,
-        title: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Image.asset(
-              'assets/icons/Accept.jpg',
-              height: 70,
-              width: 70,
-              fit: BoxFit.contain,
-            ),
-            const SizedBox(height: 10),
-            const Text(
-              'Success',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontFamily: 'Poppins',
-                fontSize: 18,
-              ),
-            ),
-          ],
-        ),
-        content: const Padding(
-          padding: EdgeInsets.only(top: 0),
-          child: Text(
-            'Gambar berhasil diunggah!',
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              fontFamily: 'Poppins',
-              fontSize: 14,
-            ),
-          ),
-        ),
-        contentPadding: const EdgeInsets.only(left: 25, right: 25, top: 15, bottom: 30),
-        actions: [
-          Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.pop(context, true); // Dikonfirmasi 'true'
-                  Navigator.pushNamedAndRemoveUntil(
-                    context, '/navbar', (Route<dynamic> route) => false);
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Color(0xFF009951), 
-                  foregroundColor: Colors.white, 
-                  padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 15),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8),
-                    side: BorderSide(color: Colors.grey.withOpacity(0.2)), 
-                  ),
-                  shadowColor: Colors.transparent, 
-                  elevation: 0, 
-                ),
-                child: const Text(
-                  'OK',
-                  style: TextStyle(
-                    fontWeight: FontWeight.w600,
-                    fontFamily: 'Poppins',
-                    fontSize: 16,
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ],
-      );
-    },
-  );
-}
-
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
@@ -147,48 +57,152 @@ class _DisplayPictureScreenState extends State<DisplayPictureScreen> {
           },
         ),
       ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          Center(
-            child: Transform(
-              alignment: Alignment.center,
-              transform: widget.isFrontCamera
-                  ? Matrix4.rotationY(
-                      3.14159) // Apply mirror effect if front camera
-                  : Matrix4
-                      .identity(), // Keep normal orientation for back camera
-              child: Image.file(
-                height: getImageSize * 19,
-                File(widget.imagePath),
+      body: BlocProvider(
+        create: (_) => ScanBloc(),
+        child: BlocConsumer<ScanBloc, ScanState>(
+          listener: (context, state) {
+            if (state is PictureUploading) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(content: Text('Uploading gambar...')),
+              );
+            } else if (state is PictureUploadSuccess) {
+              _showSuccessDialog();
+            } else if (state is PictureUploadFailure) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(content: Text('Gagal: ${state.errorMessage}')),
+              );
+            }
+          },
+          builder: (context, state) {
+            return Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Center(
+                  child: Transform(
+                    alignment: Alignment.center,
+                    transform: widget.isFrontCamera
+                        ? Matrix4.rotationY(3.14159)
+                        : Matrix4.identity(),
+                    child: Image.file(
+                      height: getImageSize * 19,
+                      File(widget.imagePath),
+                      fit: BoxFit.contain,
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 40),
+                if (state is PictureUploading)
+                  const CircularProgressIndicator(color: Colors.blue),
+                if (state is! PictureUploading)
+                  TextButton(
+                    onPressed: () {
+                      context.read<ScanBloc>().add(
+                            PictureUploadRequested(widget.imagePath),
+                          );
+                    },
+                    child: Text(
+                      'Kirim',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                        fontSize: getFontSize * 1.2,
+                      ),
+                    ),
+                    style: TextButton.styleFrom(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 40, vertical: 12),
+                      backgroundColor: const Color(0xFF42B1FF),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30),
+                      ),
+                    ),
+                  ),
+              ],
+            );
+          },
+        ),
+      ),
+    );
+  }
+
+  Future<void> _showSuccessDialog() async {
+    // ignore: unused_local_variable
+    bool? confirm = await showDialog<bool>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          backgroundColor: Colors.white,
+          title: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Image.asset(
+                'assets/icons/Accept.jpg',
+                height: 70,
+                width: 70,
                 fit: BoxFit.contain,
+              ),
+              const SizedBox(height: 10),
+              const Text(
+                'Success',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontFamily: 'Poppins',
+                  fontSize: 18,
+                ),
+              ),
+            ],
+          ),
+          content: const Padding(
+            padding: EdgeInsets.only(top: 0),
+            child: Text(
+              'Gambar berhasil diunggah!',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontFamily: 'Poppins',
+                fontSize: 14,
               ),
             ),
           ),
-          const SizedBox(height: 40),
-          if (_isLoading) const CircularProgressIndicator(color: Colors.blue),
-          if (!_isLoading)
-            TextButton(
-              onPressed: _uploadImage,
-              child: Text(
-                'Kirim',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                  fontSize: getFontSize * 1.2,
+          contentPadding:
+              const EdgeInsets.only(left: 25, right: 25, top: 15, bottom: 30),
+          actions: [
+            Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.pop(context, true);
+                    Navigator.pushNamedAndRemoveUntil(
+                        context, '/navbar', (Route<dynamic> route) => false);
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color(0xFF009951),
+                    foregroundColor: Colors.white,
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 4, vertical: 15),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8),
+                      side: BorderSide(color: Colors.grey.withOpacity(0.2)),
+                    ),
+                    shadowColor: Colors.transparent,
+                    elevation: 0,
+                  ),
+                  child: const Text(
+                    'OK',
+                    style: TextStyle(
+                      fontWeight: FontWeight.w600,
+                      fontFamily: 'Poppins',
+                      fontSize: 16,
+                    ),
+                  ),
                 ),
-              ),
-              style: TextButton.styleFrom(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 40, vertical: 12),
-                backgroundColor: const Color(0xFF42B1FF),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(30),
-                ),
-              ),
+              ],
             ),
-        ],
-      ),
+          ],
+        );
+      },
     );
   }
 }
