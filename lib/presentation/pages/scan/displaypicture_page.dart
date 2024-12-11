@@ -63,7 +63,11 @@ class _DisplayPictureScreenState extends State<DisplayPictureScreen> {
           listener: (context, state) {
             if (state is PictureUploading) {
               ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text('Uploading Image...')),
+                const SnackBar(content: Text('Uploading Image...'),
+                backgroundColor: Colors.blue,
+                behavior: SnackBarBehavior.floating, 
+                margin: EdgeInsets.only(bottom: 40, left: 20, right: 20), 
+                ),
               );
             } else if (state is PictureUploadSuccess) {
               _showSuccessDialog();
