@@ -1,7 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hugeicons/hugeicons.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:moodify_mobile/presentation/bloc/scan/scan_bloc.dart';
 import 'package:moodify_mobile/presentation/bloc/scan/scan_even.dart';
 import 'package:moodify_mobile/presentation/bloc/scan/scan_state.dart';
@@ -63,14 +63,12 @@ class _DisplayPictureScreenState extends State<DisplayPictureScreen> {
           listener: (context, state) {
             if (state is PictureUploading) {
               ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text('Uploading gambar...')),
+                const SnackBar(content: Text('Uploading Image...')),
               );
             } else if (state is PictureUploadSuccess) {
               _showSuccessDialog();
             } else if (state is PictureUploadFailure) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text('Gagal: ${state.errorMessage}')),
-              );
+              _showFailureDialog();
             }
           },
           builder: (context, state) {
@@ -101,7 +99,7 @@ class _DisplayPictureScreenState extends State<DisplayPictureScreen> {
                           );
                     },
                     child: Text(
-                      'Kirim',
+                      'Send',
                       style: TextStyle(
                         color: Colors.white,
                         fontWeight: FontWeight.bold,
@@ -156,7 +154,7 @@ class _DisplayPictureScreenState extends State<DisplayPictureScreen> {
           content: const Padding(
             padding: EdgeInsets.only(top: 0),
             child: Text(
-              'Gambar berhasil diunggah!',
+              'Image uploaded successfully!',
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontFamily: 'Poppins',
@@ -201,8 +199,89 @@ class _DisplayPictureScreenState extends State<DisplayPictureScreen> {
               ],
             ),
           ],
-        );
+        );  
       },
     );
   }
+
+  Future<void> _showFailureDialog() async {
+  await showDialog<bool>(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        backgroundColor: Colors.white,
+        title: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Image.asset(
+              'assets/icons/Decline.jpg',
+              height: 70,
+              width: 70,
+              fit: BoxFit.contain,
+            ),
+            const SizedBox(height: 10),
+            const Text(
+              'Error',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontFamily: 'Poppins',
+                fontSize: 18,
+              ),
+            ),
+          ],
+        ),
+        content: const Padding(
+          padding: EdgeInsets.only(top: 0),
+          child: Text(
+            'Failed to Upload Image!',
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontFamily: 'Poppins',
+              fontSize: 14,
+            ),
+          ),
+        ),
+        contentPadding:
+            const EdgeInsets.only(left: 25, right: 25, top: 15, bottom: 30),
+        actions: [
+          Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.pop(context, true);
+                  Navigator.pushNamedAndRemoveUntil(
+                      context, '/navbar', (Route<dynamic> route) => false);
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color(0xFFEF5350),
+                  foregroundColor: Colors.white,
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 4, vertical: 15),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8),
+                    side: BorderSide(color: Colors.grey.withOpacity(0.2)),
+                  ),
+                  shadowColor: Colors.transparent,
+                  elevation: 0,
+                ),
+                child: const Text(
+                  'OK',
+                  style: TextStyle(
+                    fontWeight: FontWeight.w600,
+                    fontFamily: 'Poppins',
+                    fontSize: 18,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ],
+      );
+    },
+  );
+}
+
 }
