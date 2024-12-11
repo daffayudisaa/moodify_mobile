@@ -21,19 +21,27 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
   final TextEditingController _newPasswordController = TextEditingController();
   final TextEditingController _confirmPasswordController =
       TextEditingController();
-  
+
   bool _hasChanges = false;
 
   void _onTextChanged() {
     setState(() {
       _hasChanges = _currentPasswordController.text.isNotEmpty ||
-                    _newPasswordController.text.isNotEmpty ||
-                    _confirmPasswordController.text.isNotEmpty;
+          _newPasswordController.text.isNotEmpty ||
+          _confirmPasswordController.text.isNotEmpty;
     });
   }
 
   Future<void> _showCancelDialog(BuildContext context) async {
-    if (!_hasChanges) return;
+    if (!_hasChanges) {
+      Navigator.pushNamedAndRemoveUntil(
+        context,
+        '/navbar',
+        (Route<dynamic> route) => false,
+        arguments: 3,
+      );
+      return;
+    }
 
     final bool? shouldCancel = await showDialog<bool>(
       context: context,
@@ -72,7 +80,8 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
               ),
             ),
           ),
-          contentPadding: const EdgeInsets.only(left: 25, right: 25, top: 15, bottom: 30),
+          contentPadding:
+              const EdgeInsets.only(left: 25, right: 25, top: 15, bottom: 30),
           actions: [
             Column(
               mainAxisSize: MainAxisSize.min,
@@ -83,15 +92,16 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                     Navigator.pop(context, true);
                   },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.white, 
-                    foregroundColor: Colors.black, 
-                    padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 15),
+                    backgroundColor: Colors.white,
+                    foregroundColor: Colors.black,
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 4, vertical: 15),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8),
-                      side: BorderSide(color: Colors.grey.withOpacity(0.2)), 
+                      side: BorderSide(color: Colors.grey.withOpacity(0.2)),
                     ),
-                    shadowColor: Colors.transparent, 
-                    elevation: 0, 
+                    shadowColor: Colors.transparent,
+                    elevation: 0,
                   ),
                   child: Text(
                     'Yes',
@@ -108,14 +118,15 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                     Navigator.pop(context, false);
                   },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xFFEF5350), 
-                    foregroundColor: Colors.white, 
-                    padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 15),
+                    backgroundColor: const Color(0xFFEF5350),
+                    foregroundColor: Colors.white,
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 4, vertical: 15),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8),
                     ),
-                    shadowColor: Colors.transparent, 
-                    elevation: 0, 
+                    shadowColor: Colors.transparent,
+                    elevation: 0,
                   ),
                   child: Text(
                     'No',
