@@ -129,29 +129,100 @@ class _ProfilePageState extends State<ProfilePage> {
                                     color: const Color(0xFFEC221F),
                                     onTap: () async {
                                       bool? confirm = await showDialog<bool>(
-                                        context: context,
-                                        builder: (context) => AlertDialog(
-                                          backgroundColor: Colors.white,
-                                          title: const Text('Confirm Deletion'),
-                                          content: const Text(
-                                            'Are you sure you want to delete your account? This action is permanent and cannot be undone.',
+                                          context: context,
+                                          builder: (context) => AlertDialog(
+                                            backgroundColor: Colors.white,
+                                            title: Column(
+                                              mainAxisSize: MainAxisSize.min,
+                                              children: [
+                                                Image.asset(
+                                                  'assets/icons/Danger.jpg',
+                                                  height: 70,
+                                                  width: 70,
+                                                  fit: BoxFit.contain,
+                                                ),
+                                                const SizedBox(height: 15),
+                                                 Text(
+                                                  'Delete Account',
+                                                  textAlign: TextAlign.center,
+                                                  style: TextStyle(
+                                                    fontWeight: FontWeight.bold,
+                                                    fontFamily: 'Poppins',
+                                                    fontSize: getFontSize * 1.5,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                            content: Padding(
+                                              padding: EdgeInsets.only(top: 0),
+                                              child: Text(
+                                                'Are you sure want to Delete your Account?',
+                                                textAlign: TextAlign.center,
+                                                style: TextStyle(
+                                                  fontFamily: 'Poppins',
+                                                  fontSize: getFontSize * 0.9,
+                                                ),
+                                              ),
+                                            ),
+                                            contentPadding: const EdgeInsets.only(left: 25, right: 25, top: 15, bottom: 30),
+                                            actions: [
+                                              Column(
+                                                mainAxisSize: MainAxisSize.min,
+                                                crossAxisAlignment: CrossAxisAlignment.stretch,
+                                                children: [
+                                                  ElevatedButton(
+                                                    onPressed: () {
+                                                      Navigator.pop(context, true);
+                                                    },
+                                                    style: ElevatedButton.styleFrom(
+                                                      backgroundColor: Color(0xFFEF5350), 
+                                                      padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 15),
+                                                      shape: RoundedRectangleBorder(
+                                                        borderRadius: BorderRadius.circular(8),
+                                                      ),
+                                                      shadowColor: Colors.transparent, 
+                                                      elevation: 0, 
+                                                    ),
+                                                    child: Text(
+                                                      'Delete',
+                                                      style: TextStyle(
+                                                        fontWeight: FontWeight.w600,
+                                                        fontFamily: 'Poppins',
+                                                        fontSize: getFontSize * 1.1,
+                                                        color: Colors.white
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  const SizedBox(height: 10),
+                                                  ElevatedButton(
+                                                    onPressed: () {
+                                                      Navigator.pop(context, false);
+                                                    },
+                                                    style: ElevatedButton.styleFrom(
+                                                      backgroundColor: Colors.white, 
+                                                      foregroundColor: Colors.black, 
+                                                      padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 15),
+                                                      shape: RoundedRectangleBorder(
+                                                        borderRadius: BorderRadius.circular(8),
+                                                        side: BorderSide(color: Colors.grey.withOpacity(0.2)), 
+                                                      ),
+                                                      shadowColor: Colors.grey, 
+                                                      elevation: 0, 
+                                                    ),
+                                                    child: Text(
+                                                      'Cancel',
+                                                      style: TextStyle(
+                                                        fontWeight: FontWeight.w600,
+                                                        fontFamily: 'Poppins',
+                                                        fontSize: getFontSize * 1.1,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ],
                                           ),
-                                          actions: [
-                                            TextButton(
-                                              onPressed: () {
-                                                Navigator.pop(context, false);
-                                              },
-                                              child: const Text('Cancel'),
-                                            ),
-                                            TextButton(
-                                              onPressed: () {
-                                                Navigator.pop(context, true);
-                                              },
-                                              child: const Text('Delete'),
-                                            ),
-                                          ],
-                                        ),
-                                      );
+                                        );
 
                                       if (confirm == true) {
                                         showDialog(
