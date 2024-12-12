@@ -10,6 +10,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     on<LoadProfile>(_onLoadProfile);
     on<DeleteAccount>(_onDeleteAccount);
     on<UpdateProfile>(_onUpdateProfile);
+    on<UploadAvatar>(_onUploadAvatar);
   }
 
   Future<Map<String, dynamic>> _loadUserCredentials() async {
@@ -139,6 +140,42 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
         add(LoadProfile());
       } else {
         emit(ProfileError("Failed to update profile: ${response.body}"));
+      }
+    } catch (e) {
+      emit(ProfileError(e.toString()));
+    }
+  }
+
+  Future<void> _onUploadAvatar(
+      UploadAvatar event, Emitter<ProfileState> emit) async {
+    emit(ProfileUploadingAvatar()); // Emit the loading state
+    try {
+      final credentials = await _loadUserCredentials();
+      final accessToken = credentials['accessToken'];
+
+      if (accessToken == null || accessToken.isEmpty) {
+        emit(const ProfileError("Invalid user credentials"));
+        return;
+      }
+
+      final uri = Uri.parse('http://sirw.my.id/users/profile/avatar');
+      final request = http.MultipartRequest('PUT', uri)
+        ..headers['Authorization'] = 'Bearer $accessToken';
+
+      request.files.add(await http.MultipartFile.fromPath(
+        'Avatar',
+        event.avatarFile.path,
+      ));
+
+      final streamedResponse = await request.send();
+      final response = await http.Response.fromStream(streamedResponse);
+
+      if (response.statusCode == 200) {
+        final data = json.decode(response.body);
+        emit(ProfileAvatarUploaded(data['avatarUrl'] ?? 'default_avatar_url'));
+        add(LoadProfile());
+      } else {
+        emit(ProfileError("Failed to upload avatar: ${response.body}"));
       }
     } catch (e) {
       emit(ProfileError(e.toString()));

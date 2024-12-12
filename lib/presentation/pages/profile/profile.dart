@@ -129,100 +129,131 @@ class _ProfilePageState extends State<ProfilePage> {
                                     color: const Color(0xFFEC221F),
                                     onTap: () async {
                                       bool? confirm = await showDialog<bool>(
-                                          context: context,
-                                          builder: (context) => AlertDialog(
-                                            backgroundColor: Colors.white,
-                                            title: Column(
-                                              mainAxisSize: MainAxisSize.min,
-                                              children: [
-                                                Image.asset(
-                                                  'assets/icons/Danger.jpg',
-                                                  height: 70,
-                                                  width: 70,
-                                                  fit: BoxFit.contain,
+                                        context: context,
+                                        builder: (context) => AlertDialog(
+                                          backgroundColor: Colors.white,
+                                          title: Column(
+                                            mainAxisSize: MainAxisSize.min,
+                                            children: [
+                                              Image.asset(
+                                                'assets/icons/Danger.jpg',
+                                                height: 70,
+                                                width: 70,
+                                                fit: BoxFit.contain,
+                                              ),
+                                              const SizedBox(height: 15),
+                                              Text(
+                                                'Delete Account',
+                                                textAlign: TextAlign.center,
+                                                style: TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                  fontFamily: 'Poppins',
+                                                  fontSize: getFontSize * 1.5,
                                                 ),
-                                                const SizedBox(height: 15),
-                                                 Text(
-                                                  'Delete Account',
-                                                  textAlign: TextAlign.center,
-                                                  style: TextStyle(
-                                                    fontWeight: FontWeight.bold,
-                                                    fontFamily: 'Poppins',
-                                                    fontSize: getFontSize * 1.5,
+                                              ),
+                                            ],
+                                          ),
+                                          content: Padding(
+                                            padding: EdgeInsets.only(top: 0),
+                                            child: Text(
+                                              'Are you sure want to Delete your Account?',
+                                              textAlign: TextAlign.center,
+                                              style: TextStyle(
+                                                fontFamily: 'Poppins',
+                                                fontSize: getFontSize * 0.9,
+                                              ),
+                                            ),
+                                          ),
+                                          contentPadding: const EdgeInsets.only(
+                                              left: 25,
+                                              right: 25,
+                                              top: 15,
+                                              bottom: 30),
+                                          actions: [
+                                            Column(
+                                              mainAxisSize: MainAxisSize.min,
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.stretch,
+                                              children: [
+                                                ElevatedButton(
+                                                  onPressed: () {
+                                                    Navigator.pop(
+                                                        context, true);
+                                                  },
+                                                  style:
+                                                      ElevatedButton.styleFrom(
+                                                    backgroundColor:
+                                                        Color(0xFFEF5350),
+                                                    padding: const EdgeInsets
+                                                        .symmetric(
+                                                        horizontal: 4,
+                                                        vertical: 15),
+                                                    shape:
+                                                        RoundedRectangleBorder(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              8),
+                                                    ),
+                                                    shadowColor:
+                                                        Colors.transparent,
+                                                    elevation: 0,
+                                                  ),
+                                                  child: Text(
+                                                    'Delete',
+                                                    style: TextStyle(
+                                                        fontWeight:
+                                                            FontWeight.w600,
+                                                        fontFamily: 'Poppins',
+                                                        fontSize:
+                                                            getFontSize * 1.1,
+                                                        color: Colors.white),
+                                                  ),
+                                                ),
+                                                const SizedBox(height: 10),
+                                                ElevatedButton(
+                                                  onPressed: () {
+                                                    Navigator.pop(
+                                                        context, false);
+                                                  },
+                                                  style:
+                                                      ElevatedButton.styleFrom(
+                                                    backgroundColor:
+                                                        Colors.white,
+                                                    foregroundColor:
+                                                        Colors.black,
+                                                    padding: const EdgeInsets
+                                                        .symmetric(
+                                                        horizontal: 4,
+                                                        vertical: 15),
+                                                    shape:
+                                                        RoundedRectangleBorder(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              8),
+                                                      side: BorderSide(
+                                                          color: Colors.grey
+                                                              .withOpacity(
+                                                                  0.2)),
+                                                    ),
+                                                    shadowColor: Colors.grey,
+                                                    elevation: 0,
+                                                  ),
+                                                  child: Text(
+                                                    'Cancel',
+                                                    style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.w600,
+                                                      fontFamily: 'Poppins',
+                                                      fontSize:
+                                                          getFontSize * 1.1,
+                                                    ),
                                                   ),
                                                 ),
                                               ],
                                             ),
-                                            content: Padding(
-                                              padding: EdgeInsets.only(top: 0),
-                                              child: Text(
-                                                'Are you sure want to Delete your Account?',
-                                                textAlign: TextAlign.center,
-                                                style: TextStyle(
-                                                  fontFamily: 'Poppins',
-                                                  fontSize: getFontSize * 0.9,
-                                                ),
-                                              ),
-                                            ),
-                                            contentPadding: const EdgeInsets.only(left: 25, right: 25, top: 15, bottom: 30),
-                                            actions: [
-                                              Column(
-                                                mainAxisSize: MainAxisSize.min,
-                                                crossAxisAlignment: CrossAxisAlignment.stretch,
-                                                children: [
-                                                  ElevatedButton(
-                                                    onPressed: () {
-                                                      Navigator.pop(context, true);
-                                                    },
-                                                    style: ElevatedButton.styleFrom(
-                                                      backgroundColor: Color(0xFFEF5350), 
-                                                      padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 15),
-                                                      shape: RoundedRectangleBorder(
-                                                        borderRadius: BorderRadius.circular(8),
-                                                      ),
-                                                      shadowColor: Colors.transparent, 
-                                                      elevation: 0, 
-                                                    ),
-                                                    child: Text(
-                                                      'Delete',
-                                                      style: TextStyle(
-                                                        fontWeight: FontWeight.w600,
-                                                        fontFamily: 'Poppins',
-                                                        fontSize: getFontSize * 1.1,
-                                                        color: Colors.white
-                                                      ),
-                                                    ),
-                                                  ),
-                                                  const SizedBox(height: 10),
-                                                  ElevatedButton(
-                                                    onPressed: () {
-                                                      Navigator.pop(context, false);
-                                                    },
-                                                    style: ElevatedButton.styleFrom(
-                                                      backgroundColor: Colors.white, 
-                                                      foregroundColor: Colors.black, 
-                                                      padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 15),
-                                                      shape: RoundedRectangleBorder(
-                                                        borderRadius: BorderRadius.circular(8),
-                                                        side: BorderSide(color: Colors.grey.withOpacity(0.2)), 
-                                                      ),
-                                                      shadowColor: Colors.grey, 
-                                                      elevation: 0, 
-                                                    ),
-                                                    child: Text(
-                                                      'Cancel',
-                                                      style: TextStyle(
-                                                        fontWeight: FontWeight.w600,
-                                                        fontFamily: 'Poppins',
-                                                        fontSize: getFontSize * 1.1,
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ],
-                                          ),
-                                        );
+                                          ],
+                                        ),
+                                      );
 
                                       if (confirm == true) {
                                         showDialog(
@@ -292,23 +323,36 @@ class _ProfilePageState extends State<ProfilePage> {
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               GestureDetector(
-                                onTap: isEditing ? _pickImage : null,
+                                onTap: () async {
+                                  await _pickImage();
+                                  if (_profileImage != null) {
+                                    context
+                                        .read<ProfileBloc>()
+                                        .add(UploadAvatar(_profileImage!));
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      const SnackBar(
+                                        content: Text("Uploading Image"),
+                                        backgroundColor: Colors.blue,
+                                        behavior: SnackBarBehavior.floating,
+                                        margin: EdgeInsets.only(
+                                            left: 20, right: 20),
+                                      ),
+                                    );
+                                  }
+                                },
                                 child: CircleAvatar(
                                   radius: getimageSize * 0.9,
                                   backgroundImage: _profileImage != null
                                       ? FileImage(_profileImage!)
-                                      : const AssetImage(
-                                              'assets/images/User.jpg')
-                                          as ImageProvider,
+                                      : NetworkImage(
+                                          'https://sirw.my.id/users/avatar/${state.avatar}'),
                                   child: Stack(
                                     children: [
                                       Align(
                                         alignment: Alignment.bottomRight,
                                         child: Container(
-                                          decoration: BoxDecoration(
-                                            color: isEditing == false
-                                                ? Colors.grey
-                                                : Colors.blue,
+                                          decoration: const BoxDecoration(
+                                            color: Colors.blue,
                                             shape: BoxShape.circle,
                                           ),
                                           padding: const EdgeInsets.all(6),
@@ -437,101 +481,155 @@ class _ProfilePageState extends State<ProfilePage> {
                                     text: 'Save',
                                     onTap: isEditing
                                         ? () async {
-                                         bool? confirm = await showDialog<bool>(
-                                          context: context,
-                                          builder: (context) => AlertDialog(
-                                            backgroundColor: Colors.white,
-                                            title: Column(
-                                              mainAxisSize: MainAxisSize.min,
-                                              children: [
-                                                Image.asset(
-                                                  'assets/icons/Help.jpg',
-                                                  height: 70,
-                                                  width: 70,
-                                                  fit: BoxFit.contain,
+                                            bool? confirm =
+                                                await showDialog<bool>(
+                                              context: context,
+                                              builder: (context) => AlertDialog(
+                                                backgroundColor: Colors.white,
+                                                title: Column(
+                                                  mainAxisSize:
+                                                      MainAxisSize.min,
+                                                  children: [
+                                                    Image.asset(
+                                                      'assets/icons/Help.jpg',
+                                                      height: 70,
+                                                      width: 70,
+                                                      fit: BoxFit.contain,
+                                                    ),
+                                                    const SizedBox(height: 15),
+                                                    Text(
+                                                      'Confirm Save',
+                                                      textAlign:
+                                                          TextAlign.center,
+                                                      style: TextStyle(
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        fontFamily: 'Poppins',
+                                                        fontSize:
+                                                            getFontSize * 1.5,
+                                                      ),
+                                                    ),
+                                                  ],
                                                 ),
-                                                const SizedBox(height: 15),
-                                                 Text(
-                                                  'Confirm Save',
-                                                  textAlign: TextAlign.center,
-                                                  style: TextStyle(
-                                                    fontWeight: FontWeight.bold,
-                                                    fontFamily: 'Poppins',
-                                                    fontSize: getFontSize * 1.5,
+                                                content: Padding(
+                                                  padding:
+                                                      EdgeInsets.only(top: 0),
+                                                  child: Text(
+                                                    'Are you sure you want to save these changes?',
+                                                    textAlign: TextAlign.center,
+                                                    style: TextStyle(
+                                                      fontFamily: 'Poppins',
+                                                      fontSize:
+                                                          getFontSize * 0.9,
+                                                    ),
                                                   ),
                                                 ),
-                                              ],
-                                            ),
-                                            content: Padding(
-                                              padding: EdgeInsets.only(top: 0),
-                                              child: Text(
-                                                'Are you sure you want to save these changes?',
-                                                textAlign: TextAlign.center,
-                                                style: TextStyle(
-                                                  fontFamily: 'Poppins',
-                                                  fontSize: getFontSize * 0.9,
-                                                ),
-                                              ),
-                                            ),
-                                            contentPadding: const EdgeInsets.only(left: 25, right: 25, top: 15, bottom: 30),
-                                            actions: [
-                                              Column(
-                                                mainAxisSize: MainAxisSize.min,
-                                                crossAxisAlignment: CrossAxisAlignment.stretch,
-                                                children: [
-                                                  ElevatedButton(
-                                                    onPressed: () {
-                                                      Navigator.pop(context, true);
-                                                    },
-                                                    style: ElevatedButton.styleFrom(
-                                                      backgroundColor: Colors.white, 
-                                                      foregroundColor: Colors.black, 
-                                                      padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 15),
-                                                      shape: RoundedRectangleBorder(
-                                                        borderRadius: BorderRadius.circular(8),
-                                                        side: BorderSide(color: Colors.grey.withOpacity(0.2)), 
+                                                contentPadding:
+                                                    const EdgeInsets.only(
+                                                        left: 25,
+                                                        right: 25,
+                                                        top: 15,
+                                                        bottom: 30),
+                                                actions: [
+                                                  Column(
+                                                    mainAxisSize:
+                                                        MainAxisSize.min,
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .stretch,
+                                                    children: [
+                                                      ElevatedButton(
+                                                        onPressed: () {
+                                                          Navigator.pop(
+                                                              context, true);
+                                                        },
+                                                        style: ElevatedButton
+                                                            .styleFrom(
+                                                          backgroundColor:
+                                                              Colors.white,
+                                                          foregroundColor:
+                                                              Colors.black,
+                                                          padding:
+                                                              const EdgeInsets
+                                                                  .symmetric(
+                                                                  horizontal: 4,
+                                                                  vertical: 15),
+                                                          shape:
+                                                              RoundedRectangleBorder(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        8),
+                                                            side: BorderSide(
+                                                                color: Colors
+                                                                    .grey
+                                                                    .withOpacity(
+                                                                        0.2)),
+                                                          ),
+                                                          shadowColor: Colors
+                                                              .transparent,
+                                                          elevation: 0,
+                                                        ),
+                                                        child: Text(
+                                                          'Save',
+                                                          style: TextStyle(
+                                                            fontWeight:
+                                                                FontWeight.w600,
+                                                            fontFamily:
+                                                                'Poppins',
+                                                            fontSize:
+                                                                getFontSize *
+                                                                    1.1,
+                                                          ),
+                                                        ),
                                                       ),
-                                                      shadowColor: Colors.transparent, 
-                                                      elevation: 0, 
-                                                    ),
-                                                    child: Text(
-                                                      'Save',
-                                                      style: TextStyle(
-                                                        fontWeight: FontWeight.w600,
-                                                        fontFamily: 'Poppins',
-                                                        fontSize: getFontSize * 1.1,
+                                                      const SizedBox(
+                                                          height: 10),
+                                                      ElevatedButton(
+                                                        onPressed: () {
+                                                          Navigator.pop(
+                                                              context, false);
+                                                        },
+                                                        style: ElevatedButton
+                                                            .styleFrom(
+                                                          backgroundColor:
+                                                              Color(0xFFEF5350),
+                                                          foregroundColor:
+                                                              Colors.white,
+                                                          padding:
+                                                              const EdgeInsets
+                                                                  .symmetric(
+                                                                  horizontal: 4,
+                                                                  vertical: 15),
+                                                          shape:
+                                                              RoundedRectangleBorder(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        8),
+                                                          ),
+                                                          shadowColor: Colors
+                                                              .transparent,
+                                                          elevation: 0,
+                                                        ),
+                                                        child: Text(
+                                                          'Cancel',
+                                                          style: TextStyle(
+                                                            fontWeight:
+                                                                FontWeight.w600,
+                                                            fontFamily:
+                                                                'Poppins',
+                                                            fontSize:
+                                                                getFontSize *
+                                                                    1.1,
+                                                          ),
+                                                        ),
                                                       ),
-                                                    ),
-                                                  ),
-                                                  const SizedBox(height: 10),
-                                                  ElevatedButton(
-                                                    onPressed: () {
-                                                      Navigator.pop(context, false);
-                                                    },
-                                                    style: ElevatedButton.styleFrom(
-                                                      backgroundColor: Color(0xFFEF5350), 
-                                                      foregroundColor: Colors.white, 
-                                                      padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 15),
-                                                      shape: RoundedRectangleBorder(
-                                                        borderRadius: BorderRadius.circular(8),
-                                                      ),
-                                                      shadowColor: Colors.transparent, 
-                                                      elevation: 0, 
-                                                    ),
-                                                    child: Text(
-                                                      'Cancel',
-                                                      style: TextStyle(
-                                                        fontWeight: FontWeight.w600,
-                                                        fontFamily: 'Poppins',
-                                                        fontSize: getFontSize * 1.1,
-                                                      ),
-                                                    ),
+                                                    ],
                                                   ),
                                                 ],
                                               ),
-                                            ],
-                                          ),
-                                        );
+                                            );
                                             if (confirm == true) {
                                               final updatedFirstName =
                                                   firstNameController.text;
@@ -556,18 +654,20 @@ class _ProfilePageState extends State<ProfilePage> {
                                               setState(() {
                                                 isEditing = false;
                                               });
-                                              ScaffoldMessenger.of(context).showSnackBar(
-                                              const SnackBar(
+                                              ScaffoldMessenger.of(context)
+                                                  .showSnackBar(
+                                                const SnackBar(
                                                   content: const Text(
                                                     'Profile updated successfully!',
                                                     textAlign: TextAlign.center,
                                                   ),
                                                   backgroundColor: Colors.green,
-                                                  behavior: SnackBarBehavior.floating, 
-                                                  margin: EdgeInsets.only( left: 20, right: 20), 
+                                                  behavior:
+                                                      SnackBarBehavior.floating,
+                                                  margin: EdgeInsets.only(
+                                                      left: 20, right: 20),
                                                 ),
                                               );
-
                                             }
                                           }
                                         : () {}),
@@ -583,7 +683,10 @@ class _ProfilePageState extends State<ProfilePage> {
                     child: Text(state.errorMessage),
                   );
                 } else {
-                  return const Center(child: CircularProgressIndicator());
+                  return const Center(
+                      child: CircularProgressIndicator(
+                    color: Colors.blue,
+                  ));
                 }
               },
             ),

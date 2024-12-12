@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:equatable/equatable.dart';
 
 abstract class ProfileState extends Equatable {
@@ -65,4 +67,18 @@ class ProfileUpdated extends ProfileState {
 
   @override
   List<Object> get props => [firstName, lastName, email, gender, birthDate];
+}
+
+class ProfileAvatarUploaded extends ProfileState {
+  final String avatarUrl;
+
+  const ProfileAvatarUploaded(this.avatarUrl);
+}
+
+class ProfileUploadingAvatar extends ProfileState {}
+
+class ProfileAvatarLoaded extends ProfileState {
+  final Image avatarImage;
+
+  const ProfileAvatarLoaded(this.avatarImage);
 }
