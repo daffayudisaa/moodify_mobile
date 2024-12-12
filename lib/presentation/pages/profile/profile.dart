@@ -342,10 +342,8 @@ class _ProfilePageState extends State<ProfilePage> {
                                 },
                                 child: CircleAvatar(
                                   radius: getimageSize * 0.9,
-                                  backgroundImage: _profileImage != null
-                                      ? FileImage(_profileImage!)
-                                      : NetworkImage(
-                                          'https://sirw.my.id/users/avatar/${state.avatar}'),
+                                  backgroundImage: NetworkImage(
+                                      'https://sirw.my.id/users/avatar/${state.avatar}'),
                                   child: Stack(
                                     children: [
                                       Align(
