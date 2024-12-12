@@ -6,6 +6,7 @@ import 'package:moodify_mobile/presentation/bloc/auth/auth_bloc.dart';
 import 'package:moodify_mobile/presentation/bloc/change_password/change_pass_bloc.dart';
 import 'package:moodify_mobile/presentation/bloc/music/music_bloc.dart';
 import 'package:moodify_mobile/presentation/bloc/recap_mood/history/history_bloc.dart';
+import 'package:moodify_mobile/presentation/bloc/recap_mood/recap/recap_bloc.dart';
 import 'package:moodify_mobile/presentation/pages/auth/sign_in.dart';
 import 'package:moodify_mobile/presentation/pages/change_password/change_password.dart';
 import 'package:moodify_mobile/presentation/pages/scan/scan_page.dart';
@@ -46,6 +47,9 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider<MoodHistoryBloc>(
           create: (context) => MoodHistoryBloc(),
+        ),
+        BlocProvider<RecapBloc>(
+          create: (context) => RecapBloc(),
         ),
         // Tambahkan Bloc lainnya di sini jika diperlukan
       ],
