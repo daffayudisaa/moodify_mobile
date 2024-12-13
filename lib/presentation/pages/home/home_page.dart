@@ -8,6 +8,9 @@ import 'package:moodify_mobile/presentation/bloc/music/music_event.dart';
 import 'package:moodify_mobile/presentation/bloc/profile/profile_bloc.dart';
 import 'package:moodify_mobile/presentation/bloc/profile/profile_event.dart';
 import 'package:moodify_mobile/presentation/bloc/profile/profile_state.dart';
+import 'package:moodify_mobile/presentation/bloc/quotes/quotes_bloc.dart';
+import 'package:moodify_mobile/presentation/bloc/quotes/quotes_event.dart';
+import 'package:moodify_mobile/presentation/bloc/quotes/quotes_state.dart';
 import 'package:moodify_mobile/presentation/bloc/recap_mood/recap/recap_bloc.dart';
 import 'package:moodify_mobile/presentation/bloc/recap_mood/recap/recap_event.dart';
 import 'package:moodify_mobile/presentation/bloc/recap_mood/recap/recap_state.dart';
@@ -25,6 +28,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   late MusicBloc _musicBloc;
+  late QuotesBloc _quotesBloc;
   String selectedMood = 'All';
 
   @override
@@ -33,6 +37,7 @@ class _HomePageState extends State<HomePage> {
     context.read<RecapBloc>().add(LoadRecap());
     _musicBloc = MusicBloc();
     context.read<ProfileBloc>().add(LoadProfile());
+    _quotesBloc = QuotesBloc();
   }
 
   @override
@@ -77,10 +82,14 @@ class _HomePageState extends State<HomePage> {
           ),
           child: Padding(
             padding: const EdgeInsets.all(25),
-            child: Text(
-              message,
-              style: textStyle(getFontSize),
-              textAlign: textAlign,
+            child: Column(
+              children: [
+                Text(
+                  message,
+                  style: textStyle(getFontSize),
+                  textAlign: textAlign,
+                ),
+              ],
             ),
           ),
         ),
@@ -166,6 +175,8 @@ class _HomePageState extends State<HomePage> {
                       } else if (state is RecapLoadedLatest) {
                         _musicBloc
                             .add(FetchMusic(state.moodDetected.toLowerCase()));
+                        _quotesBloc
+                            .add(FetchQuotes(state.moodDetected.toLowerCase()));
                         return Container(
                           margin: const EdgeInsets.symmetric(horizontal: 25),
                           width: double.infinity,
@@ -231,8 +242,56 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ),
                 const SizedBox(height: 20),
-                messageContainer(
-                  "Happiness is when what you think, what you say, and what you do are in harmony.",
+                BlocBuilder<QuotesBloc, QuotesState>(
+                  bloc: _quotesBloc,
+                  builder: (context, state) {
+                    if (state is QuotesLoading) {
+                      return const Center(
+                        child: CircularProgressIndicator(
+                          color: Colors.blue,
+                        ),
+                      );
+                    } else if (state is QuotesLoaded) {
+                      List<Map<String, String>> filteredQuotes;
+
+                      if (selectedMood == 'All') {
+                        filteredQuotes = state.quotes;
+                      } else {
+                        filteredQuotes = state.quotes
+                            .where((quotes) => quotes['Mood'] == selectedMood)
+                            .toList();
+                      }
+
+                      filteredQuotes.shuffle();
+                      filteredQuotes = filteredQuotes.take(1).toList();
+
+                      if (filteredQuotes.isNotEmpty) {
+                        String author =
+                            filteredQuotes[0]['QuoteAuthor'] == "Unknown"
+                                ? "Moodify"
+                                : filteredQuotes[0]['QuoteAuthor']!;
+
+                        return messageContainer(
+                            '${filteredQuotes[0]['QuoteText']!}\n\n\n- $author');
+                      } else {
+                        return Center(
+                          child: Padding(
+                            padding: const EdgeInsets.all(20.0),
+                            child: Text(
+                              'No songs available for $selectedMood mood.',
+                              style: TextStyle(
+                                fontFamily: 'Poppins',
+                                fontSize: getFontSize,
+                                color: Colors.grey,
+                              ),
+                              textAlign: TextAlign.center,
+                            ),
+                          ),
+                        );
+                      }
+                    }
+                    return const SizedBox();
+                  },
                 ),
                 const SizedBox(height: 20),
                 Center(
@@ -243,13 +302,16 @@ class _HomePageState extends State<HomePage> {
                         Padding(
                           padding: const EdgeInsets.only(left: 25),
                           child: Text('Recommended Songs',
-                              style: textStyle(getFontSize * 1.4,
-                                  fontWeight: FontWeight.w600)),
+                              style: textStyle(
+                                getFontSize * 1.4,
+                                fontWeight: FontWeight.w600,
+                                color: const Color(0xFF004373),
+                              )),
                         ),
                         const SizedBox(width: 5),
                         HugeIcon(
                           icon: HugeIcons.strokeRoundedArrowRight01,
-                          color: Colors.black,
+                          color: const Color(0xFF004373),
                           size: getFontSize * 1.5,
                         ),
                       ],
@@ -277,7 +339,7 @@ class _HomePageState extends State<HomePage> {
                             .toList();
                       }
 
-                      // filteredSongs.shuffle();
+                      filteredSongs.shuffle();
                       filteredSongs = filteredSongs.take(5).toList();
 
                       if (filteredSongs.isNotEmpty) {
@@ -340,13 +402,16 @@ class _HomePageState extends State<HomePage> {
                       Padding(
                         padding: const EdgeInsets.only(left: 25),
                         child: Text('Recap Mood',
-                            style: textStyle(getFontSize * 1.4,
-                                fontWeight: FontWeight.w600)),
+                            style: textStyle(
+                              getFontSize * 1.4,
+                              fontWeight: FontWeight.w600,
+                              color: const Color(0xFF004373),
+                            )),
                       ),
                       const SizedBox(width: 5),
                       HugeIcon(
                         icon: HugeIcons.strokeRoundedArrowRight01,
-                        color: Colors.black,
+                        color: const Color(0xFF004373),
                         size: getFontSize * 1.5,
                       ),
                     ],

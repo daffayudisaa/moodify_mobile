@@ -81,10 +81,12 @@ class _MusicRecomPageState extends State<MusicRecomPage> {
                   List<Map<String, String>> filteredSongs;
                   if (selectedMood == 'All') {
                     filteredSongs = state.songs;
+                    filteredSongs.shuffle();
                   } else {
                     filteredSongs = state.songs
                         .where((song) => song['mood'] == selectedMood)
                         .toList();
+                    filteredSongs.shuffle();
                   }
 
                   return SingleChildScrollView(
