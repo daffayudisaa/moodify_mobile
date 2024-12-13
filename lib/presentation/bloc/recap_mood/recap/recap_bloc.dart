@@ -88,10 +88,8 @@ class RecapBloc extends Bloc<RecapEvent, RecapState> {
 
       if (response.statusCode == 200) {
         final data = json.decode(response.body);
-        emit(RecapLoadedLatest(
-          moodDetected: data['MoodDetected'].toString(),
-        ));
-        print(data);
+        final moodDetected = data['MoodDetected'].toString();
+        emit(RecapLoadedLatest(moodDetected: moodDetected));
       } else {
         emit(RecapError("Failed to load profile: ${response.body}"));
       }

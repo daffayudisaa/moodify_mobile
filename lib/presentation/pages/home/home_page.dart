@@ -17,9 +17,7 @@ import 'package:moodify_mobile/presentation/widgets/list/recom_song.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class HomePage extends StatefulWidget {
-  final String userMood;
-
-  const HomePage({key, required this.userMood}) : super(key: key);
+  const HomePage({key}) : super(key: key);
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -34,7 +32,6 @@ class _HomePageState extends State<HomePage> {
     super.initState();
     context.read<RecapBloc>().add(LoadRecap());
     _musicBloc = MusicBloc();
-    _musicBloc.add(FetchMusic(widget.userMood));
     context.read<ProfileBloc>().add(LoadProfile());
   }
 
@@ -167,6 +164,8 @@ class _HomePageState extends State<HomePage> {
                             child:
                                 CircularProgressIndicator(color: Colors.blue));
                       } else if (state is RecapLoadedLatest) {
+                        _musicBloc
+                            .add(FetchMusic(state.moodDetected.toLowerCase()));
                         return Container(
                           margin: const EdgeInsets.symmetric(horizontal: 25),
                           width: double.infinity,
@@ -278,7 +277,7 @@ class _HomePageState extends State<HomePage> {
                             .toList();
                       }
 
-                      filteredSongs.shuffle();
+                      // filteredSongs.shuffle();
                       filteredSongs = filteredSongs.take(5).toList();
 
                       if (filteredSongs.isNotEmpty) {
