@@ -45,3 +45,11 @@ class RecapError extends RecapState {
   @override
   List<Object> get props => [errorMessage];
 }
+
+class RecapLoadedLatest extends RecapState {
+  final String moodDetected;
+
+  const RecapLoadedLatest({
+    required this.moodDetected,
+  });
+}

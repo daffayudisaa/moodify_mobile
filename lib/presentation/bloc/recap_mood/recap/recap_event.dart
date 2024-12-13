@@ -8,3 +8,5 @@ abstract class RecapEvent extends Equatable {
 }
 
 class LoadRecap extends RecapEvent {}
+
+class LoadRecapLatest extends RecapEvent {}

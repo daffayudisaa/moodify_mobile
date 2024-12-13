@@ -8,6 +8,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 class RecapBloc extends Bloc<RecapEvent, RecapState> {
   RecapBloc() : super(RecapInitial()) {
     on<LoadRecap>(_onLoadRecap);
+    on<LoadRecapLatest>(_onLoadRecapLatest);
   }
 
   Future<Map<String, dynamic>> _loadUserCredentials() async {
@@ -52,6 +53,43 @@ class RecapBloc extends Bloc<RecapEvent, RecapState> {
           surprise: data['Surprise'],
           neutral: data['Neutral'],
           total: data['Total'],
+        ));
+        print(data);
+      } else {
+        emit(RecapError("Failed to load profile: ${response.body}"));
+      }
+    } catch (e) {
+      emit(RecapError(e.toString()));
+    }
+  }
+
+  Future<void> _onLoadRecapLatest(
+    LoadRecapLatest event,
+    Emitter<RecapState> emit,
+  ) async {
+    emit(RecapLoading());
+    try {
+      final credentials = await _loadUserCredentials();
+      final userId = credentials['userId'];
+      final accessToken = credentials['accessToken'];
+
+      if (userId == null || accessToken == null || accessToken.isEmpty) {
+        emit(const RecapError("Invalid user credentials"));
+        return;
+      }
+
+      final response = await http.get(
+        Uri.parse('http://sirw.my.id/expression_analysis/latest'),
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $accessToken',
+        },
+      );
+
+      if (response.statusCode == 200) {
+        final data = json.decode(response.body);
+        emit(RecapLoadedLatest(
+          moodDetected: data['MoodDetected'].toString(),
         ));
         print(data);
       } else {

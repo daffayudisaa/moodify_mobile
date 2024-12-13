@@ -158,47 +158,77 @@ class _HomePageState extends State<HomePage> {
           body: SingleChildScrollView(
             child: Column(
               children: [
-                Container(
-                  margin: const EdgeInsets.symmetric(horizontal: 25),
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                    gradient: const LinearGradient(colors: [
-                      Color(0xFFA0D3F5),
-                      Color(0xFFD9E9F8),
-                    ]),
-                    borderRadius: BorderRadius.circular(16),
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(left: 20, right: 5),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text("Feeling Happy!",
-                                style: textStyle(getFontSize * 1.65,
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.w600)),
-                            Text("Enjoy every moment!",
-                                style: textStyle(getFontSize * 1.1,
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.w400)),
-                            const SizedBox(height: 20),
-                            Text(
-                              formattedDate, // Tampilkan tanggal yang sudah diformat
-                              style: textStyle(getFontSize * 0.95,
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.w500),
-                            ),
-                          ],
-                        ),
-                      ),
-                      Image(
-                          image: const AssetImage(
-                              'assets/meowdy/Meowdy-Happy.png'),
-                          height: getImageSize * 2.3),
-                    ],
+                BlocProvider(
+                  create: (context) => RecapBloc()..add(LoadRecapLatest()),
+                  child: BlocBuilder<RecapBloc, RecapState>(
+                    builder: (context, state) {
+                      if (state is RecapLoading) {
+                        return const Center(
+                            child:
+                                CircularProgressIndicator(color: Colors.blue));
+                      } else if (state is RecapLoadedLatest) {
+                        return Container(
+                          margin: const EdgeInsets.symmetric(horizontal: 25),
+                          width: double.infinity,
+                          decoration: BoxDecoration(
+                            gradient: const LinearGradient(colors: [
+                              Color(0xFFA0D3F5),
+                              Color(0xFFD9E9F8),
+                            ]),
+                            borderRadius: BorderRadius.circular(16),
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Padding(
+                                padding:
+                                    const EdgeInsets.only(left: 20, right: 5),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      "Feeling ${state.moodDetected}!",
+                                      style: textStyle(
+                                        getFontSize * 1.65,
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    ),
+                                    Text(
+                                      "Enjoy every moment!",
+                                      style: textStyle(
+                                        getFontSize * 1.1,
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.w400,
+                                      ),
+                                    ),
+                                    const SizedBox(height: 20),
+                                    Text(
+                                      formattedDate, // Display formatted date
+                                      style: textStyle(
+                                        getFontSize * 0.95,
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Image(
+                                image: const AssetImage(
+                                    'assets/meowdy/Meowdy-Happy.png'),
+                                height: getImageSize * 2.3,
+                              ),
+                            ],
+                          ),
+                        );
+                      } else if (state is RecapError) {
+                        return Center(
+                            child: Text('Error: ${state.errorMessage}'));
+                      }
+
+                      return const Center(child: Text('Unknown state'));
+                    },
                   ),
                 ),
                 const SizedBox(height: 20),
