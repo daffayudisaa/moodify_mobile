@@ -304,7 +304,8 @@ class _HistoryPageState extends State<HistoryPage> {
         child: BlocBuilder<MoodHistoryBloc, MoodHistoryState>(
           builder: (context, state) {
             if (state is MoodHistoryLoadingState) {
-              return const Center(child: CircularProgressIndicator());
+              return const Center(
+                  child: CircularProgressIndicator(color: Colors.blue));
             } else if (state is MoodHistoryErrorState) {
               return Center(child: Text('Error: ${state.message}'));
             } else if (state is MoodHistoryLoadedState) {

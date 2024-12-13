@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:hugeicons/hugeicons.dart';
 import 'package:moodify_mobile/presentation/widgets/cards/mood_card.dart';
 import 'package:moodify_mobile/utils/screen_utils.dart';
 import 'package:pie_chart/pie_chart.dart';
@@ -86,7 +85,8 @@ class _RecapPageState extends State<RecapPage> {
                               builder: (context, state) {
                                 if (state is RecapLoading) {
                                   return const Center(
-                                      child: CircularProgressIndicator());
+                                      child: CircularProgressIndicator(
+                                          color: Colors.blue));
                                 } else if (state is RecapLoaded) {
                                   dataMap = {
                                     "Happy": state.happy.toDouble(),
@@ -158,7 +158,9 @@ class _RecapPageState extends State<RecapPage> {
                   BlocBuilder<RecapBloc, RecapState>(
                     builder: (context, state) {
                       if (state is RecapLoading) {
-                        return const Center(child: CircularProgressIndicator());
+                        return const Center(
+                            child:
+                                CircularProgressIndicator(color: Colors.blue));
                       } else if (state is RecapLoaded) {
                         return RecapMoodCard(
                           path: 'assets/meowdy/Meowdy-Happy.png',
@@ -175,7 +177,9 @@ class _RecapPageState extends State<RecapPage> {
                   BlocBuilder<RecapBloc, RecapState>(
                     builder: (context, state) {
                       if (state is RecapLoading) {
-                        return const Center(child: CircularProgressIndicator());
+                        return const Center(
+                            child:
+                                CircularProgressIndicator(color: Colors.blue));
                       } else if (state is RecapLoaded) {
                         return RecapMoodCard(
                           path: 'assets/meowdy/Meowdy-Happy.png',
@@ -192,7 +196,9 @@ class _RecapPageState extends State<RecapPage> {
                   BlocBuilder<RecapBloc, RecapState>(
                     builder: (context, state) {
                       if (state is RecapLoading) {
-                        return const Center(child: CircularProgressIndicator());
+                        return const Center(
+                            child:
+                                CircularProgressIndicator(color: Colors.blue));
                       } else if (state is RecapLoaded) {
                         return RecapMoodCard(
                           path: 'assets/meowdy/Meowdy-Happy.png',
@@ -209,7 +215,9 @@ class _RecapPageState extends State<RecapPage> {
                   BlocBuilder<RecapBloc, RecapState>(
                     builder: (context, state) {
                       if (state is RecapLoading) {
-                        return const Center(child: CircularProgressIndicator());
+                        return const Center(
+                            child:
+                                CircularProgressIndicator(color: Colors.blue));
                       } else if (state is RecapLoaded) {
                         return RecapMoodCard(
                           path: 'assets/meowdy/Meowdy-Happy.png',
@@ -241,7 +249,9 @@ class _RecapPageState extends State<RecapPage> {
                   BlocBuilder<RecapBloc, RecapState>(
                     builder: (context, state) {
                       if (state is RecapLoading) {
-                        return const Center(child: CircularProgressIndicator());
+                        return const Center(
+                            child:
+                                CircularProgressIndicator(color: Colors.blue));
                       } else if (state is RecapLoaded) {
                         return RecapMoodCard(
                           path: 'assets/meowdy/Meowdy-Happy.png',
@@ -258,7 +268,9 @@ class _RecapPageState extends State<RecapPage> {
                   BlocBuilder<RecapBloc, RecapState>(
                     builder: (context, state) {
                       if (state is RecapLoading) {
-                        return const Center(child: CircularProgressIndicator());
+                        return const Center(
+                            child:
+                                CircularProgressIndicator(color: Colors.blue));
                       } else if (state is RecapLoaded) {
                         return RecapMoodCard(
                           path: 'assets/meowdy/Meowdy-Happy.png',
@@ -275,7 +287,9 @@ class _RecapPageState extends State<RecapPage> {
                   BlocBuilder<RecapBloc, RecapState>(
                     builder: (context, state) {
                       if (state is RecapLoading) {
-                        return const Center(child: CircularProgressIndicator());
+                        return const Center(
+                            child:
+                                CircularProgressIndicator(color: Colors.blue));
                       } else if (state is RecapLoaded) {
                         return RecapMoodCard(
                           path: 'assets/meowdy/Meowdy-Happy.png',
@@ -292,7 +306,9 @@ class _RecapPageState extends State<RecapPage> {
                   BlocBuilder<RecapBloc, RecapState>(
                     builder: (context, state) {
                       if (state is RecapLoading) {
-                        return const Center(child: CircularProgressIndicator());
+                        return const Center(
+                            child:
+                                CircularProgressIndicator(color: Colors.blue));
                       } else if (state is RecapLoaded) {
                         return RecapMoodCard(
                           path: 'assets/meowdy/Meowdy-Happy.png',

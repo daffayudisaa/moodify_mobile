@@ -5,6 +5,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:moodify_mobile/presentation/bloc/auth/auth_bloc.dart';
 import 'package:moodify_mobile/presentation/bloc/change_password/change_pass_bloc.dart';
 import 'package:moodify_mobile/presentation/bloc/music/music_bloc.dart';
+import 'package:moodify_mobile/presentation/bloc/profile/profile_bloc.dart';
 import 'package:moodify_mobile/presentation/bloc/recap_mood/history/history_bloc.dart';
 import 'package:moodify_mobile/presentation/bloc/recap_mood/recap/recap_bloc.dart';
 import 'package:moodify_mobile/presentation/pages/auth/sign_in.dart';
@@ -50,6 +51,9 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider<RecapBloc>(
           create: (context) => RecapBloc(),
+        ),
+        BlocProvider<ProfileBloc>(
+          create: (context) => ProfileBloc(),
         ),
         // Tambahkan Bloc lainnya di sini jika diperlukan
       ],
