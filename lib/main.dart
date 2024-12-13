@@ -12,7 +12,7 @@ import 'package:moodify_mobile/presentation/pages/auth/sign_in.dart';
 import 'package:moodify_mobile/presentation/pages/change_password/change_password.dart';
 import 'package:moodify_mobile/presentation/pages/scan/scan_page.dart';
 import 'package:moodify_mobile/presentation/widgets/navbar.dart';
-import 'package:moodify_mobile/presentation/widgets/splash_screen.dart';
+// import 'package:moodify_mobile/presentation/widgets/splash_screen.dart';
 
 late final List<CameraDescription> cameras;
 
@@ -63,7 +63,7 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        home: const SplashScreen(),
+        home: const SignInPage(),
         routes: {
           '/navbar': (context) {
             final initialTab =

@@ -220,6 +220,12 @@ class _HistoryPageState extends State<HistoryPage> {
                         width: screenWidth * 0.25,
                         height: screenHeight * 0.2,
                         fit: BoxFit.cover,
+                        loadingBuilder: (context, child, loadingProgress) {
+                          if (loadingProgress == null) return child;
+                          return Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        },
                       ),
                     ),
                     const SizedBox(width: 10),
