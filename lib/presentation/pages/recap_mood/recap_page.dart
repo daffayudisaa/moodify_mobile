@@ -34,6 +34,12 @@ class _RecapPageState extends State<RecapPage> {
   }
 
   @override
+  void dispose() {
+    context.read<RecapBloc>().close();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
     double screenHeight = MediaQuery.of(context).size.height;

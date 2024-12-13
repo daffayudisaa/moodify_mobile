@@ -14,10 +14,17 @@ class HistoryPage extends StatefulWidget {
 
 class _HistoryPageState extends State<HistoryPage> {
   bool _isEmojiGridVisible = false;
+  MoodHistoryBloc? _moodHistoryBloc;
 
   @override
   void initState() {
     super.initState();
+    _moodHistoryBloc = MoodHistoryBloc()..add(FetchHistory());
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
   }
 
   void _toggleEmojiGrid() {
@@ -306,7 +313,7 @@ class _HistoryPageState extends State<HistoryPage> {
     return Scaffold(
       backgroundColor: Colors.white,
       body: BlocProvider(
-        create: (context) => MoodHistoryBloc()..add(FetchHistory()),
+        create: (_) => _moodHistoryBloc!,
         child: BlocBuilder<MoodHistoryBloc, MoodHistoryState>(
           builder: (context, state) {
             if (state is MoodHistoryLoadingState) {

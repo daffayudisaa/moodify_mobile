@@ -29,6 +29,11 @@ class _ProfilePageState extends State<ProfilePage> {
   String? birthDate;
 
   @override
+  void dispose() {
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     double getFontSize = ScreenUtils.getFontSize(context, 14);
     double getimageSize = ScreenUtils.getFontSize(context, 80);

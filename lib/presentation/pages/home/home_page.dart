@@ -41,6 +41,13 @@ class _HomePageState extends State<HomePage> {
   }
 
   @override
+  void dispose() {
+    _musicBloc.close();
+    _quotesBloc.close();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     double getFontSize = ScreenUtils.getFontSize(context, 13);
     double getImageSize = ScreenUtils.getImageSize(context, 50);

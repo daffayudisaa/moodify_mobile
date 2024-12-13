@@ -31,6 +31,13 @@ class _MusicRecomPageState extends State<MusicRecomPage> {
   }
 
   @override
+  void dispose() {
+    _musicBloc.close();
+    _recapBloc.close();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     double getFontSize = ScreenUtils.getFontSize(context, 14);
     double getVerticalPadding = ScreenUtils.getImageSize(context, 8);
@@ -252,11 +259,5 @@ class _MusicRecomPageState extends State<MusicRecomPage> {
         ),
       ),
     );
-  }
-
-  @override
-  void dispose() {
-    _musicBloc.close();
-    super.dispose();
   }
 }
