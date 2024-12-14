@@ -239,10 +239,13 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                     controller: _currentPasswordController,
                   ),
                   Padding(
-                    padding: const EdgeInsets.only(right: 10.0), // Geser ikon ke kiri
+                    padding: const EdgeInsets.only(
+                        right: 10.0), // Geser ikon ke kiri
                     child: IconButton(
                       icon: Icon(
-                        isCurrentPasswordVisible ? Icons.visibility : Icons.visibility_off,
+                        isCurrentPasswordVisible
+                            ? Icons.visibility
+                            : Icons.visibility_off,
                         color: Colors.grey,
                       ),
                       onPressed: () {
@@ -254,7 +257,6 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                   ),
                 ],
               ),
-
               const SizedBox(height: 20),
               Stack(
                 alignment: Alignment.centerRight,
@@ -265,10 +267,13 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                     controller: _newPasswordController,
                   ),
                   Padding(
-                    padding: const EdgeInsets.only(right: 10.0), // Geser ikon ke kiri
+                    padding: const EdgeInsets.only(
+                        right: 10.0), // Geser ikon ke kiri
                     child: IconButton(
                       icon: Icon(
-                        isNewPasswordVisible ? Icons.visibility : Icons.visibility_off,
+                        isNewPasswordVisible
+                            ? Icons.visibility
+                            : Icons.visibility_off,
                         color: Colors.grey,
                       ),
                       onPressed: () {
@@ -290,15 +295,19 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                     controller: _confirmPasswordController,
                   ),
                   Padding(
-                    padding: const EdgeInsets.only(right: 10.0), // Geser ikon ke kiri
+                    padding: const EdgeInsets.only(
+                        right: 10.0), // Geser ikon ke kiri
                     child: IconButton(
                       icon: Icon(
-                        isConfirmNewPasswordVisible ? Icons.visibility : Icons.visibility_off,
+                        isConfirmNewPasswordVisible
+                            ? Icons.visibility
+                            : Icons.visibility_off,
                         color: Colors.grey,
                       ),
                       onPressed: () {
                         setState(() {
-                          isConfirmNewPasswordVisible = !isConfirmNewPasswordVisible;
+                          isConfirmNewPasswordVisible =
+                              !isConfirmNewPasswordVisible;
                         });
                       },
                     ),
@@ -321,18 +330,39 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                       color: const Color(0xFF42B1FF),
                       text: 'Save',
                       onTap: () {
-                        if (_newPasswordController.text ==
-                            _confirmPasswordController.text) {
-                          BlocProvider.of<ChangePasswordBloc>(context).add(
-                            ChangePasswordSubmitted(
-                              oldPassword: _currentPasswordController.text,
-                              newPassword: _newPasswordController.text,
-                            ),
-                          );
+                        final oldPassword = _currentPasswordController.text;
+                        final newPassword = _newPasswordController.text;
+                        final confirmPassword = _confirmPasswordController.text;
+
+                        if (newPassword == confirmPassword) {
+                          if (oldPassword != newPassword) {
+                            BlocProvider.of<ChangePasswordBloc>(context).add(
+                              ChangePasswordSubmitted(
+                                oldPassword: oldPassword,
+                                newPassword: newPassword,
+                              ),
+                            );
+                          } else {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content: Text(
+                                    'New password cannot be the same as the old password'),
+                                backgroundColor: Colors.red,
+                                behavior: SnackBarBehavior.floating,
+                                margin: EdgeInsets.only(
+                                    bottom: 40, left: 20, right: 20),
+                              ),
+                            );
+                          }
                         } else {
                           ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(
-                                content: Text('Passwords do not match')),
+                              content: Text('Passwords do not match'),
+                              backgroundColor: Colors.red,
+                              behavior: SnackBarBehavior.floating,
+                              margin: EdgeInsets.only(
+                                  bottom: 40, left: 20, right: 20),
+                            ),
                           );
                         }
                       },

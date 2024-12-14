@@ -349,7 +349,8 @@ class _HistoryPageState extends State<HistoryPage> {
                       child: CircularProgressIndicator(color: Colors.blue),
                     );
                   } else if (state is MoodHistoryErrorState) {
-                    return Center(child: Text('Error: ${state.message}'));
+                    return const Center(
+                        child: Text("You haven't scanned your face yet"));
                   } else if (state is MoodHistoryLoadedState) {
                     _history.addAll(state.userHistory);
                     return _buildHistory(_history);

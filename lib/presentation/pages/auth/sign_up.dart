@@ -83,18 +83,12 @@ class _SignUpPageState extends State<SignUpPage> {
               const SnackBar(
                 content: Text("Your account has been successfully created!"),
                 backgroundColor: Colors.green,
-                behavior: SnackBarBehavior.floating, 
-                margin: EdgeInsets.only( bottom: 40, left: 20, right: 20), 
+                behavior: SnackBarBehavior.floating,
+                margin: EdgeInsets.only(bottom: 40, left: 20, right: 20),
               ),
             );
           } else if (state is AuthError) {
             Navigator.of(context).pop();
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text(state.message),
-              behavior: SnackBarBehavior.floating, 
-              margin: const EdgeInsets.only( bottom: 40, left: 20, right: 20), 
-              ),
-            );
           }
         },
         child: SingleChildScrollView(
@@ -190,10 +184,13 @@ class _SignUpPageState extends State<SignUpPage> {
                       controller: passwordController,
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(right: 10.0), // Geser ikon ke kiri
+                      padding: const EdgeInsets.only(
+                          right: 10.0), // Geser ikon ke kiri
                       child: IconButton(
                         icon: Icon(
-                          isPasswordVisible ? Icons.visibility : Icons.visibility_off,
+                          isPasswordVisible
+                              ? Icons.visibility
+                              : Icons.visibility_off,
                           color: Colors.grey,
                         ),
                         onPressed: () {
@@ -215,22 +212,28 @@ class _SignUpPageState extends State<SignUpPage> {
                       controller: confirmPasswordController,
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(right: 10.0), // Geser ikon ke kiri
+                      padding: const EdgeInsets.only(
+                          right: 10.0), // Geser ikon ke kiri
                       child: IconButton(
                         icon: Icon(
-                          isconfirmPasswordVisible ? Icons.visibility : Icons.visibility_off,
+                          isconfirmPasswordVisible
+                              ? Icons.visibility
+                              : Icons.visibility_off,
                           color: Colors.grey,
                         ),
                         onPressed: () {
                           setState(() {
-                            isconfirmPasswordVisible = !isconfirmPasswordVisible;
+                            isconfirmPasswordVisible =
+                                !isconfirmPasswordVisible;
                           });
                         },
                       ),
                     ),
                   ],
                 ),
-                const SizedBox(height: 20,),
+                const SizedBox(
+                  height: 20,
+                ),
                 Row(
                   children: [
                     Expanded(
@@ -248,31 +251,48 @@ class _SignUpPageState extends State<SignUpPage> {
                               birthdate == null) {
                             ScaffoldMessenger.of(context).showSnackBar(
                               const SnackBar(
-                                  content: Text("Please fill all fields"),
-                                  backgroundColor: Colors.red,
-                                  behavior: SnackBarBehavior.floating, 
-                                  margin: EdgeInsets.only( bottom: 40, left: 20, right: 20), 
-                                  ),
+                                content: Text("Please fill all fields"),
+                                backgroundColor: Colors.red,
+                                behavior: SnackBarBehavior.floating,
+                                margin: EdgeInsets.only(
+                                    bottom: 40, left: 20, right: 20),
+                              ),
+                            );
+                          } else if (!RegExp(
+                                  r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$')
+                              .hasMatch(emailController.text)) {
+                            // Validate email format
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content:
+                                    Text("Please enter a valid email address"),
+                                backgroundColor: Colors.red,
+                                behavior: SnackBarBehavior.floating,
+                                margin: EdgeInsets.only(
+                                    bottom: 40, left: 20, right: 20),
+                              ),
                             );
                           } else if (passwordController.text.length < 8) {
                             ScaffoldMessenger.of(context).showSnackBar(
                               const SnackBar(
-                                  content: Text(
-                                      "Password must be at least 8 characters"),
-                                      backgroundColor: Colors.red,
-                                      behavior: SnackBarBehavior.floating, 
-                                      margin: EdgeInsets.only( bottom: 40, left: 20, right: 20), 
-                                      ),
+                                content: Text(
+                                    "Password must be at least 8 characters"),
+                                backgroundColor: Colors.red,
+                                behavior: SnackBarBehavior.floating,
+                                margin: EdgeInsets.only(
+                                    bottom: 40, left: 20, right: 20),
+                              ),
                             );
                           } else if (passwordController.text !=
                               confirmPasswordController.text) {
                             ScaffoldMessenger.of(context).showSnackBar(
                               const SnackBar(
-                                  content: Text("Passwords do not match"),
-                                  backgroundColor: Colors.red,
-                                  behavior: SnackBarBehavior.floating, 
-                                  margin: EdgeInsets.only( bottom: 40, left: 20, right: 20), 
-                                  ),
+                                content: Text("Passwords do not match"),
+                                backgroundColor: Colors.red,
+                                behavior: SnackBarBehavior.floating,
+                                margin: EdgeInsets.only(
+                                    bottom: 40, left: 20, right: 20),
+                              ),
                             );
                           } else {
                             BlocProvider.of<AuthBloc>(context).add(
