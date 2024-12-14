@@ -11,11 +11,12 @@ class MoodHistoryLoadingState extends MoodHistoryState {}
 
 class MoodHistoryLoadedState extends MoodHistoryState {
   final List<Map<String, String>> userHistory;
+  final int skip;
 
-  MoodHistoryLoadedState(this.userHistory);
+  MoodHistoryLoadedState(this.userHistory, this.skip);
 
   @override
-  List<Object?> get props => [userHistory];
+  List<Object?> get props => [userHistory, skip];
 }
 
 class MoodHistoryErrorState extends MoodHistoryState {

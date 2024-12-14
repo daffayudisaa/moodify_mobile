@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:moodify_mobile/utils/screen_utils.dart';
 
@@ -49,7 +50,7 @@ class ListSongRecom extends StatelessWidget {
                   height: imageSize * additionSizeImage!,
                   decoration: BoxDecoration(
                     image: DecorationImage(
-                      image: NetworkImage(images),
+                      image: CachedNetworkImageProvider(images),
                       fit: BoxFit.cover,
                     ),
                     borderRadius: BorderRadius.circular(8 * multiplier),

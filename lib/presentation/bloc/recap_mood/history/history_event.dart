@@ -5,9 +5,14 @@ abstract class MoodHistoryEvent extends Equatable {
   List<Object?> get props => [];
 }
 
+// ignore: must_be_immutable
 class FetchHistory extends MoodHistoryEvent {
+  late int page;
+  late int limit;
+
+  FetchHistory({required this.page, required this.limit});
   @override
-  List<Object?> get props => [];
+  List<Object?> get props => [page, limit];
 }
 
 class GetImageHistory extends MoodHistoryEvent {
@@ -17,4 +22,9 @@ class GetImageHistory extends MoodHistoryEvent {
 
   @override
   List<Object?> get props => [imageId];
+}
+
+class LoadMoreHistory extends MoodHistoryEvent {
+  @override
+  List<Object?> get props => [];
 }

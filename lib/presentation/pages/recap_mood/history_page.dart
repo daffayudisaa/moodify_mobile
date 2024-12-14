@@ -16,11 +16,15 @@ class HistoryPage extends StatefulWidget {
 class _HistoryPageState extends State<HistoryPage> {
   bool _isEmojiGridVisible = false;
   MoodHistoryBloc? _moodHistoryBloc;
+  List<Map<String, String>> _history = [];
+  int _currentPage = 1;
+  final int _itemsPerPage = 10;
 
   @override
   void initState() {
     super.initState();
-    _moodHistoryBloc = MoodHistoryBloc()..add(FetchHistory());
+    _moodHistoryBloc = MoodHistoryBloc()
+      ..add(FetchHistory(page: _currentPage, limit: _itemsPerPage));
   }
 
   @override
@@ -32,6 +36,17 @@ class _HistoryPageState extends State<HistoryPage> {
     setState(() {
       _isEmojiGridVisible = !_isEmojiGridVisible;
     });
+  }
+
+  // Function to load more data when user scrolls to the bottom
+  void _loadMoreData() {
+    if (_moodHistoryBloc != null) {
+      setState(() {
+        _currentPage++;
+      });
+      _moodHistoryBloc!
+          .add(FetchHistory(page: _currentPage, limit: _itemsPerPage));
+    }
   }
 
   Widget _buildEmojiGrid() {
@@ -205,105 +220,133 @@ class _HistoryPageState extends State<HistoryPage> {
                 ],
               ),
             ),
-            ...history.map((item) {
-              return Container(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-                margin:
-                    const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(10),
-                  border: Border.all(
-                    color: const Color(0xFFA0D3F5).withOpacity(0.3),
-                  ),
-                ),
-                child: Row(
-                  children: [
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(10),
-                      child: CachedNetworkImage(
-                        imageUrl:
-                            'https://sirw.my.id/images/${item['imageID']}',
-                        width: screenWidth * 0.25,
-                        height: screenHeight * 0.2,
-                        fit: BoxFit.cover,
-                        placeholder: (context, url) => const Center(
-                          child: CircularProgressIndicator(
-                            color: Colors.blue,
-                          ),
-                        ),
-                        errorWidget: (context, url, error) =>
-                            const Icon(Icons.error),
-                      ),
+            ListView.builder(
+              shrinkWrap: true,
+              physics: NeverScrollableScrollPhysics(),
+              itemCount: history.length,
+              itemBuilder: (context, index) {
+                var item = history[index];
+                return Container(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                  margin:
+                      const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(10),
+                    border: Border.all(
+                      color: const Color(0xFFA0D3F5).withOpacity(0.3),
                     ),
-                    const SizedBox(width: 10),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(left: 10, right: 10),
-                            child: Column(
-                              children: [
-                                Align(
-                                  alignment: Alignment.topLeft,
-                                  child: Text(
-                                    () {
-                                      String formattedDate = '';
-                                      if (item['CreatedAt'] != null) {
-                                        try {
-                                          DateTime parsedDate = DateTime.parse(
-                                              item['CreatedAt']!);
-                                          formattedDate =
-                                              DateFormat('yyyy-MM-dd HH:mm')
-                                                  .format(parsedDate);
-                                        } catch (e) {
-                                          formattedDate =
-                                              item['CreatedAt'] ?? '';
-                                        }
-                                      }
-                                      return formattedDate;
-                                    }(),
-                                    style: TextStyle(
-                                      fontSize: getFontSize,
-                                      color: Colors.grey,
-                                    ),
-                                  ),
-                                ),
-                                Align(
-                                  alignment: Alignment.topLeft,
-                                  child: Text(
-                                    'Mood: ${item['AnalysisID'] ?? ''}',
-                                    style: TextStyle(
-                                      fontSize: getFontSize * 1.2,
-                                      fontWeight: FontWeight.w600,
-                                      fontFamily: 'Poppins',
-                                    ),
-                                    overflow: TextOverflow.ellipsis,
-                                  ),
-                                ),
-                              ],
+                  ),
+                  child: Row(
+                    children: [
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(10),
+                        child: CachedNetworkImage(
+                          imageUrl:
+                              'https://sirw.my.id/images/${item['imageID']}',
+                          width: screenWidth * 0.25,
+                          height: screenHeight * 0.2,
+                          fit: BoxFit.cover,
+                          placeholder: (context, url) => const Center(
+                            child: CircularProgressIndicator(
+                              color: Colors.blue,
                             ),
                           ),
-                          const SizedBox(width: 10),
-                          _buildPercentageGrid(
-                            item['AngryScore'] ?? '0',
-                            item['FearScore'] ?? '0',
-                            item['SurpriseScore'] ?? '0',
-                            item['SadScore'] ?? '0',
-                            item['HappyScore'] ?? '0',
-                            item['DisgustScore'] ?? '0',
-                            item['NeutralScore'] ?? '0',
-                          ),
-                        ],
+                          errorWidget: (context, url, error) =>
+                              const Icon(Icons.error),
+                        ),
                       ),
+                      const SizedBox(width: 10),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Padding(
+                              padding:
+                                  const EdgeInsets.only(left: 10, right: 10),
+                              child: Column(
+                                children: [
+                                  Align(
+                                    alignment: Alignment.topLeft,
+                                    child: Text(
+                                      () {
+                                        String formattedDate = '';
+                                        if (item['CreatedAt'] != null) {
+                                          try {
+                                            DateTime parsedDate =
+                                                DateTime.parse(
+                                                    item['CreatedAt']!);
+                                            formattedDate =
+                                                DateFormat('yyyy-MM-dd HH:mm')
+                                                    .format(parsedDate);
+                                          } catch (e) {
+                                            formattedDate =
+                                                item['CreatedAt'] ?? '';
+                                          }
+                                        }
+                                        return formattedDate;
+                                      }(),
+                                      style: TextStyle(
+                                        fontSize: getFontSize,
+                                        color: Colors.grey,
+                                      ),
+                                    ),
+                                  ),
+                                  Align(
+                                    alignment: Alignment.topLeft,
+                                    child: Text(
+                                      'Mood: ${item['AnalysisID'] ?? ''}',
+                                      style: TextStyle(
+                                        fontSize: getFontSize * 1.2,
+                                        fontWeight: FontWeight.w600,
+                                        fontFamily: 'Poppins',
+                                      ),
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            const SizedBox(width: 10),
+                            _buildPercentageGrid(
+                              item['AngryScore'] ?? '0',
+                              item['FearScore'] ?? '0',
+                              item['SurpriseScore'] ?? '0',
+                              item['SadScore'] ?? '0',
+                              item['HappyScore'] ?? '0',
+                              item['DisgustScore'] ?? '0',
+                              item['NeutralScore'] ?? '0',
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                );
+              },
+            ),
+            if (_moodHistoryBloc != null &&
+                history.isNotEmpty &&
+                history.length % _itemsPerPage == 0)
+              Center(
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: ElevatedButton(
+                    onPressed: _loadMoreData,
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.white,
+                      shadowColor: Colors.transparent,
+                      side: const BorderSide(color: Colors.blue, width: 1),
                     ),
-                  ],
+                    child: const HugeIcon(
+                      icon: HugeIcons.strokeRoundedArrowDown01,
+                      color: Colors.blue,
+                    ),
+                  ),
                 ),
-              );
-            }).toList(),
+              ),
             const SizedBox(height: 40),
           ],
         ),
@@ -325,7 +368,8 @@ class _HistoryPageState extends State<HistoryPage> {
             } else if (state is MoodHistoryErrorState) {
               return Center(child: Text('Error: ${state.message}'));
             } else if (state is MoodHistoryLoadedState) {
-              return _buildHistory(state.userHistory);
+              _history.addAll(state.userHistory);
+              return _buildHistory(_history);
             }
             return Container();
           },
