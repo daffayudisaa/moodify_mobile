@@ -306,7 +306,7 @@ class _ProfilePageState extends State<ProfilePage> {
               builder: (context, state) {
                 if (state is ProfileLoaded) {
                   String birthDateString =
-                      DateFormat('dd-MM-yyyy').format(state.birthDate);
+                      DateFormat('yyyy-MM-dd').format(state.birthDate);
 
                   final firstNameController =
                       TextEditingController(text: state.firstName);
@@ -318,7 +318,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       TextEditingController(text: state.gender);
                   final birthDateController =
                       TextEditingController(text: birthDateString);
-
+                  print(state.birthDate);
                   return SingleChildScrollView(
                     child: Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 30.0),
@@ -455,8 +455,8 @@ class _ProfilePageState extends State<ProfilePage> {
                             controller: birthDateController,
                             enabled: isEditing,
                             onDateChanged: (date) {
-                              birthDate =
-                                  DateFormat('yyyy-MM-dd').format(date!);
+                              birthDate = DateFormat('yyyy-MM-dd')
+                                  .format(date ?? state.birthDate);
                               birthDateController.text = birthDate!;
                             },
                           ),
