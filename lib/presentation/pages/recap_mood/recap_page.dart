@@ -35,7 +35,6 @@ class _RecapPageState extends State<RecapPage> {
 
   @override
   void dispose() {
-    context.read<RecapBloc>().close();
     super.dispose();
   }
 

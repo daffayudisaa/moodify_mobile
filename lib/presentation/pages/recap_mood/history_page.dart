@@ -14,7 +14,6 @@ class HistoryPage extends StatefulWidget {
 }
 
 class _HistoryPageState extends State<HistoryPage> {
-  bool _isEmojiGridVisible = false;
   MoodHistoryBloc? _moodHistoryBloc;
   List<Map<String, String>> _history = [];
   int _currentPage = 1;
@@ -32,12 +31,6 @@ class _HistoryPageState extends State<HistoryPage> {
     super.dispose();
   }
 
-  void _toggleEmojiGrid() {
-    setState(() {
-      _isEmojiGridVisible = !_isEmojiGridVisible;
-    });
-  }
-
   // Function to load more data when user scrolls to the bottom
   void _loadMoreData() {
     if (_moodHistoryBloc != null) {
@@ -51,6 +44,7 @@ class _HistoryPageState extends State<HistoryPage> {
 
   Widget _buildEmojiGrid() {
     return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Column(
@@ -59,6 +53,7 @@ class _HistoryPageState extends State<HistoryPage> {
           children: [
             _buildEmojiItem('😡', 'Angry'),
             _buildEmojiItem('😢', 'Sad'),
+            _buildEmojiItem('😐', 'Neutral')
           ],
         ),
         Column(
@@ -73,8 +68,8 @@ class _HistoryPageState extends State<HistoryPage> {
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            _buildEmojiItem('😞', 'Disgusting'),
-            _buildEmojiItem('😮', 'Surprised'),
+            _buildEmojiItem('🤮', 'Disgust'),
+            _buildEmojiItem('😮', 'Surprise'),
           ],
         ),
       ],
@@ -191,32 +186,16 @@ class _HistoryPageState extends State<HistoryPage> {
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  GestureDetector(
-                    onTap: _toggleEmojiGrid,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        const Text(
-                          'Details',
-                          style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        const SizedBox(width: 5),
-                        Icon(
-                          _isEmojiGridVisible
-                              ? HugeIcons.strokeRoundedArrowDown01
-                              : HugeIcons.strokeRoundedArrowUp01,
-                          size: 25,
-                        ),
-                      ],
+                  Text(
+                    "Details",
+                    style: TextStyle(
+                      fontFamily: 'Poppins',
+                      fontSize: getFontSize * 1.2,
+                      fontWeight: FontWeight.w600,
                     ),
                   ),
-                  Visibility(
-                    visible: _isEmojiGridVisible,
-                    child: _buildEmojiGrid(),
-                  ),
+                  const SizedBox(height: 10),
+                  _buildEmojiGrid(),
                 ],
               ),
             ),
@@ -358,22 +337,29 @@ class _HistoryPageState extends State<HistoryPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      body: BlocProvider(
-        create: (_) => _moodHistoryBloc!,
-        child: BlocBuilder<MoodHistoryBloc, MoodHistoryState>(
-          builder: (context, state) {
-            if (state is MoodHistoryLoadingState) {
-              return const Center(
-                  child: CircularProgressIndicator(color: Colors.blue));
-            } else if (state is MoodHistoryErrorState) {
-              return Center(child: Text('Error: ${state.message}'));
-            } else if (state is MoodHistoryLoadedState) {
-              _history.addAll(state.userHistory);
-              return _buildHistory(_history);
-            }
-            return Container();
-          },
-        ),
+      body: Column(
+        children: [
+          Expanded(
+            child: BlocProvider(
+              create: (_) => _moodHistoryBloc!,
+              child: BlocBuilder<MoodHistoryBloc, MoodHistoryState>(
+                builder: (context, state) {
+                  if (state is MoodHistoryLoadingState) {
+                    return const Center(
+                      child: CircularProgressIndicator(color: Colors.blue),
+                    );
+                  } else if (state is MoodHistoryErrorState) {
+                    return Center(child: Text('Error: ${state.message}'));
+                  } else if (state is MoodHistoryLoadedState) {
+                    _history.addAll(state.userHistory);
+                    return _buildHistory(_history);
+                  }
+                  return Container();
+                },
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
