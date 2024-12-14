@@ -149,186 +149,91 @@ class _RecapPageState extends State<RecapPage> {
               const SizedBox(
                 height: 20,
               ),
-              GridView.count(
-                padding: const EdgeInsets.symmetric(horizontal: 25),
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                crossAxisCount: 4,
-                crossAxisSpacing:
-                    MediaQuery.of(context).size.width > 1200 ? 12 : 8,
-                mainAxisSpacing:
-                    MediaQuery.of(context).size.width > 1200 ? 15 : 10,
-                childAspectRatio:
-                    MediaQuery.of(context).size.width > 1200 ? 1.5 : 0.7,
-                children: [
-                  BlocBuilder<RecapBloc, RecapState>(
-                    builder: (context, state) {
-                      if (state is RecapLoading) {
-                        return const Center(
-                            child:
-                                CircularProgressIndicator(color: Colors.blue));
-                      } else if (state is RecapLoaded) {
-                        return RecapMoodCard(
-                          path: 'assets/meowdy/Meowdy-Happy.png',
-                          mood: 'Happy',
-                          count: state.happy,
-                        );
-                      } else if (state is RecapError) {
-                        return Center(
-                            child: Text('Error: ${state.errorMessage}'));
-                      }
-                      return const SizedBox(); // Placeholder untuk kondisi default
-                    },
-                  ),
-                  BlocBuilder<RecapBloc, RecapState>(
-                    builder: (context, state) {
-                      if (state is RecapLoading) {
-                        return const Center(
-                            child:
-                                CircularProgressIndicator(color: Colors.blue));
-                      } else if (state is RecapLoaded) {
-                        return RecapMoodCard(
-                          path: 'assets/meowdy/Meowdy-Sad.png',
-                          mood: 'Sad',
-                          count: state.sad,
-                        );
-                      } else if (state is RecapError) {
-                        return Center(
-                            child: Text('Error: ${state.errorMessage}'));
-                      }
-                      return const SizedBox();
-                    },
-                  ),
-                  BlocBuilder<RecapBloc, RecapState>(
-                    builder: (context, state) {
-                      if (state is RecapLoading) {
-                        return const Center(
-                            child:
-                                CircularProgressIndicator(color: Colors.blue));
-                      } else if (state is RecapLoaded) {
-                        return RecapMoodCard(
-                          path: 'assets/meowdy/Meowdy-Angry.png',
-                          mood: 'Angry',
-                          count: state.angry,
-                        );
-                      } else if (state is RecapError) {
-                        return Center(
-                            child: Text('Error: ${state.errorMessage}'));
-                      }
-                      return const SizedBox();
-                    },
-                  ),
-                  BlocBuilder<RecapBloc, RecapState>(
-                    builder: (context, state) {
-                      if (state is RecapLoading) {
-                        return const Center(
-                            child:
-                                CircularProgressIndicator(color: Colors.blue));
-                      } else if (state is RecapLoaded) {
-                        return RecapMoodCard(
-                          path: 'assets/meowdy/Meowdy-Surprise.png',
-                          mood: 'Surprise',
-                          count: state.surprise,
-                        );
-                      } else if (state is RecapError) {
-                        return Center(
-                            child: Text('Error: ${state.errorMessage}'));
-                      }
-                      return const SizedBox();
-                    },
-                  ),
-                ],
+              // Loading spinner will only be shown once here
+              BlocBuilder<RecapBloc, RecapState>(
+                builder: (context, state) {
+                  if (state is RecapLoading) {
+                    return const Center(
+                        child: CircularProgressIndicator(color: Colors.blue));
+                  }
+                  return GridView.count(
+                    padding: const EdgeInsets.symmetric(horizontal: 25),
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    crossAxisCount: 4,
+                    crossAxisSpacing:
+                        MediaQuery.of(context).size.width > 1200 ? 12 : 8,
+                    mainAxisSpacing:
+                        MediaQuery.of(context).size.width > 1200 ? 15 : 10,
+                    childAspectRatio:
+                        MediaQuery.of(context).size.width > 1200 ? 1.5 : 0.7,
+                    children: [
+                      RecapMoodCard(
+                        path: 'assets/meowdy/Meowdy-Happy.png',
+                        mood: 'Happy',
+                        count: state is RecapLoaded ? state.happy : 0,
+                      ),
+                      RecapMoodCard(
+                        path: 'assets/meowdy/Meowdy-Sad.png',
+                        mood: 'Sad',
+                        count: state is RecapLoaded ? state.sad : 0,
+                      ),
+                      RecapMoodCard(
+                        path: 'assets/meowdy/Meowdy-Angry.png',
+                        mood: 'Angry',
+                        count: state is RecapLoaded ? state.angry : 0,
+                      ),
+                      RecapMoodCard(
+                        path: 'assets/meowdy/Meowdy-Surprise.png',
+                        mood: 'Surprise',
+                        count: state is RecapLoaded ? state.surprise : 0,
+                      ),
+                    ],
+                  );
+                },
               ),
               const SizedBox(height: 15),
-              GridView.count(
-                padding: const EdgeInsets.symmetric(horizontal: 25),
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                crossAxisCount: 4,
-                crossAxisSpacing:
-                    MediaQuery.of(context).size.width > 1200 ? 12 : 8,
-                mainAxisSpacing:
-                    MediaQuery.of(context).size.width > 1200 ? 15 : 10,
-                childAspectRatio:
-                    MediaQuery.of(context).size.width > 1200 ? 1.5 : 0.7,
-                children: [
-                  BlocBuilder<RecapBloc, RecapState>(
-                    builder: (context, state) {
-                      if (state is RecapLoading) {
-                        return const Center(
-                            child:
-                                CircularProgressIndicator(color: Colors.blue));
-                      } else if (state is RecapLoaded) {
-                        return RecapMoodCard(
-                          path: 'assets/meowdy/Meowdy-Disgust.png',
-                          mood: 'Disgust',
-                          count: state.disgust,
-                        );
-                      } else if (state is RecapError) {
-                        return Center(
-                            child: Text('Error: ${state.errorMessage}'));
-                      }
-                      return const SizedBox(); // Placeholder untuk kondisi default
-                    },
-                  ),
-                  BlocBuilder<RecapBloc, RecapState>(
-                    builder: (context, state) {
-                      if (state is RecapLoading) {
-                        return const Center(
-                            child:
-                                CircularProgressIndicator(color: Colors.blue));
-                      } else if (state is RecapLoaded) {
-                        return RecapMoodCard(
-                          path: 'assets/meowdy/Meowdy-Fear.png',
-                          mood: 'Fear',
-                          count: state.fear,
-                        );
-                      } else if (state is RecapError) {
-                        return Center(
-                            child: Text('Error: ${state.errorMessage}'));
-                      }
-                      return const SizedBox();
-                    },
-                  ),
-                  BlocBuilder<RecapBloc, RecapState>(
-                    builder: (context, state) {
-                      if (state is RecapLoading) {
-                        return const Center(
-                            child:
-                                CircularProgressIndicator(color: Colors.blue));
-                      } else if (state is RecapLoaded) {
-                        return RecapMoodCard(
-                          path: 'assets/meowdy/Meowdy-Neutral.png',
-                          mood: 'Neutral',
-                          count: state.neutral,
-                        );
-                      } else if (state is RecapError) {
-                        return Center(
-                            child: Text('Error: ${state.errorMessage}'));
-                      }
-                      return const SizedBox();
-                    },
-                  ),
-                  BlocBuilder<RecapBloc, RecapState>(
-                    builder: (context, state) {
-                      if (state is RecapLoading) {
-                        return const Center(
-                            child:
-                                CircularProgressIndicator(color: Colors.blue));
-                      } else if (state is RecapLoaded) {
-                        return RecapMoodCard(
-                          path: 'assets/meowdy/Meowdy-Total.png',
-                          mood: 'Total',
-                          count: state.total,
-                        );
-                      } else if (state is RecapError) {
-                        return Center(
-                            child: Text('Error: ${state.errorMessage}'));
-                      }
-                      return const SizedBox();
-                    },
-                  ),
-                ],
+              BlocBuilder<RecapBloc, RecapState>(
+                builder: (context, state) {
+                  if (state is RecapLoading) {
+                    return const Center(
+                        child: CircularProgressIndicator(color: Colors.blue));
+                  }
+                  return GridView.count(
+                    padding: const EdgeInsets.symmetric(horizontal: 25),
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    crossAxisCount: 4,
+                    crossAxisSpacing:
+                        MediaQuery.of(context).size.width > 1200 ? 12 : 8,
+                    mainAxisSpacing:
+                        MediaQuery.of(context).size.width > 1200 ? 15 : 10,
+                    childAspectRatio:
+                        MediaQuery.of(context).size.width > 1200 ? 1.5 : 0.7,
+                    children: [
+                      RecapMoodCard(
+                        path: 'assets/meowdy/Meowdy-Disgust.png',
+                        mood: 'Disgust',
+                        count: state is RecapLoaded ? state.disgust : 0,
+                      ),
+                      RecapMoodCard(
+                        path: 'assets/meowdy/Meowdy-Fear.png',
+                        mood: 'Fear',
+                        count: state is RecapLoaded ? state.fear : 0,
+                      ),
+                      RecapMoodCard(
+                        path: 'assets/meowdy/Meowdy-Neutral.png',
+                        mood: 'Neutral',
+                        count: state is RecapLoaded ? state.neutral : 0,
+                      ),
+                      RecapMoodCard(
+                        path: 'assets/meowdy/Meowdy-Total.png',
+                        mood: 'Total',
+                        count: state is RecapLoaded ? state.total : 0,
+                      ),
+                    ],
+                  );
+                },
               ),
             ],
           ),
