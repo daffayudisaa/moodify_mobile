@@ -21,6 +21,9 @@ class _MusicRecomPageState extends State<MusicRecomPage> {
   late MusicBloc _musicBloc;
   String selectedMood = 'All';
   late RecapBloc _recapBloc;
+  TextEditingController _searchController =
+      TextEditingController(); // Controller untuk search bar
+  String searchQuery = '';
 
   @override
   void initState() {
@@ -34,6 +37,7 @@ class _MusicRecomPageState extends State<MusicRecomPage> {
   void dispose() {
     _musicBloc.close();
     _recapBloc.close();
+    _searchController.dispose(); // Dispose controller saat halaman dibuang
     super.dispose();
   }
 
@@ -87,11 +91,19 @@ class _MusicRecomPageState extends State<MusicRecomPage> {
                 } else if (state is MusicLoaded) {
                   List<Map<String, String>> filteredSongs;
                   if (selectedMood == 'All') {
-                    filteredSongs = state.songs;
+                    filteredSongs = state.songs
+                        .where((song) => song['title']!
+                            .toLowerCase()
+                            .contains(searchQuery.toLowerCase()))
+                        .toList();
                     filteredSongs.shuffle();
                   } else {
                     filteredSongs = state.songs
-                        .where((song) => song['mood'] == selectedMood)
+                        .where((song) =>
+                            song['mood'] == selectedMood &&
+                            song['title']!
+                                .toLowerCase()
+                                .contains(searchQuery.toLowerCase()))
                         .toList();
                     filteredSongs.shuffle();
                   }
@@ -115,6 +127,49 @@ class _MusicRecomPageState extends State<MusicRecomPage> {
                                   fontFamily: 'Poppins',
                                   fontSize: getFontSize * 0.95,
                                   fontWeight: FontWeight.w400,
+                                ),
+                              ),
+                              const SizedBox(height: 20),
+                              TextField(
+                                controller: _searchController,
+                                onChanged: (query) {
+                                  setState(() {
+                                    searchQuery = query;
+                                  });
+                                },
+                                decoration: InputDecoration(
+                                  hintText: 'Search Songs',
+                                  hintStyle: TextStyle(
+                                    fontFamily: 'Poppins',
+                                    fontSize: getFontSize,
+                                    color: Colors.grey,
+                                  ),
+                                  focusedBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(15),
+                                    borderSide: const BorderSide(
+                                      color: Color(0xFFA0D3F5),
+                                      width: 2,
+                                    ),
+                                  ),
+                                  enabledBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(15),
+                                    borderSide: BorderSide(
+                                      color: Colors.blue.withOpacity(0.3),
+                                      width: 1,
+                                    ),
+                                  ),
+                                  contentPadding: const EdgeInsets.symmetric(
+                                    vertical: 12,
+                                    horizontal: 25,
+                                  ),
+                                  suffixIcon: const Padding(
+                                    padding:
+                                        EdgeInsets.symmetric(horizontal: 20),
+                                    child: Icon(
+                                      Icons.search,
+                                      color: Colors.blue, // Icon color
+                                    ),
+                                  ),
                                 ),
                               ),
                               const SizedBox(height: 10),
