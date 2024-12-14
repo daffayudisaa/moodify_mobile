@@ -195,6 +195,33 @@ class _HomePageState extends State<HomePage> {
                             .add(FetchMusic(state.moodDetected.toLowerCase()));
                         _quotesBloc
                             .add(FetchQuotes(state.moodDetected.toLowerCase()));
+
+                        String imageAsset;
+                        switch (state.moodDetected.toLowerCase()) {
+                          case 'happy':
+                            imageAsset = 'assets/meowdy/Meowdy-Happy.png';
+                            break;
+                          case 'sad':
+                            imageAsset = 'assets/meowdy/Meowdy-Sad.png';
+                            break;
+                          case 'angry':
+                            imageAsset = 'assets/meowdy/Meowdy-Angry.png';
+                            break;
+                          case 'surprise':
+                            imageAsset = 'assets/meowdy/Meowdy-Surprise.png';
+                            break;
+                          case 'disgust':
+                            imageAsset = 'assets/meowdy/Meowdy-Disgust.png';
+                            break;
+                          case 'fear':
+                            imageAsset = 'assets/meowdy/Meowdy-Fear.png';
+                            break;
+                          case 'neutral':
+                            imageAsset = 'assets/meowdy/Meowdy-Neutral.png';
+                            break;
+                          default:
+                            imageAsset = 'assets/meowdy/Meowdy-Total.png';
+                        }
                         return Container(
                           margin: const EdgeInsets.symmetric(horizontal: 25),
                           width: double.infinity,
@@ -242,9 +269,8 @@ class _HomePageState extends State<HomePage> {
                                   ],
                                 ),
                               ),
-                              Image(
-                                image: const AssetImage(
-                                    'assets/meowdy/Meowdy-Happy.png'),
+                              Image.asset(
+                                imageAsset,
                                 height: getImageSize * 2.3,
                               ),
                             ],
@@ -475,7 +501,7 @@ class _HomePageState extends State<HomePage> {
                                   color: Colors.blue));
                         } else if (state is RecapLoaded) {
                           return RecapMoodCard(
-                            path: 'assets/meowdy/Meowdy-Happy.png',
+                            path: 'assets/meowdy/Meowdy-Sad.png',
                             mood: 'Sad',
                             count: state.sad,
                           );
@@ -494,7 +520,7 @@ class _HomePageState extends State<HomePage> {
                                   color: Colors.blue));
                         } else if (state is RecapLoaded) {
                           return RecapMoodCard(
-                            path: 'assets/meowdy/Meowdy-Happy.png',
+                            path: 'assets/meowdy/Meowdy-Angry.png',
                             mood: 'Angry',
                             count: state.angry,
                           );
@@ -513,7 +539,7 @@ class _HomePageState extends State<HomePage> {
                                   color: Colors.blue));
                         } else if (state is RecapLoaded) {
                           return RecapMoodCard(
-                            path: 'assets/meowdy/Meowdy-Happy.png',
+                            path: 'assets/meowdy/Meowdy-Neutral.png',
                             mood: 'Neutral',
                             count: state.neutral,
                           );

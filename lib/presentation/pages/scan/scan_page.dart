@@ -208,7 +208,7 @@ class ScanPageState extends State<ScanPage> {
               ),
             ),
             Container(
-              padding: const EdgeInsets.symmetric(vertical: 20),
+              padding: const EdgeInsets.symmetric(vertical: 70),
               child: GestureDetector(
                 onTap: () async {
                   if (_controller?.value.isInitialized != true) return;

@@ -188,7 +188,7 @@ class _RecapPageState extends State<RecapPage> {
                                 CircularProgressIndicator(color: Colors.blue));
                       } else if (state is RecapLoaded) {
                         return RecapMoodCard(
-                          path: 'assets/meowdy/Meowdy-Happy.png',
+                          path: 'assets/meowdy/Meowdy-Sad.png',
                           mood: 'Sad',
                           count: state.sad,
                         );
@@ -207,7 +207,7 @@ class _RecapPageState extends State<RecapPage> {
                                 CircularProgressIndicator(color: Colors.blue));
                       } else if (state is RecapLoaded) {
                         return RecapMoodCard(
-                          path: 'assets/meowdy/Meowdy-Happy.png',
+                          path: 'assets/meowdy/Meowdy-Angry.png',
                           mood: 'Angry',
                           count: state.angry,
                         );
@@ -226,7 +226,7 @@ class _RecapPageState extends State<RecapPage> {
                                 CircularProgressIndicator(color: Colors.blue));
                       } else if (state is RecapLoaded) {
                         return RecapMoodCard(
-                          path: 'assets/meowdy/Meowdy-Happy.png',
+                          path: 'assets/meowdy/Meowdy-Surprise.png',
                           mood: 'Surprise',
                           count: state.surprise,
                         );
@@ -260,7 +260,7 @@ class _RecapPageState extends State<RecapPage> {
                                 CircularProgressIndicator(color: Colors.blue));
                       } else if (state is RecapLoaded) {
                         return RecapMoodCard(
-                          path: 'assets/meowdy/Meowdy-Happy.png',
+                          path: 'assets/meowdy/Meowdy-Disgust.png',
                           mood: 'Disgust',
                           count: state.disgust,
                         );
@@ -279,7 +279,7 @@ class _RecapPageState extends State<RecapPage> {
                                 CircularProgressIndicator(color: Colors.blue));
                       } else if (state is RecapLoaded) {
                         return RecapMoodCard(
-                          path: 'assets/meowdy/Meowdy-Happy.png',
+                          path: 'assets/meowdy/Meowdy-Fear.png',
                           mood: 'Fear',
                           count: state.fear,
                         );
@@ -298,7 +298,7 @@ class _RecapPageState extends State<RecapPage> {
                                 CircularProgressIndicator(color: Colors.blue));
                       } else if (state is RecapLoaded) {
                         return RecapMoodCard(
-                          path: 'assets/meowdy/Meowdy-Happy.png',
+                          path: 'assets/meowdy/Meowdy-Neutral.png',
                           mood: 'Neutral',
                           count: state.neutral,
                         );
@@ -317,7 +317,7 @@ class _RecapPageState extends State<RecapPage> {
                                 CircularProgressIndicator(color: Colors.blue));
                       } else if (state is RecapLoaded) {
                         return RecapMoodCard(
-                          path: 'assets/meowdy/Meowdy-Happy.png',
+                          path: 'assets/meowdy/Meowdy-Total.png',
                           mood: 'Total',
                           count: state.total,
                         );
