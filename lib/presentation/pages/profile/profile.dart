@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:hugeicons/hugeicons.dart';
@@ -347,8 +348,9 @@ class _ProfilePageState extends State<ProfilePage> {
                                 },
                                 child: CircleAvatar(
                                   radius: getimageSize * 0.9,
-                                  backgroundImage: NetworkImage(
-                                      'https://sirw.my.id/users/avatar/${state.avatar}'),
+                                  backgroundImage: CachedNetworkImageProvider(
+                                    'https://sirw.my.id/users/avatar/${state.avatar}',
+                                  ),
                                   child: Stack(
                                     children: [
                                       Align(

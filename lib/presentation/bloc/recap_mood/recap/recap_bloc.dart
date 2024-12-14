@@ -91,7 +91,7 @@ class RecapBloc extends Bloc<RecapEvent, RecapState> {
         final moodDetected = data['MoodDetected'].toString();
         emit(RecapLoadedLatest(moodDetected: moodDetected));
       } else {
-        emit(RecapError("Failed to load profile: ${response.body}"));
+        emit(RecapError("Failed to load mood: ${response.body}"));
       }
     } catch (e) {
       emit(RecapError(e.toString()));

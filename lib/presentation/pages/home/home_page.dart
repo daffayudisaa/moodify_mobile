@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hugeicons/hugeicons.dart';
@@ -149,10 +150,20 @@ class _HomePageState extends State<HomePage> {
                           ),
                           GestureDetector(
                             onTap: () => navigateToPage(3),
-                            child: CircleAvatar(
-                              radius: getImageSize * 0.7,
-                              backgroundImage: NetworkImage(
-                                  'https://sirw.my.id/users/avatar/${state.avatar}'),
+                            child: ClipOval(
+                              child: CachedNetworkImage(
+                                imageUrl:
+                                    'https://sirw.my.id/users/avatar/${state.avatar}',
+                                placeholder: (context, url) =>
+                                    const CircularProgressIndicator(
+                                  color: Colors.blue,
+                                ), // Widget loading
+                                errorWidget: (context, url, error) =>
+                                    const Icon(Icons.error), // Widget error
+                                width: getImageSize * 1.4, // Ukuran lingkaran
+                                height: getImageSize * 1.4,
+                                fit: BoxFit.cover, // Menjaga proporsi gambar
+                              ),
                             ),
                           ),
                         ],
@@ -161,7 +172,7 @@ class _HomePageState extends State<HomePage> {
                       print("Failed to load profile");
                     }
                     return Container(
-                      color: Colors.pink,
+                      color: const Color.fromARGB(255, 87, 191, 255),
                     ); // Placeholder in case no data is available
                   },
                 ),
@@ -204,7 +215,7 @@ class _HomePageState extends State<HomePage> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      "Feeling ${state.moodDetected}!",
+                                      "Feeling ${state.moodDetected}",
                                       style: textStyle(
                                         getFontSize * 1.65,
                                         color: Colors.white,
