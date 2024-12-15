@@ -31,7 +31,6 @@ class _HistoryPageState extends State<HistoryPage> {
     super.dispose();
   }
 
-  // Function to load more data when user scrolls to the bottom
   void _loadMoreData() {
     if (_moodHistoryBloc != null) {
       setState(() {
@@ -164,7 +163,8 @@ class _HistoryPageState extends State<HistoryPage> {
     double screenWidth = MediaQuery.of(context).size.width;
     double screenHeight = MediaQuery.of(context).size.height;
     double getFontSize = ScreenUtils.getFontSize(context, 14);
-
+    bool isLastPage = (history.length) < _currentPage * _itemsPerPage;
+    print(history.length);
     return Center(
       child: SingleChildScrollView(
         child: Column(
@@ -306,9 +306,7 @@ class _HistoryPageState extends State<HistoryPage> {
                 );
               },
             ),
-            if (_moodHistoryBloc != null &&
-                history.isNotEmpty &&
-                history.length % _itemsPerPage == 0)
+            if (!isLastPage)
               Center(
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
@@ -349,12 +347,23 @@ class _HistoryPageState extends State<HistoryPage> {
                       child: CircularProgressIndicator(color: Colors.blue),
                     );
                   } else if (state is MoodHistoryErrorState) {
-                    return const Center(
-                        child: Text("You haven't scanned your face yet"));
+                    if (_history.isEmpty) {
+                      return const Center(
+                          child: Text("You haven't scanned your face yet"));
+                    } else {
+                      return _buildHistory(_history);
+                    }
                   } else if (state is MoodHistoryLoadedState) {
                     _history.addAll(state.userHistory);
+
+                    if (_history.isEmpty) {
+                      return const Center(
+                          child: Text("You haven't scanned your face yet"));
+                    }
+
                     return _buildHistory(_history);
                   }
+
                   return Container();
                 },
               ),

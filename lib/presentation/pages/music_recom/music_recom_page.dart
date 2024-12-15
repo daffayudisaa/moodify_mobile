@@ -8,7 +8,7 @@ import 'package:moodify_mobile/presentation/bloc/recap_mood/recap/recap_event.da
 import 'package:moodify_mobile/presentation/bloc/recap_mood/recap/recap_state.dart';
 import 'package:moodify_mobile/utils/screen_utils.dart';
 import 'package:moodify_mobile/presentation/widgets/list/recom_song.dart';
-import 'package:url_launcher/url_launcher.dart';
+//import 'package:url_launcher/url_launcher.dart';
 
 class MusicRecomPage extends StatefulWidget {
   const MusicRecomPage({Key? key}) : super(key: key);
@@ -138,7 +138,7 @@ class _MusicRecomPageState extends State<MusicRecomPage> {
                                   });
                                 },
                                 decoration: InputDecoration(
-                                  hintText: 'Search Songs',
+                                  hintText: 'Search Songs by Title',
                                   hintStyle: TextStyle(
                                     fontFamily: 'Poppins',
                                     fontSize: getFontSize,
@@ -247,19 +247,19 @@ class _MusicRecomPageState extends State<MusicRecomPage> {
                           Column(
                             children: filteredSongs.map((song) {
                               return GestureDetector(
-                                onTap: () async {
-                                  final url = Uri.parse(song['url']!);
-                                  print('Launching URL: $url');
+                                // onTap: () async {
+                                //   final url = Uri.parse(song['url']!);
+                                //   print('Launching URL: $url');
 
-                                  if (await canLaunchUrl(url)) {
-                                    await launchUrl(
-                                      url,
-                                      mode: LaunchMode.externalApplication,
-                                    );
-                                  } else {
-                                    print('Could not launch $url');
-                                  }
-                                },
+                                //   if (await canLaunchUrl(url)) {
+                                //     await launchUrl(
+                                //       url,
+                                //       mode: LaunchMode.externalApplication,
+                                //     );
+                                //   } else {
+                                //     print('Could not launch $url');
+                                //   }
+                                // },
                                 child: Container(
                                   color: Colors.transparent,
                                   child: ListSongRecom(
@@ -270,6 +270,7 @@ class _MusicRecomPageState extends State<MusicRecomPage> {
                                     title: song['title']!,
                                     artist: song['artist']!,
                                     duration: song['duration']!,
+                                    url: song['url']!,
                                   ),
                                 ),
                               );

@@ -18,7 +18,7 @@ import 'package:moodify_mobile/presentation/bloc/recap_mood/recap/recap_state.da
 import 'package:moodify_mobile/utils/screen_utils.dart';
 import 'package:moodify_mobile/presentation/widgets/cards/mood_card.dart';
 import 'package:moodify_mobile/presentation/widgets/list/recom_song.dart';
-import 'package:url_launcher/url_launcher.dart';
+//import 'package:url_launcher/url_launcher.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({key}) : super(key: key);
@@ -390,19 +390,19 @@ class _HomePageState extends State<HomePage> {
                         return Column(
                           children: filteredSongs.map((song) {
                             return GestureDetector(
-                              onTap: () async {
-                                final url = Uri.parse(song['url']!);
-                                print('Launching URL: $url');
+                              // onTap: () async {
+                              //   final url = Uri.parse(song['url']!);
+                              //   print('Launching URL: $url');
 
-                                if (await canLaunchUrl(url)) {
-                                  await launchUrl(
-                                    url,
-                                    mode: LaunchMode.externalApplication,
-                                  );
-                                } else {
-                                  print('Could not launch $url');
-                                }
-                              },
+                              //   if (await canLaunchUrl(url)) {
+                              //     await launchUrl(
+                              //       url,
+                              //       mode: LaunchMode.externalApplication,
+                              //     );
+                              //   } else {
+                              //     print('Could not launch $url');
+                              //   }
+                              // },
                               child: Container(
                                 color: Colors.transparent,
                                 child: ListSongRecom(
@@ -413,6 +413,7 @@ class _HomePageState extends State<HomePage> {
                                   title: song['title']!,
                                   artist: song['artist']!,
                                   duration: song['duration']!,
+                                  url: song['url']!,
                                 ),
                               ),
                             );
