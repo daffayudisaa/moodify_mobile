@@ -241,16 +241,16 @@ class _SignInPageState extends State<SignInPage> {
                         ],
                       ),
                       const SizedBox(height: 30),
-                      Text(
-                        "Or Continue With",
-                        style: TextStyle(
-                          color: const Color.fromRGBO(0, 0, 0, 0.6),
-                          fontFamily: 'Poppins',
-                          fontSize: getFontSize * 0.85,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                      const SizedBox(height: 15),
+                      // Text(
+                      //   "Or Continue With",
+                      //   style: TextStyle(
+                      //     color: const Color.fromRGBO(0, 0, 0, 0.6),
+                      //     fontFamily: 'Poppins',
+                      //     fontSize: getFontSize * 0.85,
+                      //     fontWeight: FontWeight.w600,
+                      //   ),
+                      // ),
+                      // const SizedBox(height: 15),
                       // button_spotify(getFontSize: getFontSize),
                       // const SizedBox(height: 30),
                       Row(
