@@ -8,7 +8,7 @@ import 'package:moodify_mobile/presentation/bloc/auth/auth_event.dart';
 import 'package:moodify_mobile/presentation/widgets/buttons/button.dart';
 import 'package:moodify_mobile/presentation/widgets/form/text_field.dart';
 import 'package:moodify_mobile/presentation/pages/auth/forgot_password.dart';
-import 'package:moodify_mobile/presentation/widgets/buttons/button_spotify.dart';
+//import 'package:moodify_mobile/presentation/widgets/buttons/button_spotify.dart';
 
 class SignInPage extends StatefulWidget {
   const SignInPage({super.key});
@@ -23,7 +23,6 @@ class _SignInPageState extends State<SignInPage> {
   final TextEditingController passwordController = TextEditingController();
 
   bool isPasswordVisible = false;
-
 
   @override
   Widget build(BuildContext context) {
@@ -63,8 +62,8 @@ class _SignInPageState extends State<SignInPage> {
               SnackBar(
                 content: Text(state.message),
                 backgroundColor: Colors.red,
-                behavior: SnackBarBehavior.floating, 
-                margin: const EdgeInsets.only( bottom: 40, left: 20, right: 20), 
+                behavior: SnackBarBehavior.floating,
+                margin: const EdgeInsets.only(bottom: 40, left: 20, right: 20),
               ),
             );
           }
@@ -178,10 +177,13 @@ class _SignInPageState extends State<SignInPage> {
                             controller: passwordController,
                           ),
                           Padding(
-                            padding: const EdgeInsets.only(right: 10.0), // Geser ikon ke kiri
+                            padding: const EdgeInsets.only(
+                                right: 10.0), // Geser ikon ke kiri
                             child: IconButton(
                               icon: Icon(
-                                isPasswordVisible ? Icons.visibility : Icons.visibility_off,
+                                isPasswordVisible
+                                    ? Icons.visibility
+                                    : Icons.visibility_off,
                                 color: Colors.grey,
                               ),
                               onPressed: () {
@@ -249,8 +251,8 @@ class _SignInPageState extends State<SignInPage> {
                         ),
                       ),
                       const SizedBox(height: 15),
-                      button_spotify(getFontSize: getFontSize),
-                      const SizedBox(height: 30),
+                      // button_spotify(getFontSize: getFontSize),
+                      // const SizedBox(height: 30),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -300,5 +302,4 @@ class _SignInPageState extends State<SignInPage> {
       ),
     );
   }
-  
 }
