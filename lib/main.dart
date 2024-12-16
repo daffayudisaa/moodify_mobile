@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:moodify_mobile/presentation/bloc/auth/auth_bloc.dart';
 import 'package:moodify_mobile/presentation/bloc/change_password/change_pass_bloc.dart';
 import 'package:moodify_mobile/presentation/bloc/music/music_bloc.dart';
@@ -12,7 +13,6 @@ import 'package:moodify_mobile/presentation/pages/auth/sign_in.dart';
 import 'package:moodify_mobile/presentation/pages/change_password/change_password.dart';
 import 'package:moodify_mobile/presentation/pages/scan/scan_page.dart';
 import 'package:moodify_mobile/presentation/widgets/navbar.dart';
-// import 'package:moodify_mobile/presentation/widgets/splash_screen.dart';
 
 late final List<CameraDescription> cameras;
 
@@ -27,11 +27,22 @@ Future<void> main() async {
   }
 
   await dotenv.load(fileName: ".env");
-  runApp(const MyApp());
+
+  final loggedIn = await isLoggedIn();
+
+  runApp(MyApp(initialRoute: loggedIn ? '/navbar' : '/signin'));
+}
+
+Future<bool> isLoggedIn() async {
+  final prefs = await SharedPreferences.getInstance();
+  final accessToken = prefs.getString('access_token');
+  return accessToken != null && accessToken.isNotEmpty;
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final String initialRoute;
+
+  const MyApp({super.key, required this.initialRoute});
 
   @override
   Widget build(BuildContext context) {
@@ -55,7 +66,6 @@ class MyApp extends StatelessWidget {
         BlocProvider<ProfileBloc>(
           create: (context) => ProfileBloc(),
         ),
-        // Tambahkan Bloc lainnya di sini jika diperlukan
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
@@ -63,7 +73,7 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        home: const SignInPage(),
+        initialRoute: initialRoute,
         routes: {
           '/navbar': (context) {
             final initialTab =

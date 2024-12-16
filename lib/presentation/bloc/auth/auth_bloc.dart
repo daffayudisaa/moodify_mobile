@@ -107,3 +107,14 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     }
   }
 }
+
+Future<void> saveAccessToken(String accessToken) async {
+  final prefs = await SharedPreferences.getInstance();
+  await prefs.setString('access_token', accessToken);
+}
+
+Future<bool> isLoggedIn() async {
+  final prefs = await SharedPreferences.getInstance();
+  final accessToken = prefs.getString('access_token');
+  return accessToken != null && accessToken.isNotEmpty;
+}
