@@ -278,6 +278,11 @@ class _ProfilePageState extends State<ProfilePage> {
                                         context
                                             .read<ProfileBloc>()
                                             .add(DeleteAccount());
+
+                                        context
+                                            .read<AuthBloc>()
+                                            .add(SignOutRequested());
+
                                         Navigator.pushNamedAndRemoveUntil(
                                           context,
                                           '/signin',
